@@ -1,0 +1,123 @@
+---
+import Button from './Button.astro';
+
+interface Props {
+  mode?: 'b2b' | 'b2c' | 'hybrid';
+}
+
+const { mode = 'hybrid' } = Astro.props;
+---
+
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[rgb(var(--color-gray-light))]">
+  <div class="max-w-7xl mx-auto px-6 lg:px-16">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center group">
+        <img
+          src="/images/logo-equitraccion.png"
+          alt="Fundación Equitracción"
+          class="h-14 w-auto group-hover:opacity-80 transition-opacity"
+        />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a
+          href="/servicios-forestales"
+          class="text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+        >
+          Servicios Forestales
+        </a>
+        <a
+          href="/desarrollo-personal"
+          class="text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+        >
+          Desarrollo Personal
+        </a>
+        <a
+          href="/formacion"
+          class="text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+        >
+          Formación
+        </a>
+        <a
+          href="/fundacion"
+          class="text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+        >
+          Fundación
+        </a>
+        <a
+          href="/blog"
+          class="text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+        >
+          Blog
+        </a>
+        <Button href="/contacto" variant="primary" mode={mode} class="ml-4">
+          Contacto
+        </Button>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-button"
+        class="md:hidden p-2 rounded-lg hover:bg-[rgb(var(--color-gray-very-light))] transition-colors"
+        aria-label="Abrir menú"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-[rgb(var(--color-gray-light))]">
+    <nav class="px-6 py-4 space-y-3">
+      <a
+        href="/servicios-forestales"
+        class="block py-2 text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+      >
+        Servicios Forestales
+      </a>
+      <a
+        href="/desarrollo-personal"
+        class="block py-2 text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+      >
+        Desarrollo Personal
+      </a>
+      <a
+        href="/formacion"
+        class="block py-2 text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+      >
+        Formación
+      </a>
+      <a
+        href="/fundacion"
+        class="block py-2 text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+      >
+        Fundación
+      </a>
+      <a
+        href="/blog"
+        class="block py-2 text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+      >
+        Blog
+      </a>
+      <div class="pt-4">
+        <Button href="/contacto" variant="primary" mode={mode} class="w-full">
+          Contacto
+        </Button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>

@@ -1,0 +1,393 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout
+  title="Servicios Forestales con Tracción Equina | Equitracción"
+  description="Gestión forestal sostenible mediante tracción equina profesional. Reducción del 78% en huella de carbono. Operamos en terrenos de alta sensibilidad ecológica con certificación FSC."
+  mode="b2b"
+>
+  <Header mode="b2b" />
+
+  <main class="mode-b2b">
+    <!-- Hero Section con imagen -->
+    <section class="relative min-h-[85vh] flex items-center overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+        <img
+          src="/images/roberto-contaldo-equitraccion-n002.webp"
+          alt="Trabajo forestal con tracción animal"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-b2b-primary))]/85 to-[rgb(var(--color-brand-primary))]/75"></div>
+      </div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-24">
+        <div class="max-w-3xl">
+          <h1 class="font-heading font-bold text-5xl md:text-6xl leading-tight mb-6 text-white drop-shadow-lg">
+            Tracción Animal Profesional para Gestión Forestal Sostenible
+          </h1>
+          <p class="text-xl md:text-2xl leading-relaxed mb-8 text-white/95 drop-shadow">
+            Optimizamos operaciones forestales mediante equipos equinos especializados,
+            reduciendo el impacto ambiental hasta un 78% respecto a maquinaria convencional.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <Button href="#contacto" variant="primary" mode="b2b" class="text-lg">
+              Solicitar análisis de viabilidad
+            </Button>
+            <Button href="/contacto" variant="secondary" mode="b2b" class="text-lg !border-white !text-white hover:!bg-white hover:!text-[rgb(var(--color-b2b-primary))]">
+              Contactar
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ventajas Técnicas -->
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Ventajas Técnicas de la Tracción Equina
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))] max-w-3xl mx-auto">
+            Tecnología apropiada del siglo XXI para gestión forestal de bajo impacto
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Ventaja 1 -->
+          <div class="p-8 bg-[rgb(var(--color-gray-very-light))] rounded-lg border-l-4 border-[rgb(var(--color-b2b-primary))]">
+            <div class="w-12 h-12 rounded-lg bg-[rgb(var(--color-b2b-primary))] flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-3 text-[rgb(var(--color-text-primary))]">
+              Cero Compactación del Suelo
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Presión de 0.5 kg/cm² vs. 2-4 kg/cm² de tractores. Preserva estructura del suelo, infiltración hídrica y regeneración natural.
+            </p>
+          </div>
+
+          <!-- Ventaja 2 -->
+          <div class="p-8 bg-[rgb(var(--color-gray-very-light))] rounded-lg border-l-4 border-[rgb(var(--color-b2b-primary))]">
+            <div class="w-12 h-12 rounded-lg bg-[rgb(var(--color-b2b-primary))] flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-3 text-[rgb(var(--color-text-primary))]">
+              78% Reducción CO₂
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Huella de carbono mínima. Energía renovable animal vs. combustibles fósiles. Certificable para proyectos carbono neutral.
+            </p>
+          </div>
+
+          <!-- Ventaja 3 -->
+          <div class="p-8 bg-[rgb(var(--color-gray-very-light))] rounded-lg border-l-4 border-[rgb(var(--color-b2b-primary))]">
+            <div class="w-12 h-12 rounded-lg bg-[rgb(var(--color-b2b-primary))] flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-3 text-[rgb(var(--color-text-primary))]">
+              Terrenos Inaccesibles
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Operamos en pendientes hasta 45°, zonas protegidas, espacios naturales donde maquinaria no puede acceder o está prohibida.
+            </p>
+          </div>
+
+          <!-- Ventaja 4 -->
+          <div class="p-8 bg-[rgb(var(--color-gray-very-light))] rounded-lg border-l-4 border-[rgb(var(--color-b2b-primary))]">
+            <div class="w-12 h-12 rounded-lg bg-[rgb(var(--color-b2b-primary))] flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-3 text-[rgb(var(--color-text-primary))]">
+              Certificación FSC
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Cumplimiento de estándares de manejo forestal responsable. Ideal para empresas con compromisos de sostenibilidad.
+            </p>
+          </div>
+
+          <!-- Ventaja 5 -->
+          <div class="p-8 bg-[rgb(var(--color-gray-very-light))] rounded-lg border-l-4 border-[rgb(var(--color-b2b-primary))]">
+            <div class="w-12 h-12 rounded-lg bg-[rgb(var(--color-b2b-primary))] flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-3 text-[rgb(var(--color-text-primary))]">
+              Coste Competitivo
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Costes operativos comparables o inferiores a maquinaria en terrenos complejos. Sin necesidad de infraestructura pesada.
+            </p>
+          </div>
+
+          <!-- Ventaja 6 -->
+          <div class="p-8 bg-[rgb(var(--color-gray-very-light))] rounded-lg border-l-4 border-[rgb(var(--color-b2b-primary))]">
+            <div class="w-12 h-12 rounded-lg bg-[rgb(var(--color-b2b-primary))] flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-3 text-[rgb(var(--color-text-primary))]">
+              Valor Añadido Social
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Diferenciación en licitaciones públicas. Responsabilidad social corporativa. Educación ambiental y sensibilización.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios Específicos -->
+    <section class="py-24 bg-[rgb(var(--color-gray-very-light))]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Servicios Forestales
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Servicio 1 -->
+          <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Desembosque y Extracción
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-6">
+              Extracción selectiva de madera en aclareos, entresacas y cortas finales. Mínimo daño a masa forestal remanente. Ideal para trabajos de precisión en regeneración natural.
+            </p>
+            <ul class="space-y-2 text-[rgb(var(--color-gray-medium))]">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Arrastre desde cepas hasta vías principales
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Pendientes hasta 45°
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Distancias de arrastre hasta 500m
+              </li>
+            </ul>
+          </div>
+
+          <!-- Servicio 2 -->
+          <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Gestión de Espacios Protegidos
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-6">
+              Intervenciones en Red Natura 2000, parques naturales y zonas de alta sensibilidad ecológica. Cumplimiento estricto de normativas ambientales.
+            </p>
+            <ul class="space-y-2 text-[rgb(var(--color-gray-medium))]">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Zonas con restricciones a maquinaria
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Preservación de biodiversidad
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Informes de impacto ambiental
+              </li>
+            </ul>
+          </div>
+
+          <!-- Servicio 3 -->
+          <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Silvicultura Preventiva
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-6">
+              Tratamientos silvícolas para prevención de incendios. Clareo de sotobosque, creación de fajas auxiliares, extracción de biomasa.
+            </p>
+            <ul class="space-y-2 text-[rgb(var(--color-gray-medium))]">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Reducción de carga combustible
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Apertura de cortafuegos
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Mantenimiento de vías forestales
+              </li>
+            </ul>
+          </div>
+
+          <!-- Servicio 4 -->
+          <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Asesoramiento Técnico
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-6">
+              Evaluación de viabilidad técnica y económica. Diseño de operaciones. Formación de equipos. Implementación de tracción animal en su organización.
+            </p>
+            <ul class="space-y-2 text-[rgb(var(--color-gray-medium))]">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Estudios previos de viabilidad
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Selección de equipos y aperos
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 mt-1 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Capacitación de personal
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galería de Trabajo Real -->
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Nuestro Trabajo en Acción
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))] max-w-3xl mx-auto">
+            Más de 15 años gestionando bosques con tracción animal en toda la Península Ibérica
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Caballo-y-Carro-2048x1537.png"
+              alt="Equipo forestal con carro"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Equipo Forestal Profesional</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/roberto-contaldo-equitraccion-n004.webp"
+              alt="Trabajo en pendientes pronunciadas"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Pendientes Difíciles</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/La-cuadrilla-001.png"
+              alt="Equipo trabajando en el bosque"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">La Cuadrilla</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Fundacion-Equitraccion-02.jpeg"
+              alt="Extracción de madera"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Extracción Selectiva</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Fundacion-Equitraccion-03.jpeg"
+              alt="Trabajo en espacios protegidos"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Espacios Protegidos</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Roberto-Contaldo-EquiTraccion-004.webp"
+              alt="Gestión forestal sostenible"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Bajo Impacto</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA de Contacto -->
+    <section id="contacto" class="py-24 bg-[rgb(var(--color-b2b-primary))] text-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 text-center">
+        <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6">
+          ¿Listo para optimizar su gestión forestal?
+        </h2>
+        <p class="text-xl leading-relaxed mb-8 text-white/90">
+          Evaluamos la viabilidad técnica y económica de tracción equina en su proyecto.<br class="hidden md:block" />
+          Respuesta en 48 horas con análisis preliminar.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="/contacto" variant="primary" mode="b2b" class="text-lg bg-white text-[rgb(var(--color-b2b-primary))] hover:bg-gray-100">
+            Solicitar análisis de viabilidad
+          </Button>
+          <Button href="tel:+34681298028" variant="secondary" mode="b2b" class="text-lg border-white text-white hover:bg-white/10">
+            Llamar: +34 681 298 028
+          </Button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

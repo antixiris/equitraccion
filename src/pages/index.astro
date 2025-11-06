@@ -1,16 +1,359 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Equitracción | Gestión Forestal Sostenible y Desarrollo Personal con Caballos"
+  description="Transformamos bosques y organizaciones mediante el trabajo con équidos. Gestionamos ecosistemas forestales con mínimo impacto ambiental y acompañamos procesos humanos de liderazgo consciente."
+  mode="hybrid"
+>
+  <Header mode="hybrid" />
+
+  <main>
+    <!-- Hero Section con imagen de fondo -->
+    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+        <img
+          src="/images/Roberto-Contaldo-EquiTraccion-005.webp"
+          alt="Roberto Contaldo con caballos de Equitracción"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60"></div>
+      </div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-24 text-center text-white">
+        <h1 class="font-heading font-bold text-4xl md:text-6xl lg:text-7xl leading-tight mb-6 drop-shadow-lg">
+          Donde la fuerza del caballo<br />
+          encuentra el propósito humano
+        </h1>
+
+        <p class="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto mb-12 text-white/95 drop-shadow">
+          Transformamos bosques y organizaciones mediante el trabajo con équidos.<br class="hidden md:block" />
+          Sostenibilidad radical que integra naturaleza, animales y personas.
+        </p>
+
+        <!-- CTAs Duales -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <Button href="/servicios-forestales" variant="primary" mode="b2b" class="w-full sm:w-auto text-lg">
+            Servicios Forestales →
+          </Button>
+          <Button href="/desarrollo-personal" variant="primary" mode="b2c" class="w-full sm:w-auto text-lg">
+            Desarrollo Personal →
+          </Button>
+        </div>
+
+        <div class="mt-8">
+          <Button href="/formacion" variant="secondary" mode="hybrid" class="text-lg !border-white !text-white hover:!bg-white hover:!text-[rgb(var(--color-brand-primary))]">
+            Formación en Tracción Animal
+          </Button>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
+        <svg class="w-6 h-6 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Galería Visual con Scroll Parallax -->
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            15 Años de Experiencia Real
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))] max-w-3xl mx-auto">
+            Más de 1,200 hectáreas gestionadas con tracción animal y 350+ personas transformadas en procesos de desarrollo personal.
+          </p>
+        </div>
+
+        <!-- Grid de imágenes -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <div class="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/roberto-contaldo-equitraccion-n001.webp"
+              alt="Roberto Contaldo trabajando con caballos"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Roberto Contaldo</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Crecimiento-Personal-Foto-1.jpeg"
+              alt="Sesión de desarrollo personal con caballos"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Desarrollo Personal</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Caballo-y-Carro-2048x1537.png"
+              alt="Caballo con carro forestal"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Trabajo Forestal</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Crecimiento-Personal-Foto-2.jpeg"
+              alt="Conexión humana con caballos"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Coaching Equino</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/roberto-contaldo-equitraccion-n002.webp"
+              alt="Trabajo en el bosque con caballos"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">En el Bosque</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Crecimiento-Personal-Foto-3.jpeg"
+              alt="Formación en tracción animal"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Formación</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: ¿Qué es Equitracción? -->
+    <section class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Integración Radical
+          </h2>
+          <p class="text-lg md:text-xl leading-relaxed text-[rgb(var(--color-gray-medium))]">
+            No somos una empresa forestal que "también hace algo de coaching".<br class="hidden md:block" />
+            Tampoco un centro de desarrollo personal que "usa caballos como herramienta".<br class="hidden md:block" />
+            <strong class="text-[rgb(var(--color-brand-primary))]">Somos la integración de ambos</strong> como propuesta única diferencial.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Card 1: Trabajo Forestal -->
+          <div class="p-8 rounded-xl border-l-4 border-[rgb(var(--color-b2b-primary))] bg-white hover:shadow-xl transition-all duration-300">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-b2b-primary))] flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Gestión Forestal Profesional
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-6">
+              Tracción equina para operaciones forestales de bajo impacto. Reducción del 78% en huella de carbono vs. maquinaria convencional.
+            </p>
+            <Button href="/servicios-forestales" variant="tertiary" mode="b2b">
+              Explorar servicios técnicos →
+            </Button>
+          </div>
+
+          <!-- Card 2: Desarrollo Personal -->
+          <div class="p-8 rounded-xl border-l-4 border-[rgb(var(--color-b2c-accent))] bg-white hover:shadow-xl transition-all duration-300">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-b2c-accent))] flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Transformación Personal
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-6">
+              Los caballos como espejos honestos de tu liderazgo, comunicación y presencia. Autoconocimiento enraizado en la acción.
+            </p>
+            <Button href="/desarrollo-personal" variant="tertiary" mode="b2c">
+              Descubrir experiencias →
+            </Button>
+          </div>
+
+          <!-- Card 3: Formación -->
+          <div class="p-8 rounded-xl border-l-4 border-[rgb(var(--color-brand-secondary))] bg-white hover:shadow-xl transition-all duration-300">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-brand-secondary))] flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Formación Técnica y Vivencial
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-6">
+              Aprende el oficio de la tracción animal moderna. Formación que integra lo técnico y lo ético, el saber hacer y el saber ser.
+            </p>
+            <Button href="/formacion" variant="tertiary" mode="hybrid">
+              Ver programas formativos →
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Números de Impacto -->
+    <section class="py-24 bg-[rgb(var(--color-brand-primary))] text-white relative overflow-hidden">
+      <!-- Background pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <img
+          src="/images/roberto-contaldo-equitraccion-n003.webp"
+          alt="Background"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          <div class="text-center">
+            <div class="font-heading font-bold text-5xl md:text-6xl mb-2">15+</div>
+            <div class="text-white/90 text-lg">Años con équidos</div>
+          </div>
+          <div class="text-center">
+            <div class="font-heading font-bold text-5xl md:text-6xl mb-2">1,200+</div>
+            <div class="text-white/90 text-lg">Hectáreas gestionadas</div>
+          </div>
+          <div class="text-center">
+            <div class="font-heading font-bold text-5xl md:text-6xl mb-2">350+</div>
+            <div class="text-white/90 text-lg">Personas acompañadas</div>
+          </div>
+          <div class="text-center">
+            <div class="font-heading font-bold text-5xl md:text-6xl mb-2">78%</div>
+            <div class="text-white/90 text-lg">Reducción CO₂</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Roberto Contaldo con imagen -->
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="order-2 lg:order-1">
+            <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
+              Fundador
+            </span>
+            <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+              Roberto Contaldo
+            </h2>
+            <div class="space-y-4 text-lg text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              <p>
+                A los 28 años, Roberto dirigía una próspera empresa náutica. Tenía todo lo que la sociedad considera "éxito", pero algo esencial faltaba.
+              </p>
+              <p>
+                La búsqueda de sentido lo llevó primero a una comunidad Amish en Estados Unidos, donde descubrió el poder transformador del trabajo con caballos. Luego, cinco años en la Amazonía peruana le enseñaron la interdependencia entre humanos y naturaleza.
+              </p>
+              <p>
+                Al regresar a España en 2010, fundó Equitracción con una visión clara: <strong class="text-[rgb(var(--color-brand-primary))]">demostrar que la tracción animal no es un retroceso tecnológico, sino una solución avanzada</strong> que responde simultáneamente a la crisis ecológica y a la desconexión humana.
+              </p>
+            </div>
+            <div class="mt-8">
+              <Button href="/fundacion" variant="primary" mode="hybrid">
+                Conocer toda la historia →
+              </Button>
+            </div>
+          </div>
+          <div class="order-1 lg:order-2">
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src="/images/Robero-Contaldo-Fundacio-Equitraccion.jpeg"
+                alt="Roberto Contaldo, fundador de Equitracción"
+                class="w-full h-auto"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Manifiesto -->
+    <section class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16">
+        <h2 class="font-heading font-bold text-4xl md:text-5xl mb-8 text-center text-[rgb(var(--color-text-primary))]">
+          Nuestro Manifiesto
+        </h2>
+
+        <div class="prose prose-lg max-w-none text-[rgb(var(--color-text-primary))]">
+          <p class="text-xl leading-relaxed mb-6">
+            Creemos que la <strong>tracción animal es el futuro, no el pasado</strong>. Es tecnología apropiada del siglo XXI, energía renovable animal que restaura suelos, biodiversidad y conexión humana.
+          </p>
+          <p class="text-xl leading-relaxed mb-6">
+            Creemos que los <strong>caballos enseñan lo que los humanos olvidamos</strong>: presencia, coherencia entre lo que pensamos-decimos-hacemos, comunicación que va más allá de las palabras.
+          </p>
+          <p class="text-xl leading-relaxed mb-6">
+            Creemos que la <strong>sostenibilidad es indivisible de la conciencia</strong>. No podemos cuidar ecosistemas sin cuidar comunidades. No podemos trabajar con caballos sin respeto profundo por su bienestar y naturaleza.
+          </p>
+          <p class="text-xl leading-relaxed">
+            <strong class="text-[rgb(var(--color-brand-primary))]">Te invitamos a formar parte de este movimiento.</strong> Empresas forestales que necesitan alternativas de bajo impacto. Personas buscando transformación auténtica. Proyectos que quieren integrar équidos con ética y profesionalismo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: CTA Final -->
+    <section class="py-24 bg-white">
+      <div class="max-w-5xl mx-auto px-6 lg:px-16 text-center">
+        <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+          ¿Listo para comenzar?
+        </h2>
+        <p class="text-xl leading-relaxed mb-12 text-[rgb(var(--color-gray-medium))]">
+          Ya sea un proyecto forestal, un proceso de transformación personal<br class="hidden md:block" />
+          o formación en tracción animal: el primer paso es una conversación.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <Button href="/contacto" variant="primary" mode="hybrid" class="w-full sm:w-auto text-lg">
+            Contactar con nosotros
+          </Button>
+          <Button href="/blog" variant="secondary" mode="hybrid" class="w-full sm:w-auto text-lg">
+            Explorar el blog
+          </Button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Animación bounce para el scroll indicator */
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0) translateX(-50%);
+    }
+    50% {
+      transform: translateY(-10px) translateX(-50%);
+    }
+  }
+
+  .animate-bounce {
+    animation: bounce 2s infinite;
+  }
+</style>

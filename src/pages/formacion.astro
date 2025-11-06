@@ -1,0 +1,492 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout
+  title="Formación en Tracción Animal | Equitracción"
+  description="Aprende tracción animal con profesionales certificados. Cursos prácticos desde iniciación hasta especialización profesional en silvicultura sostenible."
+  mode="hybrid"
+>
+  <Header mode="hybrid" />
+
+  <main class="mode-hybrid">
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-[rgb(var(--color-brand-primary))] to-[rgb(var(--color-b2b-primary))] text-white py-20">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 text-center">
+        <h1 class="font-heading font-bold text-5xl md:text-6xl mb-6">
+          Formación en Tracción Animal
+        </h1>
+        <p class="text-xl md:text-2xl text-white/90">
+          Aprende el arte y la ciencia del trabajo forestal con caballos. Desde principiantes hasta profesionales que quieren especializarse.
+        </p>
+      </div>
+    </section>
+
+    <!-- Por qué formarte con nosotros -->
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
+            Aprender haciendo
+          </span>
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Por qué formarte con Equitracción
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Razón 1 -->
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-brand-primary))] mx-auto mb-6 flex items-center justify-center">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-xl mb-3 text-[rgb(var(--color-text-primary))]">
+              15 años de experiencia real
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              No enseñamos teoría de libro. Todo lo que compartimos viene de 1,200+ hectáreas gestionadas y 15 años resolviendo problemas reales en bosques reales.
+            </p>
+          </div>
+
+          <!-- Razón 2 -->
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-b2b-primary))] mx-auto mb-6 flex items-center justify-center">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-xl mb-3 text-[rgb(var(--color-text-primary))]">
+              Ratio bajo: máximo 6 alumnos
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              Grupos reducidos garantizan atención personalizada. Cada alumno trabaja directamente con los caballos, no solo observa.
+            </p>
+          </div>
+
+          <!-- Razón 3 -->
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-brand-secondary))] mx-auto mb-6 flex items-center justify-center">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-xl mb-3 text-[rgb(var(--color-text-primary))]">
+              Enfoque profesional
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              Te preparamos para trabajar: seguridad, planificación, normativa, presupuestos, relación con clientes. No solo técnica.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Programas formativos -->
+    <section class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl text-[rgb(var(--color-text-primary))]">
+            Nuestros Programas
+          </h2>
+        </div>
+
+        <div class="space-y-8">
+          <!-- Curso 1: Iniciación -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="md:flex">
+              <div class="md:w-1/3 bg-[rgb(var(--color-brand-primary))] p-8 text-white flex flex-col justify-center">
+                <span class="text-sm font-semibold uppercase tracking-wider mb-2 opacity-90">Nivel 1</span>
+                <h3 class="font-heading font-bold text-3xl mb-4">
+                  Iniciación a la Tracción Animal
+                </h3>
+                <div class="space-y-2 text-white/90">
+                  <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    3 días intensivos
+                  </p>
+                  <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    Máx. 6 personas
+                  </p>
+                  <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    450 € / persona
+                  </p>
+                </div>
+              </div>
+              <div class="md:w-2/3 p-8">
+                <h4 class="font-heading font-semibold text-xl mb-4 text-[rgb(var(--color-text-primary))]">
+                  ¿Para quién?
+                </h4>
+                <p class="text-[rgb(var(--color-gray-medium))] mb-6">
+                  Personas sin experiencia previa que quieren descubrir si la tracción animal es para ellos. Ideal para propietarios forestales, gestores de fincas, o curiosos que quieren aprender desde cero.
+                </p>
+
+                <h4 class="font-heading font-semibold text-xl mb-4 text-[rgb(var(--color-text-primary))]">
+                  Contenidos
+                </h4>
+                <ul class="grid md:grid-cols-2 gap-3 mb-6">
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-brand-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Manejo básico y seguridad
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-brand-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Enjaezamiento y equipos
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-brand-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Comunicación con el caballo
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-brand-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Arrastre básico de troncos
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-brand-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Bienestar animal
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-brand-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Práctica en terreno real
+                  </li>
+                </ul>
+
+                <Button href="/contacto" variant="primary" mode="hybrid">
+                  Solicitar información
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Curso 2: Avanzado -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="md:flex">
+              <div class="md:w-1/3 bg-[rgb(var(--color-b2b-primary))] p-8 text-white flex flex-col justify-center">
+                <span class="text-sm font-semibold uppercase tracking-wider mb-2 opacity-90">Nivel 2</span>
+                <h3 class="font-heading font-bold text-3xl mb-4">
+                  Silvicultura Profesional
+                </h3>
+                <div class="space-y-2 text-white/90">
+                  <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    5 días intensivos
+                  </p>
+                  <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    Máx. 4 personas
+                  </p>
+                  <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    950 € / persona
+                  </p>
+                </div>
+              </div>
+              <div class="md:w-2/3 p-8">
+                <h4 class="font-heading font-semibold text-xl mb-4 text-[rgb(var(--color-text-primary))]">
+                  ¿Para quién?
+                </h4>
+                <p class="text-[rgb(var(--color-gray-medium))] mb-6">
+                  Profesionales forestales, gestores de espacios naturales o personas que han completado el curso de iniciación y quieren trabajar profesionalmente con tracción animal.
+                </p>
+
+                <h4 class="font-heading font-semibold text-xl mb-4 text-[rgb(var(--color-text-primary))]">
+                  Contenidos
+                </h4>
+                <ul class="grid md:grid-cols-2 gap-3 mb-6">
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Planificación de operaciones
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Trabajo en pendientes
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Técnicas de cortas selectivas
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Normativa y certificaciones
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Presupuestos y viabilidad
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-b2b-primary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Relación con clientes
+                  </li>
+                </ul>
+
+                <p class="text-sm text-[rgb(var(--color-gray-medium))] mb-4 italic">
+                  Requisito: Haber completado curso de iniciación o demostrar experiencia equivalente
+                </p>
+
+                <Button href="/contacto" variant="primary" mode="b2b">
+                  Solicitar información
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Curso 3: Mentoría -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="md:flex">
+              <div class="md:w-1/3 bg-[rgb(var(--color-brand-secondary))] p-8 text-white flex flex-col justify-center">
+                <span class="text-sm font-semibold uppercase tracking-wider mb-2 opacity-90">Personalizado</span>
+                <h3 class="font-heading font-bold text-3xl mb-4">
+                  Mentoría Individual
+                </h3>
+                <div class="space-y-2 text-white/90">
+                  <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Duración flexible
+                  </p>
+                  <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    1 persona o equipo
+                  </p>
+                  <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Consultar precio
+                  </p>
+                </div>
+              </div>
+              <div class="md:w-2/3 p-8">
+                <h4 class="font-heading font-semibold text-xl mb-4 text-[rgb(var(--color-text-primary))]">
+                  ¿Para quién?
+                </h4>
+                <p class="text-[rgb(var(--color-gray-medium))] mb-6">
+                  Organizaciones, ayuntamientos, cooperativas forestales o profesionales que necesitan formación específica adaptada a sus circunstancias: tipo de terreno, especies, objetivos de gestión.
+                </p>
+
+                <h4 class="font-heading font-semibold text-xl mb-4 text-[rgb(var(--color-text-primary))]">
+                  Ejemplos de mentoría personalizada
+                </h4>
+                <ul class="space-y-3 mb-6">
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-brand-secondary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <span><strong>Parque Natural:</strong> Formación a equipo técnico para implementar tracción animal en su plan de gestión forestal</span>
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-brand-secondary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <span><strong>Propietario forestal:</strong> Acompañamiento para montar servicio propio de tracción animal en su finca (600+ hectáreas)</span>
+                  </li>
+                  <li class="flex items-start text-[rgb(var(--color-gray-medium))]">
+                    <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-[rgb(var(--color-brand-secondary))]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <span><strong>Cooperativa forestal:</strong> Formación técnica + análisis de viabilidad económica para ofrecer este servicio a sus asociados</span>
+                  </li>
+                </ul>
+
+                <Button href="/contacto" variant="primary" mode="hybrid">
+                  Contactar para propuesta
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Próximas fechas -->
+    <section class="py-24 bg-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-12">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Próximas Fechas
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))]">
+            Los cursos se realizan en nuestra base operativa en Ibiza y ocasionalmente en ubicaciones de la península.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Fecha 1 -->
+          <div class="border-2 border-[rgb(var(--color-gray-light))] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[rgb(var(--color-brand-primary))] transition-colors">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-[rgb(var(--color-brand-primary),0.1)] text-[rgb(var(--color-brand-primary))] mb-2">
+                Iniciación
+              </span>
+              <h3 class="font-heading font-semibold text-xl text-[rgb(var(--color-text-primary))]">
+                15-17 Diciembre 2025
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))]">Ibiza • 3 plazas disponibles</p>
+            </div>
+            <Button href="/contacto" variant="primary" mode="hybrid">
+              Reservar
+            </Button>
+          </div>
+
+          <!-- Fecha 2 -->
+          <div class="border-2 border-[rgb(var(--color-gray-light))] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[rgb(var(--color-brand-primary))] transition-colors">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-[rgb(var(--color-b2b-primary),0.1)] text-[rgb(var(--color-b2b-primary))] mb-2">
+                Avanzado
+              </span>
+              <h3 class="font-heading font-semibold text-xl text-[rgb(var(--color-text-primary))]">
+                20-24 Enero 2026
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))]">Ibiza • 2 plazas disponibles</p>
+            </div>
+            <Button href="/contacto" variant="primary" mode="b2b">
+              Reservar
+            </Button>
+          </div>
+
+          <!-- Fecha 3 -->
+          <div class="border-2 border-[rgb(var(--color-gray-light))] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[rgb(var(--color-brand-primary))] transition-colors">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-[rgb(var(--color-brand-primary),0.1)] text-[rgb(var(--color-brand-primary))] mb-2">
+                Iniciación
+              </span>
+              <h3 class="font-heading font-semibold text-xl text-[rgb(var(--color-text-primary))]">
+                10-12 Marzo 2026
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))]">Ibiza • 6 plazas disponibles</p>
+            </div>
+            <Button href="/contacto" variant="primary" mode="hybrid">
+              Reservar
+            </Button>
+          </div>
+        </div>
+
+        <p class="text-center text-[rgb(var(--color-gray-medium))] mt-8">
+          ¿No ves fechas que te vengan bien? <a href="/contacto" class="text-[rgb(var(--color-brand-primary))] hover:underline font-semibold">Contáctanos</a> y organizamos un curso si hay grupo mínimo (4 personas).
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16">
+        <h2 class="font-heading font-bold text-4xl md:text-5xl mb-12 text-center text-[rgb(var(--color-text-primary))]">
+          Preguntas Frecuentes
+        </h2>
+
+        <div class="space-y-4">
+          <details class="bg-white rounded-xl p-6 shadow-sm">
+            <summary class="font-heading font-semibold text-lg cursor-pointer text-[rgb(var(--color-text-primary))]">
+              ¿Necesito experiencia previa con caballos?
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              No. El curso de iniciación está diseñado para personas sin experiencia. De hecho, a veces es más fácil aprender desde cero que desaprender hábitos incorrectos de la equitación tradicional.
+            </p>
+          </details>
+
+          <details class="bg-white rounded-xl p-6 shadow-sm">
+            <summary class="font-heading font-semibold text-lg cursor-pointer text-[rgb(var(--color-text-primary))]">
+              ¿Qué incluye el precio del curso?
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Formación completa, materiales didácticos, uso de equipos y caballos, seguro de accidentes, y certificado de asistencia. No incluye alojamiento ni comidas (te facilitamos contactos de alojamientos cercanos).
+            </p>
+          </details>
+
+          <details class="bg-white rounded-xl p-6 shadow-sm">
+            <summary class="font-heading font-semibold text-lg cursor-pointer text-[rgb(var(--color-text-primary))]">
+              ¿Hay requisitos físicos?
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Es trabajo físico moderado. Debes poder caminar en terreno irregular, levantar pesos de hasta 15kg y estar de pie varias horas. Si tienes dudas sobre tu condición física, contáctanos antes de inscribirte.
+            </p>
+          </details>
+
+          <details class="bg-white rounded-xl p-6 shadow-sm">
+            <summary class="font-heading font-semibold text-lg cursor-pointer text-[rgb(var(--color-text-primary))]">
+              ¿Puedo trabajar profesionalmente después del curso?
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              El curso de iniciación te da las bases. Para trabajar profesionalmente, recomendamos completar el curso avanzado + período de práctica supervisada. Muchos alumnos empiezan ofreciendo servicios en su propia finca antes de trabajar para terceros.
+            </p>
+          </details>
+
+          <details class="bg-white rounded-xl p-6 shadow-sm">
+            <summary class="font-heading font-semibold text-lg cursor-pointer text-[rgb(var(--color-text-primary))]">
+              ¿Qué pasa si tengo que cancelar?
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Cancelación con más de 30 días: reembolso 100%. Entre 15-30 días: reembolso 50%. Menos de 15 días: sin reembolso (puedes transferir tu plaza a otra persona o cambiar a otra fecha si hay disponibilidad).
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-24 bg-gradient-to-br from-[rgb(var(--color-brand-primary))] to-[rgb(var(--color-b2b-primary))] text-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 text-center">
+        <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6">
+          ¿Listo para aprender?
+        </h2>
+        <p class="text-xl mb-10 text-white/90">
+          Reserva tu plaza o solicita más información sobre nuestros programas formativos.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="/contacto" variant="secondary" mode="hybrid" class="text-lg">
+            Solicitar información
+          </Button>
+          <Button href="tel:+34681298028" variant="primary" mode="hybrid" class="text-lg">
+            Llamar: +34 681 298 028
+          </Button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

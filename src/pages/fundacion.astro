@@ -1,0 +1,423 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout
+  title="Fundación | Equitracción"
+  description="Conoce la historia de Equitracción: cómo un empresario náutico encontró en la tracción animal una vía de transformación personal y regeneración ecológica."
+  mode="hybrid"
+>
+  <Header mode="hybrid" />
+
+  <main class="mode-hybrid">
+    <!-- Hero con imagen -->
+    <section class="relative min-h-[70vh] flex items-center overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+        <img
+          src="/images/Fundacion-Equitraccion-05.jpeg"
+          alt="Equitracción fundación"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-brand-primary))]/80 to-[rgb(var(--color-b2c-primary))]/75"></div>
+      </div>
+
+      <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-16 text-center py-20">
+        <h1 class="font-heading font-bold text-5xl md:text-6xl mb-6 text-white drop-shadow-lg">
+          Una historia de transformación
+        </h1>
+        <p class="text-xl md:text-2xl text-white/95 drop-shadow">
+          Del mundo empresarial a los bosques: cómo la tracción animal se convirtió en un puente entre la sostenibilidad técnica y el crecimiento personal.
+        </p>
+      </div>
+    </section>
+
+    <!-- Origen: La historia de Roberto -->
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
+              El origen
+            </span>
+            <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+              Roberto Contaldo
+            </h2>
+            <div class="space-y-4 text-lg text-[rgb(var(--color-gray-medium))]">
+              <p>
+                A los 28 años, Roberto dirigía una próspera empresa náutica. Tenía todo lo que la sociedad considera "éxito", pero algo esencial faltaba.
+              </p>
+              <p>
+                La búsqueda de sentido lo llevó primero a una comunidad Amish en Estados Unidos, donde descubrió el poder transformador del trabajo con caballos. Luego, cinco años en la Amazonía peruana le enseñaron la interdependencia entre humanos y naturaleza.
+              </p>
+              <p>
+                Al regresar a España en 2010, fundó Equitracción con una visión clara: <strong>demostrar que la tracción animal no es un retroceso tecnológico, sino una solución avanzada</strong> que responde simultáneamente a la crisis ecológica y a la desconexión humana.
+              </p>
+              <p>
+                Hoy, 15 años después, Equitracción es referente internacional en silvicultura sostenible y desarrollo personal asistido por caballos.
+              </p>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="aspect-[4/5] bg-[rgb(var(--color-beige-linen))] rounded-2xl overflow-hidden shadow-xl">
+              <img
+                src="/images/Robero-Contaldo-Fundacio-Equitraccion.jpeg"
+                alt="Roberto Contaldo, fundador de Equitracción"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="absolute -bottom-6 -right-6 bg-[rgb(var(--color-brand-secondary))] text-white p-6 rounded-xl shadow-lg max-w-xs">
+              <p class="font-heading text-lg font-semibold mb-1">
+                "Los caballos me enseñaron a escuchar más allá de las palabras."
+              </p>
+              <p class="text-sm text-white/80">Roberto Contaldo, Fundador</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Misión y Valores -->
+    <section class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
+            Lo que nos mueve
+          </span>
+          <h2 class="font-heading font-bold text-4xl md:text-5xl text-[rgb(var(--color-text-primary))]">
+            Misión y Valores
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 mb-16">
+          <!-- Misión -->
+          <div class="bg-white p-8 rounded-2xl shadow-sm">
+            <div class="w-14 h-14 rounded-lg bg-[rgb(var(--color-brand-primary))] flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Nuestra Misión
+            </h3>
+            <p class="text-lg text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Regenerar ecosistemas forestales y facilitar procesos de transformación personal mediante la tracción animal, demostrando que la sostenibilidad técnica y el crecimiento humano son inseparables.
+            </p>
+          </div>
+
+          <!-- Visión -->
+          <div class="bg-white p-8 rounded-2xl shadow-sm">
+            <div class="w-14 h-14 rounded-lg bg-[rgb(var(--color-b2c-primary))] flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Nuestra Visión
+            </h3>
+            <p class="text-lg text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Ser el puente que reconecta el mundo profesional con la naturaleza, demostrando que las soluciones más avanzadas a menudo están en métodos ancestrales reinterpretados con conciencia contemporánea.
+            </p>
+          </div>
+        </div>
+
+        <!-- Valores (grid de 4) -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-brand-primary))] mx-auto mb-4 flex items-center justify-center">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-lg mb-2 text-[rgb(var(--color-text-primary))]">
+              Integridad
+            </h4>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              Coherencia entre lo que decimos y hacemos. Transparencia en cada acción.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-b2b-primary))] mx-auto mb-4 flex items-center justify-center">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-lg mb-2 text-[rgb(var(--color-text-primary))]">
+              Respeto
+            </h4>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              Por la tierra, los animales y las personas. Sin jerarquías, solo roles.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-b2c-primary))] mx-auto mb-4 flex items-center justify-center">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-lg mb-2 text-[rgb(var(--color-text-primary))]">
+              Innovación
+            </h4>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              Reinterpretar lo ancestral con tecnología contemporánea.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-[rgb(var(--color-b2c-accent))] mx-auto mb-4 flex items-center justify-center">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-lg mb-2 text-[rgb(var(--color-text-primary))]">
+              Compasión
+            </h4>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              Entendemos que cada proceso tiene su tiempo. Paciencia activa.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Línea de tiempo -->
+    <section class="py-24 bg-white">
+      <div class="max-w-5xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
+            Nuestro camino
+          </span>
+          <h2 class="font-heading font-bold text-4xl md:text-5xl text-[rgb(var(--color-text-primary))]">
+            15 años de evolución
+          </h2>
+        </div>
+
+        <div class="space-y-12">
+          <!-- 2010 -->
+          <div class="flex gap-6 items-start">
+            <div class="flex-shrink-0 w-24 text-right">
+              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2010</span>
+            </div>
+            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
+              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-brand-primary))]"></div>
+            </div>
+            <div class="flex-1 pb-12">
+              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
+                Fundación de Equitracción
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))]">
+                Roberto regresa de la Amazonía y establece Equitracción en Ibiza. Primeros contratos forestales con Consell Insular.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2013 -->
+          <div class="flex gap-6 items-start">
+            <div class="flex-shrink-0 w-24 text-right">
+              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2013</span>
+            </div>
+            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
+              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-b2b-primary))]"></div>
+            </div>
+            <div class="flex-1 pb-12">
+              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
+                Expansión a Península Ibérica
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))]">
+                Primeros proyectos en espacios naturales protegidos. Colaboración con Parques Nacionales.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2016 -->
+          <div class="flex gap-6 items-start">
+            <div class="flex-shrink-0 w-24 text-right">
+              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2016</span>
+            </div>
+            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
+              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-b2c-primary))]"></div>
+            </div>
+            <div class="flex-1 pb-12">
+              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
+                Inicio Desarrollo Personal
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))]">
+                Lanzamiento de programas de crecimiento personal asistido por caballos. Primera formación en tracción animal.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2019 -->
+          <div class="flex gap-6 items-start">
+            <div class="flex-shrink-0 w-24 text-right">
+              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2019</span>
+            </div>
+            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
+              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-b2b-accent))]"></div>
+            </div>
+            <div class="flex-1 pb-12">
+              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
+                Reconocimiento Internacional
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))]">
+                Participación en congresos europeos de silvicultura sostenible. Superamos las 1,000 hectáreas gestionadas.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2022 -->
+          <div class="flex gap-6 items-start">
+            <div class="flex-shrink-0 w-24 text-right">
+              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2022</span>
+            </div>
+            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
+              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-b2c-accent))]"></div>
+            </div>
+            <div class="flex-1 pb-12">
+              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
+                Modelo Dual Consolidado
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))]">
+                Equilibrio perfecto entre servicios forestales B2B y desarrollo personal B2C. +350 personas acompañadas.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2025 -->
+          <div class="flex gap-6 items-start">
+            <div class="flex-shrink-0 w-24 text-right">
+              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2025</span>
+            </div>
+            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
+              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-brand-secondary))]"></div>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
+                Presente y Futuro
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))]">
+                Consolidación como referente en tracción animal. Nuevos programas formativos y expansión de servicios de consultoría.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- El equipo (caballos como protagonistas) -->
+    <section class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
+            Los verdaderos maestros
+          </span>
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Nuestro equipo
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))] max-w-3xl mx-auto">
+            En Equitracción, los caballos no son herramientas ni mascotas: son compañeros de trabajo, maestros de presencia y facilitadores de transformación.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Caballo 1 -->
+          <div class="bg-white p-6 rounded-2xl shadow-sm text-center">
+            <div class="aspect-square bg-[rgb(var(--color-gray-very-light))] rounded-xl mb-6 overflow-hidden">
+              <img
+                src="/images/La-cuadrilla-002.png"
+                alt="Trueno, caballo percherón"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3 class="font-heading font-bold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
+              Trueno
+            </h3>
+            <p class="text-[rgb(var(--color-brand-secondary))] font-semibold mb-3">
+              Percherón • 12 años
+            </p>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              Líder natural del equipo. Especializado en desembosque pesado y trabajo en pendientes pronunciadas.
+            </p>
+          </div>
+
+          <!-- Caballo 2 -->
+          <div class="bg-white p-6 rounded-2xl shadow-sm text-center">
+            <div class="aspect-square bg-[rgb(var(--color-gray-very-light))] rounded-xl mb-6 overflow-hidden">
+              <img
+                src="/images/Fundacion-Equitraccion-02.jpeg"
+                alt="Luna, yegua hispano-bretón"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3 class="font-heading font-bold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
+              Luna
+            </h3>
+            <p class="text-[rgb(var(--color-brand-secondary))] font-semibold mb-3">
+              Hispano-Bretón • 8 años
+            </p>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              Sensibilidad extraordinaria. Protagonista de sesiones de desarrollo personal por su capacidad empática.
+            </p>
+          </div>
+
+          <!-- Caballo 3 -->
+          <div class="bg-white p-6 rounded-2xl shadow-sm text-center">
+            <div class="aspect-square bg-[rgb(var(--color-gray-very-light))] rounded-xl mb-6 overflow-hidden">
+              <img
+                src="/images/Fundacion-Equitraccion-03.jpeg"
+                alt="Volcán, percherón joven"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3 class="font-heading font-bold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
+              Volcán
+            </h3>
+            <p class="text-[rgb(var(--color-brand-secondary))] font-semibold mb-3">
+              Percherón • 6 años
+            </p>
+            <p class="text-[rgb(var(--color-gray-medium))]">
+              El más joven del equipo. Energía vital y curiosidad infinita. Perfecto para formaciones y demostraciones.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 text-center">
+          <p class="text-lg text-[rgb(var(--color-gray-medium))] max-w-2xl mx-auto">
+            <strong class="text-[rgb(var(--color-text-primary))]">Roberto Contaldo</strong> trabaja codo a codo con ellos, acompañado por un equipo de colaboradores especializados en silvicultura, facilitación de procesos grupales y formación técnica.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Final Dual -->
+    <section class="py-24 bg-gradient-to-br from-[rgb(var(--color-brand-primary))] to-[rgb(var(--color-b2c-primary))] text-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 text-center">
+        <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6">
+          ¿Quieres formar parte de esta historia?
+        </h2>
+        <p class="text-xl mb-10 text-white/90">
+          Ya sea para un proyecto forestal o para explorar tu propio proceso de transformación.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="/servicios-forestales" variant="secondary" mode="hybrid" class="text-lg">
+            Servicios Forestales
+          </Button>
+          <Button href="/desarrollo-personal" variant="secondary" mode="hybrid" class="text-lg">
+            Desarrollo Personal
+          </Button>
+          <Button href="/contacto" variant="primary" mode="hybrid" class="text-lg">
+            Contactar
+          </Button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

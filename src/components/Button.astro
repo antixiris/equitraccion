@@ -1,0 +1,53 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  mode?: 'b2b' | 'b2c' | 'hybrid';
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+const {
+  href,
+  variant = 'primary',
+  mode = 'hybrid',
+  class: className = '',
+  type = 'button'
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+
+// Estilos base compartidos
+const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2';
+
+// Estilos por variante
+const variantStyles = {
+  primary: mode === 'b2b'
+    ? 'bg-[rgb(var(--color-b2b-accent))] text-white hover:bg-[rgb(184,149,106,0.9)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] rounded-[var(--radius-sm)] px-7 py-3'
+    : mode === 'b2c'
+    ? 'bg-[rgb(var(--color-b2c-accent))] text-white hover:bg-[rgb(193,127,95,0.85)] shadow-[var(--shadow-lg)] hover:shadow-[var(--shadow-xl)] hover:-translate-y-0.5 rounded-[var(--radius-xl)] px-9 py-3.5'
+    : 'bg-[rgb(var(--color-brand-secondary))] text-white hover:bg-[rgb(192,151,107,0.9)] shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] rounded-[var(--radius-md)] px-8 py-3',
+
+  secondary: mode === 'b2b'
+    ? 'border-2 border-[rgb(var(--color-b2b-accent))] text-[rgb(var(--color-b2b-accent))] hover:bg-[rgb(var(--color-b2b-accent))] hover:text-white rounded-[var(--radius-sm)] px-7 py-3'
+    : mode === 'b2c'
+    ? 'border-2 border-[rgb(var(--color-b2c-accent))] text-[rgb(var(--color-b2c-accent))] hover:bg-[rgb(193,127,95,0.1)] rounded-[var(--radius-xl)] px-9 py-3.5'
+    : 'border-2 border-[rgb(var(--color-brand-secondary))] text-[rgb(var(--color-brand-secondary))] hover:bg-[rgb(192,151,107,0.1)] rounded-[var(--radius-md)] px-8 py-3',
+
+  tertiary: mode === 'b2b'
+    ? 'text-[rgb(var(--color-b2b-primary))] hover:text-[rgb(44,95,45,0.8)] underline hover:no-underline'
+    : mode === 'b2c'
+    ? 'text-[rgb(var(--color-b2c-primary))] hover:text-[rgb(var(--color-b2c-accent))] underline decoration-dotted hover:decoration-solid'
+    : 'text-[rgb(var(--color-brand-primary))] hover:text-[rgb(61,112,69,0.8)] underline hover:no-underline'
+};
+
+const combinedClass = `${baseStyles} ${variantStyles[variant]} ${className}`;
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  class={combinedClass}
+>
+  <slot />
+</Tag>

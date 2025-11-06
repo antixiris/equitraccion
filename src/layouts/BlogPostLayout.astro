@@ -1,0 +1,203 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  date: string;
+  readTime: string;
+  author?: string;
+  mode?: 'b2b' | 'b2c' | 'hybrid';
+}
+
+const {
+  title,
+  description,
+  category,
+  date,
+  readTime,
+  author = 'Roberto Contaldo',
+  mode = 'hybrid'
+} = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('es-ES', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<BaseLayout title={`${title} | Blog Equitracción`} description={description} mode={mode}>
+  <Header mode={mode} />
+
+  <main class={`mode-${mode}`}>
+    <!-- Hero del artículo -->
+    <article class="py-24 bg-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16">
+        <!-- Breadcrumb -->
+        <nav class="mb-8 text-sm">
+          <a href="/" class="text-[rgb(var(--color-gray-medium))] hover:text-[rgb(var(--color-brand-primary))] transition-colors">
+            Inicio
+          </a>
+          <span class="text-[rgb(var(--color-gray-medium))] mx-2">/</span>
+          <a href="/blog" class="text-[rgb(var(--color-gray-medium))] hover:text-[rgb(var(--color-brand-primary))] transition-colors">
+            Blog
+          </a>
+          <span class="text-[rgb(var(--color-gray-medium))] mx-2">/</span>
+          <span class="text-[rgb(var(--color-text-primary))]">{category}</span>
+        </nav>
+
+        <!-- Meta -->
+        <div class="flex items-center gap-4 mb-6">
+          <span class={`px-4 py-1.5 rounded-full text-sm font-semibold ${
+            mode === 'b2b'
+              ? 'bg-[rgb(var(--color-b2b-primary),0.1)] text-[rgb(var(--color-b2b-primary))]'
+              : mode === 'b2c'
+              ? 'bg-[rgb(var(--color-b2c-primary),0.1)] text-[rgb(var(--color-b2c-primary))]'
+              : 'bg-[rgb(var(--color-brand-primary),0.1)] text-[rgb(var(--color-brand-primary))]'
+          }`}>
+            {category}
+          </span>
+          <span class="text-[rgb(var(--color-gray-medium))]">{readTime} lectura</span>
+        </div>
+
+        <!-- Título -->
+        <h1 class="font-heading font-bold text-4xl md:text-5xl lg:text-6xl mb-6 text-[rgb(var(--color-text-primary))]">
+          {title}
+        </h1>
+
+        <!-- Descripción/Lead -->
+        <p class="text-xl md:text-2xl text-[rgb(var(--color-gray-medium))] mb-8 leading-relaxed">
+          {description}
+        </p>
+
+        <!-- Meta inferior -->
+        <div class="flex items-center gap-4 pb-8 border-b border-[rgb(var(--color-gray-light))]">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-[rgb(var(--color-brand-primary))] flex items-center justify-center text-white font-semibold">
+              {author.split(' ').map(n => n[0]).join('')}
+            </div>
+            <div>
+              <p class="font-semibold text-[rgb(var(--color-text-primary))]">{author}</p>
+              <time class="text-sm text-[rgb(var(--color-gray-medium))]">{formattedDate}</time>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido del artículo -->
+      <div class="max-w-3xl mx-auto px-6 lg:px-16 mt-12">
+        <div class="prose prose-lg max-w-none
+          prose-headings:font-heading
+          prose-headings:font-bold
+          prose-headings:text-[rgb(var(--color-text-primary))]
+          prose-p:text-[rgb(var(--color-gray-medium))]
+          prose-p:leading-relaxed
+          prose-a:text-[rgb(var(--color-brand-primary))]
+          prose-a:no-underline
+          hover:prose-a:underline
+          prose-strong:text-[rgb(var(--color-text-primary))]
+          prose-strong:font-semibold
+          prose-blockquote:border-l-4
+          prose-blockquote:border-[rgb(var(--color-brand-primary))]
+          prose-blockquote:pl-6
+          prose-blockquote:italic
+          prose-blockquote:text-[rgb(var(--color-gray-medium))]
+          prose-ul:text-[rgb(var(--color-gray-medium))]
+          prose-ol:text-[rgb(var(--color-gray-medium))]
+          prose-li:my-2
+          prose-img:rounded-xl
+          prose-img:shadow-md
+        ">
+          <slot />
+        </div>
+      </div>
+
+      <!-- CTA al final del artículo -->
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 mt-16">
+        <div class={`rounded-2xl p-8 md:p-12 text-center ${
+          mode === 'b2b'
+            ? 'bg-[rgb(var(--color-b2b-primary),0.05)] border-2 border-[rgb(var(--color-b2b-primary),0.2)]'
+            : mode === 'b2c'
+            ? 'bg-[rgb(var(--color-b2c-primary),0.05)] border-2 border-[rgb(var(--color-b2c-primary),0.2)]'
+            : 'bg-[rgb(var(--color-beige-linen))]'
+        }`}>
+          <h3 class="font-heading font-bold text-2xl md:text-3xl mb-4 text-[rgb(var(--color-text-primary))]">
+            {mode === 'b2b'
+              ? '¿Tienes un proyecto forestal en mente?'
+              : mode === 'b2c'
+              ? '¿Listo para tu proceso de transformación?'
+              : '¿Quieres saber más?'}
+          </h3>
+          <p class="text-lg text-[rgb(var(--color-gray-medium))] mb-6 max-w-2xl mx-auto">
+            {mode === 'b2b'
+              ? 'Hablemos de cómo la tracción animal puede hacer tu operación forestal más sostenible y rentable.'
+              : mode === 'b2c'
+              ? 'Reserva una sesión exploratoria gratuita y descubre si el coaching con caballos es para ti.'
+              : 'Contáctanos para conocer más sobre nuestros servicios y programas.'}
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              href={mode === 'b2b' ? '/servicios-forestales' : mode === 'b2c' ? '/desarrollo-personal' : '/fundacion'}
+              variant="primary"
+              mode={mode}
+              class="text-lg"
+            >
+              {mode === 'b2b' ? 'Ver servicios' : mode === 'b2c' ? 'Reservar sesión' : 'Conocer más'}
+            </Button>
+            <Button href="/contacto" variant="secondary" mode={mode} class="text-lg">
+              Contactar
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navegación artículos relacionados -->
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 mt-16">
+        <div class="border-t border-[rgb(var(--color-gray-light))] pt-8">
+          <h3 class="font-heading font-bold text-2xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Más artículos
+          </h3>
+          <Button href="/blog" variant="secondary" mode={mode}>
+            Ver todos los artículos
+          </Button>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Ajustes adicionales para el contenido del artículo */
+  .prose {
+    font-size: 1.125rem;
+    line-height: 1.8;
+  }
+
+  .prose h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    font-size: 2rem;
+  }
+
+  .prose h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .prose p {
+    margin-bottom: 1.5rem;
+  }
+
+  .prose ul,
+  .prose ol {
+    margin-bottom: 1.5rem;
+  }
+</style>

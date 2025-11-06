@@ -1,0 +1,412 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout
+  title="Desarrollo Personal con Caballos | Autoconocimiento y Liderazgo | Equitracción"
+  description="Los caballos como espejos honestos de tu liderazgo, comunicación y presencia. Experiencias transformadoras de autoconocimiento enraizado en la acción, no en la teoría."
+  mode="b2c"
+>
+  <Header mode="b2c" />
+
+  <main class="mode-b2c">
+    <!-- Hero Section con imagen -->
+    <section class="relative min-h-[85vh] flex items-center overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+        <img
+          src="/images/Crecimiento-Personal-Foto-1.jpeg"
+          alt="Desarrollo personal con caballos"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-b2c-primary))]/80 to-[rgb(var(--color-brand-primary))]/70"></div>
+      </div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 py-32">
+        <div class="max-w-3xl mx-auto text-center">
+          <h1 class="font-heading font-bold text-5xl md:text-6xl leading-tight mb-8 text-white drop-shadow-lg">
+            ¿Qué te devuelve el espejo del caballo?
+          </h1>
+          <p class="text-xl md:text-2xl leading-relaxed mb-10 text-white/95 drop-shadow">
+            El trabajo con caballos no es terapia convencional: es un encuentro con tu forma
+            auténtica de liderar, comunicar y habitar el mundo. Autoconocimiento que se vive en acción.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button href="#proceso" variant="primary" mode="b2c" class="text-lg">
+              Descubrir cómo funciona
+            </Button>
+            <Button href="/contacto" variant="secondary" mode="b2c" class="text-lg !border-white !text-white hover:!bg-white hover:!text-[rgb(var(--color-b2c-primary))]">
+              Reservar sesión exploratoria
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Por qué caballos -->
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Por qué los caballos
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))] leading-relaxed">
+            Los caballos son maestros de presencia, coherencia y comunicación no verbal.
+            No juzgan tu currículum ni tu historia. Responden a quién eres en este momento.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Razón 1 -->
+          <div class="text-center">
+            <div class="w-20 h-20 rounded-full bg-[rgb(var(--color-b2c-accent))] mx-auto mb-6 flex items-center justify-center">
+              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Espejos Honestos
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Los caballos reflejan tu estado interno sin filtros. Si estás ansioso, lo notan. Si eres incongruente entre lo que piensas y haces, lo sienten. Esa honestidad es un regalo.
+            </p>
+          </div>
+
+          <!-- Razón 2 -->
+          <div class="text-center">
+            <div class="w-20 h-20 rounded-full bg-[rgb(var(--color-b2c-accent))] mx-auto mb-6 flex items-center justify-center">
+              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Presencia Absoluta
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Un caballo vive en el presente. No se preocupa por el ayer ni el mañana. Su presencia te devuelve al ahora, al único momento donde realmente puedes actuar y decidir.
+            </p>
+          </div>
+
+          <!-- Razón 3 -->
+          <div class="text-center">
+            <div class="w-20 h-20 rounded-full bg-[rgb(var(--color-b2c-accent))] mx-auto mb-6 flex items-center justify-center">
+              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Comunicación Auténtica
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Con un caballo, las palabras no bastan. Necesitas claridad en tu intención, coherencia en tu energía, respeto en tu acercamiento. Aprendes a comunicar desde la verdad.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proceso -->
+    <section id="proceso" class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-6xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Cómo funciona
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))] max-w-3xl mx-auto">
+            No es equitación. No necesitas experiencia previa con caballos. Todo el trabajo es desde el suelo, en presencia.
+          </p>
+        </div>
+
+        <div class="space-y-8">
+          <!-- Paso 1 -->
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="flex-shrink-0 w-16 h-16 rounded-full bg-[rgb(var(--color-b2c-accent))] flex items-center justify-center text-white font-heading font-bold text-2xl">
+              1
+            </div>
+            <div class="flex-1">
+              <h3 class="font-heading font-semibold text-2xl mb-3 text-[rgb(var(--color-text-primary))]">
+                Sesión Exploratoria (gratuita, 20min)
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+                Conversación inicial para entender qué buscas resolver o explorar. No es venta: es ver si hay resonancia. Si el trabajo con caballos tiene sentido para tu momento actual.
+              </p>
+            </div>
+          </div>
+
+          <!-- Paso 2 -->
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="flex-shrink-0 w-16 h-16 rounded-full bg-[rgb(var(--color-b2c-accent))] flex items-center justify-center text-white font-heading font-bold text-2xl">
+              2
+            </div>
+            <div class="flex-1">
+              <h3 class="font-heading font-semibold text-2xl mb-3 text-[rgb(var(--color-text-primary))]">
+                Primera Sesión Individual (2-3 horas)
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-4">
+                Encuentro con los caballos. Observación, acercamiento, contacto. Roberto te guía pero los caballos te enseñan. Descubres cómo llegas, cómo pides, cómo escuchas cuando no obtienes la respuesta esperada.
+              </p>
+              <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+                <strong class="text-[rgb(var(--color-b2c-accent))]">Qué aprenderás:</strong> Cómo tu estado interno afecta tu liderazgo. Dónde hay congruencia o contradicción entre lo que piensas, dices y haces. Qué patrones se repiten en tu vida.
+              </p>
+            </div>
+          </div>
+
+          <!-- Paso 3 -->
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="flex-shrink-0 w-16 h-16 rounded-full bg-[rgb(var(--color-b2c-accent))] flex items-center justify-center text-white font-heading font-bold text-2xl">
+              3
+            </div>
+            <div class="flex-1">
+              <h3 class="font-heading font-semibold text-2xl mb-3 text-[rgb(var(--color-text-primary))]">
+                Programa de Acompañamiento (opcional)
+              </h3>
+              <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-4">
+                Si decides continuar, diseñamos un proceso a medida. Puede ser mensual (para integrar aprendizajes) o intensivo (fin de semana, retiro de varios días).
+              </p>
+              <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed">
+                <strong class="text-[rgb(var(--color-b2c-accent))]">Formato flexible:</strong> Individual, pareja, pequeños grupos. Sesiones de 2-3 horas cada una. Nos adaptamos a tu ritmo y necesidades.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Para quién -->
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Para quién
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <!-- Perfil 1 -->
+          <div class="p-8 bg-[rgb(var(--color-beige-linen))] rounded-2xl">
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Personas en transición
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-4">
+              Cambios profesionales, rupturas, mudanzas, búsqueda de propósito. Momentos donde necesitas claridad sobre quién eres y hacia dónde vas.
+            </p>
+            <p class="text-sm text-[rgb(var(--color-b2c-accent))] italic">
+              "El caballo me ayudó a ver que no necesitaba cambiar todo, solo volver a confiar en mi intuición." - Ana, 38 años
+            </p>
+          </div>
+
+          <!-- Perfil 2 -->
+          <div class="p-8 bg-[rgb(var(--color-beige-linen))] rounded-2xl">
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Líderes y emprendedores
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-4">
+              Gestionas equipos, proyectos, organizaciones. Quieres liderar desde la autenticidad, no desde el control. Buscas coherencia entre valores y acciones.
+            </p>
+            <p class="text-sm text-[rgb(var(--color-b2c-accent))] italic">
+              "Lo que el caballo me mostró sobre mi estilo de liderazgo fue más potente que 10 sesiones de coaching." - Marcos, 42 años
+            </p>
+          </div>
+
+          <!-- Perfil 3 -->
+          <div class="p-8 bg-[rgb(var(--color-beige-linen))] rounded-2xl">
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Buscadores de autenticidad
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-4">
+              Has probado terapia, mindfulness, retiros. Funciona, pero buscas algo diferente. Experiencial, enraizado en lo real, sin dogmas ni new age.
+            </p>
+            <p class="text-sm text-[rgb(var(--color-b2c-accent))] italic">
+              "Por fin una experiencia transformadora que no me pide creer en nada, solo estar presente." - Laura, 35 años
+            </p>
+          </div>
+
+          <!-- Perfil 4 -->
+          <div class="p-8 bg-[rgb(var(--color-beige-linen))] rounded-2xl">
+            <h3 class="font-heading font-semibold text-2xl mb-4 text-[rgb(var(--color-text-primary))]">
+              Parejas y equipos
+            </h3>
+            <p class="text-[rgb(var(--color-gray-medium))] leading-relaxed mb-4">
+              Trabajar con caballos en pareja o pequeño grupo revela dinámicas de comunicación, roles, patrones. Ideal para parejas, socios, equipos de trabajo.
+            </p>
+            <p class="text-sm text-[rgb(var(--color-b2c-accent))] italic">
+              "Vimos patrones que llevábamos años repitiendo sin darnos cuenta. El caballo nos los mostró en 20 minutos." - Carla y Tomás
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preguntas frecuentes -->
+    <section class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Preguntas frecuentes
+          </h2>
+        </div>
+
+        <div class="space-y-6">
+          <details class="bg-white p-6 rounded-xl group">
+            <summary class="font-heading font-semibold text-xl cursor-pointer text-[rgb(var(--color-text-primary))] list-none flex justify-between items-center">
+              ¿Es esto terapia equina?
+              <span class="text-[rgb(var(--color-b2c-accent))] transform group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              No exactamente. La equinoterapia convencional se enfoca en aspectos clínicos o terapéuticos específicos. Nuestro enfoque es más educativo y vivencial: los caballos como maestros de presencia, liderazgo y comunicación auténtica. No sustituye terapia psicológica si la necesitas, pero complementa perfectamente procesos de crecimiento personal.
+            </p>
+          </details>
+
+          <details class="bg-white p-6 rounded-xl group">
+            <summary class="font-heading font-semibold text-xl cursor-pointer text-[rgb(var(--color-text-primary))] list-none flex justify-between items-center">
+              ¿Necesito saber montar?
+              <span class="text-[rgb(var(--color-b2c-accent))] transform group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              No. Todo el trabajo es desde el suelo. No hay equitación. Se trata de presencia, observación, contacto, comunicación. De hecho, no tener experiencia previa con caballos puede ser una ventaja: llegas sin expectativas ni patrones aprendidos.
+            </p>
+          </details>
+
+          <details class="bg-white p-6 rounded-xl group">
+            <summary class="font-heading font-semibold text-xl cursor-pointer text-[rgb(var(--color-text-primary))] list-none flex justify-between items-center">
+              ¿Es seguro? ¿Los caballos son grandes?
+              <span class="text-[rgb(var(--color-b2c-accent))] transform group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Sí, es seguro. Roberto tiene 15+ años trabajando con caballos y facilita encuentros desde el respeto y la consciencia. Los caballos de Equitracción están habituados a este trabajo. Sí, son grandes, y eso es parte del proceso: tu sistema nervioso aprende a regularse ante la presencia de un ser poderoso. Eso se traduce luego a tu vida.
+            </p>
+          </details>
+
+          <details class="bg-white p-6 rounded-xl group">
+            <summary class="font-heading font-semibold text-xl cursor-pointer text-[rgb(var(--color-text-primary))] list-none flex justify-between items-center">
+              ¿Dónde se realiza?
+              <span class="text-[rgb(var(--color-b2c-accent))] transform group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              Las sesiones se realizan en Ibiza y en ubicaciones de la Península Ibérica según disponibilidad. Espacios naturales donde los caballos viven en condiciones de bienestar. Contacta para confirmar próximas fechas y ubicaciones.
+            </p>
+          </details>
+
+          <details class="bg-white p-6 rounded-xl group">
+            <summary class="font-heading font-semibold text-xl cursor-pointer text-[rgb(var(--color-text-primary))] list-none flex justify-between items-center">
+              ¿Cuánto cuesta?
+              <span class="text-[rgb(var(--color-b2c-accent))] transform group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-[rgb(var(--color-gray-medium))] leading-relaxed">
+              La sesión exploratoria (20min) es gratuita. La primera sesión individual (2-3h) tiene un coste orientativo de 150-200€. Programas de acompañamiento se diseñan a medida según duración y formato. Contacta para información detallada.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galería Visual -->
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Experiencias Reales
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))] max-w-3xl mx-auto">
+            Momentos de conexión, presencia y transformación junto a los caballos
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Crecimiento-Personal-Foto-2.jpeg"
+              alt="Sesión de coaching con caballos"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Presencia y Conexión</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Crecimiento-Personal-Foto-3.jpeg"
+              alt="Trabajo con caballos en grupo"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Liderazgo Consciente</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/crescimento-personal.jpeg"
+              alt="Transformación personal"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Autoconocimiento</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Roberto-Contaldo-EquiTraccion-005.webp"
+              alt="Roberto facilitando sesión"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Facilitación Experta</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Roberto-Contaldo-EquiTraccion-008.webp"
+              alt="Conexión profunda"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Comunicación Auténtica</p>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+            <img
+              src="/images/Equitraccion-03.jpeg"
+              alt="Espacio de transformación"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+              <p class="text-white font-semibold text-lg">Entorno Natural</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section id="contacto" class="py-24 bg-[rgb(var(--color-b2c-primary))] text-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 text-center">
+        <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6">
+          ¿Listo para comenzar tu camino?
+        </h2>
+        <p class="text-xl leading-relaxed mb-10 text-white/95">
+          El primer paso es una conversación. Sin compromiso, sin presión.<br class="hidden md:block" />
+          Solo claridad sobre si este trabajo tiene sentido para ti.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+          <Button href="/contacto" variant="primary" mode="b2c" class="text-lg bg-white text-[rgb(var(--color-b2c-primary))] hover:bg-gray-100">
+            Reservar sesión exploratoria
+          </Button>
+          <Button href="tel:+34681298028" variant="secondary" mode="b2c" class="text-lg border-white text-white hover:bg-white/10">
+            Llamar: +34 681 298 028
+          </Button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

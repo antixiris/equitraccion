@@ -1,0 +1,28 @@
+# robots.txt para Equitracción
+# https://equitraccion.com
+
+User-agent: *
+Allow: /
+
+# Bloquear acceso a API endpoints
+Disallow: /api/
+
+# Bloquear archivos del sistema
+Disallow: /.env
+Disallow: /.git
+
+# Sitemap
+Sitemap: https://equitraccion.com/sitemap.xml
+
+# Crawl-delay para bots
+Crawl-delay: 1
+
+# Bots específicos permitidos
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

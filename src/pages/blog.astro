@@ -1,0 +1,258 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+
+// Artículos de blog (más adelante vendrán de Supabase)
+const articles = [
+  {
+    slug: 'traccion-animal-sostenibilidad-forestal',
+    title: 'Tracción animal: la tecnología olvidada que regenera bosques',
+    excerpt: 'Mientras la maquinaria pesada compacta el suelo y destroza raíces, los caballos de tiro ofrecen una alternativa que la ciencia forestal moderna está redescubriendo.',
+    category: 'Silvicultura',
+    date: '2025-10-15',
+    readTime: '8 min',
+    image: '/images/blog/traccion-animal-bosque.jpg',
+    mode: 'b2b'
+  },
+  {
+    slug: 'caballos-espejos-emocionales',
+    title: 'Los caballos como espejos emocionales: neurociencia de la conexión',
+    excerpt: 'La investigación neurocientífica está confirmando lo que los profesionales del coaching equino sabían: los caballos tienen una capacidad única para reflejar estados emocionales humanos.',
+    category: 'Desarrollo Personal',
+    date: '2025-09-28',
+    readTime: '6 min',
+    image: '/images/blog/caballo-humano-conexion.jpg',
+    mode: 'b2c'
+  },
+  {
+    slug: 'reduccion-huella-carbono-silvicultura',
+    title: '78% menos emisiones: datos reales de 1,200 hectáreas gestionadas',
+    excerpt: 'Análisis comparativo de nuestras operaciones forestales vs. maquinaria convencional. Los números hablan por sí solos.',
+    category: 'Impacto',
+    date: '2025-09-12',
+    readTime: '10 min',
+    image: '/images/blog/datos-carbono.jpg',
+    mode: 'b2b'
+  },
+  {
+    slug: 'transiciones-profesionales-coaching-equino',
+    title: 'Cambiar de carrera a los 40: cuando los caballos te ayudan a decidir',
+    excerpt: 'Historias reales de profesionales que utilizaron el coaching asistido por caballos para navegar transiciones de vida complejas.',
+    category: 'Historias',
+    date: '2025-08-30',
+    readTime: '12 min',
+    image: '/images/blog/transicion-profesional.jpg',
+    mode: 'b2c'
+  },
+  {
+    slug: 'amish-amazonia-ibiza',
+    title: 'De los Amish a la Amazonía: el viaje que fundó Equitracción',
+    excerpt: 'La historia de cómo un empresario náutico abandonó todo para aprender de comunidades que nunca perdieron el vínculo con la tierra y los animales.',
+    category: 'Fundación',
+    date: '2025-08-18',
+    readTime: '15 min',
+    image: '/images/blog/historia-roberto.jpg',
+    mode: 'hybrid'
+  },
+  {
+    slug: 'espacios-protegidos-sin-huellas',
+    title: 'Trabajar en Parques Nacionales sin dejar huella',
+    excerpt: 'Casos de estudio: cómo la tracción animal permite realizar trabajos forestales en espacios donde la maquinaria está prohibida.',
+    category: 'Silvicultura',
+    date: '2025-07-22',
+    readTime: '9 min',
+    image: '/images/blog/parque-nacional.jpg',
+    mode: 'b2b'
+  }
+];
+
+// Categorías únicas para filtrado
+const categories = ['Todas', ...new Set(articles.map(a => a.category))];
+---
+
+<BaseLayout
+  title="Blog | Equitracción"
+  description="Historias, conocimiento técnico y reflexiones sobre silvicultura sostenible, tracción animal y desarrollo personal asistido por caballos."
+  mode="hybrid"
+>
+  <Header mode="hybrid" />
+
+  <main class="mode-hybrid">
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-[rgb(var(--color-brand-primary))] to-[rgb(var(--color-b2c-primary))] text-white py-20">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 text-center">
+        <h1 class="font-heading font-bold text-5xl md:text-6xl mb-6">
+          Blog
+        </h1>
+        <p class="text-xl md:text-2xl text-white/90">
+          Conocimiento técnico, historias reales y reflexiones sobre cómo la tracción animal transforma bosques y personas.
+        </p>
+      </div>
+    </section>
+
+    <!-- Filtros de categoría -->
+    <section class="py-8 bg-white border-b border-[rgb(var(--color-gray-light))]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="flex flex-wrap gap-3 justify-center">
+          {categories.map(cat => (
+            <button
+              class={`px-6 py-2 rounded-full font-medium transition-all ${
+                cat === 'Todas'
+                  ? 'bg-[rgb(var(--color-brand-primary))] text-white'
+                  : 'bg-[rgb(var(--color-gray-very-light))] text-[rgb(var(--color-gray-medium))] hover:bg-[rgb(var(--color-gray-light))]'
+              }`}
+              data-category={cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid de artículos -->
+    <section class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="articles-grid">
+          {articles.map(article => (
+            <article
+              class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
+              data-category={article.category}
+            >
+              <a href={`/blog/${article.slug}`} class="block group">
+                {/* Imagen */}
+                <div class="aspect-[16/10] bg-[rgb(var(--color-gray-very-light))] overflow-hidden">
+                  <div class="w-full h-full flex items-center justify-center text-[rgb(var(--color-gray-light))]">
+                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Contenido */}
+                <div class="p-6">
+                  {/* Meta */}
+                  <div class="flex items-center justify-between mb-3">
+                    <span class={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      article.mode === 'b2b'
+                        ? 'bg-[rgb(var(--color-b2b-primary),0.1)] text-[rgb(var(--color-b2b-primary))]'
+                        : article.mode === 'b2c'
+                        ? 'bg-[rgb(var(--color-b2c-primary),0.1)] text-[rgb(var(--color-b2c-primary))]'
+                        : 'bg-[rgb(var(--color-brand-primary),0.1)] text-[rgb(var(--color-brand-primary))]'
+                    }`}>
+                      {article.category}
+                    </span>
+                    <span class="text-sm text-[rgb(var(--color-gray-medium))]">
+                      {article.readTime}
+                    </span>
+                  </div>
+
+                  {/* Título */}
+                  <h2 class="font-heading font-bold text-xl mb-3 text-[rgb(var(--color-text-primary))] group-hover:text-[rgb(var(--color-brand-primary))] transition-colors">
+                    {article.title}
+                  </h2>
+
+                  {/* Excerpt */}
+                  <p class="text-[rgb(var(--color-gray-medium))] mb-4 line-clamp-3">
+                    {article.excerpt}
+                  </p>
+
+                  {/* Fecha */}
+                  <time class="text-sm text-[rgb(var(--color-gray-medium))]">
+                    {new Date(article.date).toLocaleDateString('es-ES', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </time>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="py-24 bg-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 text-center">
+        <div class="bg-gradient-to-br from-[rgb(var(--color-brand-primary))] to-[rgb(var(--color-b2c-primary))] rounded-3xl p-12 text-white">
+          <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4">
+            Recibe nuestras historias
+          </h2>
+          <p class="text-xl text-white/90 mb-8">
+            Un email mensual con artículos, casos de estudio y reflexiones sobre silvicultura y crecimiento personal.
+          </p>
+          <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="tu@email.com"
+              class="flex-1 px-6 py-3 rounded-full text-[rgb(var(--color-text-primary))] focus:outline-none focus:ring-2 focus:ring-white"
+              required
+            />
+            <button
+              type="submit"
+              class="px-8 py-3 bg-white text-[rgb(var(--color-brand-primary))] rounded-full font-semibold hover:bg-white/90 transition-colors"
+            >
+              Suscribirme
+            </button>
+          </form>
+          <p class="text-sm text-white/70 mt-4">
+            Sin spam. Cancela cuando quieras.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  // Filtrado de artículos por categoría
+  const categoryButtons = document.querySelectorAll('[data-category]');
+  const articles = document.querySelectorAll('#articles-grid article');
+
+  categoryButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const category = button.getAttribute('data-category');
+
+      // Update active button
+      categoryButtons.forEach(btn => {
+        btn.classList.remove('bg-[rgb(var(--color-brand-primary))]', 'text-white');
+        btn.classList.add('bg-[rgb(var(--color-gray-very-light))]', 'text-[rgb(var(--color-gray-medium))]');
+      });
+      button.classList.add('bg-[rgb(var(--color-brand-primary))]', 'text-white');
+      button.classList.remove('bg-[rgb(var(--color-gray-very-light))]', 'text-[rgb(var(--color-gray-medium))]');
+
+      // Filter articles
+      articles.forEach(article => {
+        const articleCategory = article.getAttribute('data-category');
+        if (category === 'Todas' || articleCategory === category) {
+          article.style.display = 'block';
+        } else {
+          article.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Newsletter form handler (placeholder)
+  const newsletterForm = document.querySelector('form');
+  newsletterForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('¡Gracias por suscribirte! (funcionalidad backend pendiente)');
+    newsletterForm.reset();
+  });
+</script>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
