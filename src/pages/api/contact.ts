@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabase } from '../../lib/supabase';
+import { supabaseAdmin } from '../../lib/supabase';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -41,8 +41,8 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Insert into database
-    const { data, error } = await supabase
+    // Insert into database using service role key to bypass RLS
+    const { data, error } = await supabaseAdmin
       .from('contact_submissions')
       .insert([
         {
