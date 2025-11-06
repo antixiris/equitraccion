@@ -136,9 +136,9 @@ Verás una tabla con todos tus posts que muestra:
 - Máximo recomendado: 5-6 tags
 
 **Imagen de Portada**
-- URL o ruta de la imagen principal
-- Ejemplo: `/images/blog/mi-imagen.jpg`
-- Si está vacío, se usa una imagen por defecto
+- Puedes subir directamente desde tu ordenador (recomendado)
+- O usar una URL si la imagen ya está online
+- Si no subes ninguna, se usa una imagen por defecto
 
 **Tiempo de Lectura**
 - Minutos estimados de lectura
@@ -147,20 +147,44 @@ Verás una tabla con todos tus posts que muestra:
 
 ### Paso 3: Escribir el Contenido
 
-El contenido se escribe en **Markdown**, un formato simple de texto.
+El contenido se escribe en un **editor visual** tipo Word o Google Docs. No necesitas conocer código ni Markdown.
 
-#### Barra de Herramientas
-- **B**: Texto en **negrita**
-- **I**: Texto en *cursiva*
-- **H2/H3**: Títulos y subtítulos
-- **🔗**: Insertar enlaces
-- **• Lista**: Crear listas
-- **""**: Citas destacadas
+#### Barra de Herramientas Visual
 
-#### Editor de Texto
-- Escribe el contenido principal de tu post
-- Usa Markdown para dar formato (ver sección Formato Markdown)
-- La vista previa se actualiza mientras escribes
+La barra superior del editor tiene botones para formatear el texto:
+
+**Títulos**
+- **T** (grande): Título Principal (H1)
+- **T** (mediano): Subtítulo (H2)
+- **T** (pequeño): Sección (H3)
+
+**Formato de Texto**
+- **N**: Texto en **negrita**
+- **C**: Texto en *cursiva*
+
+**Listas**
+- **• Lista**: Crear lista con viñetas
+- **1. Numerada**: Crear lista numerada
+
+**Otros**
+- **💬 Cita**: Insertar cita destacada
+- **🔗 Enlace**: Insertar enlace a otra página
+- **🖼️ Añadir Imagen**: Insertar imagen en el contenido
+
+#### ¿Cómo Usar el Editor?
+
+1. **Escribe normalmente** como en Word o Google Docs
+2. **Selecciona el texto** que quieres formatear
+3. **Haz click en el botón** correspondiente (negrita, cursiva, etc.)
+4. **La vista previa** a la derecha te muestra cómo quedará
+
+**Ejemplo:**
+- Escribe: `La tracción equina es sostenible`
+- Selecciona la palabra `sostenible`
+- Haz click en **N** (negrita)
+- El texto quedará: `La tracción equina es **sostenible**`
+
+**No necesitas saber Markdown**. El editor convierte automáticamente tu texto formateado al formato correcto cuando guardas.
 
 ### Paso 4: Vista Previa
 - Panel derecho muestra cómo se verá el post
@@ -194,122 +218,151 @@ El contenido se escribe en **Markdown**, un formato simple de texto.
 
 ---
 
-## 📝 Formato Markdown
+## 📝 Uso del Editor Visual
 
-Markdown es un formato simple para escribir texto con estilo. Aquí tienes lo esencial:
+El editor funciona como Word o Google Docs. No necesitas conocer código.
 
-### Títulos
-```markdown
-# Título Principal (H1)
-## Subtítulo (H2)
-### Sección (H3)
-```
+### Crear Títulos y Subtítulos
 
-### Texto con Estilo
-```markdown
-**Texto en negrita**
-*Texto en cursiva*
-***Texto en negrita y cursiva***
-```
+1. Escribe el texto del título
+2. Selecciona todo el texto
+3. Haz click en **T** (grande, mediano o pequeño)
 
-### Enlaces
-```markdown
-[Texto del enlace](https://ejemplo.com)
-[Ir a servicios](/servicios-forestales)
-```
+**Ejemplo:**
+- Escribe: `Ventajas de la tracción equina`
+- Selecciona todo el texto
+- Haz click en **T** mediano
+- Se convierte en un subtítulo H2
 
-### Listas
+### Aplicar Negrita o Cursiva
 
-**Lista sin orden:**
-```markdown
-- Primer item
-- Segundo item
-- Tercer item
-```
+1. Selecciona la palabra o frase
+2. Haz click en **N** (negrita) o **C** (cursiva)
 
-**Lista ordenada:**
-```markdown
-1. Primer paso
-2. Segundo paso
-3. Tercer paso
-```
+**Ejemplo:**
+- Escribe: `Esto es muy importante`
+- Selecciona `muy importante`
+- Haz click en **N**
+- Quedará: Esto es **muy importante**
 
-### Citas Destacadas
-```markdown
-> Esto es una cita importante.
-> Se usa para destacar frases relevantes.
-```
+### Crear Listas
 
-### Línea Horizontal
-```markdown
----
-```
+**Lista con viñetas:**
+1. Haz click en **• Lista**
+2. Escribe el primer punto
+3. Presiona Enter para añadir más puntos
+4. Presiona Enter dos veces para terminar la lista
 
-### Imágenes
-```markdown
-![Descripción de la imagen](https://ejemplo.com/imagen.jpg)
-```
+**Lista numerada:**
+1. Haz click en **1. Numerada**
+2. Escribe el primer paso
+3. Presiona Enter para añadir más pasos
 
-### Ejemplo Completo
-```markdown
-# Gestión Forestal Sostenible
+### Insertar un Enlace
 
-La tracción equina es una **técnica de vanguardia** para la silvicultura del siglo XXI.
+1. Escribe el texto que será el enlace (ej: "nuestros servicios")
+2. Selecciona el texto
+3. Haz click en **🔗 Enlace**
+4. Introduce la URL (ej: `/servicios-forestales`)
+5. Presiona OK
 
-## Ventajas Principales
+### Añadir una Cita Destacada
 
-- Bajo impacto ambiental
-- Acceso a terrenos difíciles
-- Certificación FSC mantenida
+1. Escribe el texto de la cita
+2. Selecciona todo el texto
+3. Haz click en **💬 Cita**
 
-### Datos Clave
+**Ejemplo de cita:**
+> "La tracción equina transforma el bosque sin destruirlo"
 
-> "La diferencia entre zonas trabajadas con caballos vs maquinaria es evidente años después."
+### Insertar una Imagen
 
-Para más información, visita nuestra [página de servicios](/servicios-forestales).
+1. Coloca el cursor donde quieres la imagen
+2. Haz click en **🖼️ Añadir Imagen**
+3. Sube la imagen desde tu ordenador o pega una URL
+4. Añade una descripción (opcional)
+5. Haz click en "Insertar Imagen"
 
----
+### Ejemplo de Post Completo
 
-*¿Quieres aprender estas técnicas? [Consulta nuestros cursos](/formacion).*
-```
+Así es como escribirías un post típico en el editor visual:
+
+1. **Escribe el título**: `Gestión Forestal Sostenible`
+2. **Selecciónalo y haz click en T grande**
+3. **Escribe un párrafo**: La tracción equina es una técnica de vanguardia para la silvicultura del siglo XXI.
+4. **Selecciona "técnica de vanguardia" y haz click en N** (negrita)
+5. **Escribe un subtítulo**: `Ventajas Principales`
+6. **Selecciónalo y haz click en T mediano**
+7. **Haz click en • Lista** y escribe:
+   - Bajo impacto ambiental
+   - Acceso a terrenos difíciles
+   - Certificación FSC mantenida
+8. **Inserta una imagen** con el botón 🖼️
+9. **Añade una cita** destacando una frase importante
+
+¡Es así de fácil! No necesitas recordar ningún código.
 
 ---
 
 ## 🖼️ Gestión de Imágenes
 
-### Subir Imágenes al Servidor
+### Subir Imagen de Portada
 
-**Opción 1: Vía FTP/SFTP**
+El CMS incluye un **cargador de imágenes visual** muy fácil de usar:
+
+**Método 1: Hacer Click**
+1. En la sección "Imagen de Portada", haz click en el área de carga
+2. Selecciona la imagen desde tu ordenador
+3. La imagen se subirá automáticamente
+4. Verás una vista previa de la imagen
+
+**Método 2: Arrastrar y Soltar**
+1. Arrastra la imagen desde tu ordenador
+2. Suéltala en el área de carga (cuadro con líneas punteadas)
+3. La imagen se subirá automáticamente
+4. Verás una vista previa instantánea
+
+**Eliminar Imagen de Portada**
+- Si quieres cambiar la imagen, haz click en "🗑️ Eliminar Imagen"
+- Podrás subir una nueva
+
+### Insertar Imágenes en el Contenido
+
+Mientras escribes el contenido del post, puedes añadir imágenes:
+
+1. Coloca el cursor donde quieres insertar la imagen
+2. Haz click en el botón **"🖼️ Añadir Imagen"** de la barra de herramientas
+3. Se abrirá una ventana con dos opciones:
+
+**Opción A: Subir Imagen desde tu Ordenador**
+- Haz click en "Subir Imagen"
+- Selecciona la imagen
+- Opcionalmente añade una descripción (texto alternativo)
+- Haz click en "Insertar Imagen"
+
+**Opción B: Usar una URL**
+- Si la imagen ya está online, pega la URL
+- Añade una descripción (texto alternativo)
+- Haz click en "Insertar Imagen"
+
+La imagen aparecerá automáticamente en el contenido y en la vista previa.
+
+### Formatos y Límites
+
+- **Formatos permitidos**: JPG, PNG, WebP, GIF
+- **Tamaño máximo**: 5MB por imagen
+- **Recomendación**: Imágenes entre 1200px y 1920px de ancho
+- **Optimización**: Usa herramientas como [TinyPNG](https://tinypng.com) o [Squoosh](https://squoosh.app) para reducir el peso antes de subir
+
+### Gestión Manual (Avanzado)
+
+Si prefieres gestionar las imágenes manualmente:
+
+**Vía FTP/SFTP**
 1. Usa un cliente FTP (FileZilla, Cyberduck)
 2. Conecta al servidor
 3. Sube las imágenes a `/public/images/blog/`
-4. Usa la ruta: `/images/blog/nombre-imagen.jpg`
-
-**Opción 2: Contactar al Desarrollador**
-- Envía las imágenes por email
-- Te proporcionará las URLs para usar
-
-### Formatos Recomendados
-- **Formato**: JPG o WebP
-- **Tamaño**: Mínimo 1200px de ancho
-- **Peso**: Máximo 500KB (optimiza antes de subir)
-- **Nombres**: Descriptivos, sin espacios: `traccion-equina-bosque.jpg`
-
-### Herramientas para Optimizar Imágenes
-- **TinyPNG**: https://tinypng.com (online, gratuito)
-- **Squoosh**: https://squoosh.app (Google, gratuito)
-
-### Usar Imágenes en Posts
-
-**Imagen de Portada**
-```
-/images/blog/mi-imagen.jpg
-```
-
-**Imágenes en el Contenido (Markdown)**
-```markdown
-![Descripción alt](https://images/blog/mi-imagen.jpg)
-```
+4. Usa la ruta en el campo de URL: `/images/blog/nombre-imagen.jpg`
 
 ---
 
@@ -387,26 +440,44 @@ Sí, el CMS es responsive y funciona en todos los dispositivos, aunque se recomi
    - Responde: ¿De qué trata? ¿Por qué leerlo?
 
 3. **Estructura Clara**
-   - Usa subtítulos (H2, H3)
+   - Usa subtítulos (botones **T** en el editor)
    - Párrafos cortos (3-4 líneas)
-   - Listas para información escaneable
+   - Listas con viñetas para información escaneable
 
-4. **Longitud Ideal**
+4. **Contenido Visual**
+   - Añade al menos 1 imagen de portada (obligatorio)
+   - Inserta 2-3 imágenes en el contenido si es posible
+   - Las imágenes hacen el post más atractivo
+
+5. **Longitud Ideal**
    - Posts técnicos (B2B): 800-1500 palabras
    - Posts reflexivos (B2C): 600-1000 palabras
 
-5. **SEO Básico**
+6. **SEO Básico**
    - Usa palabras clave naturalmente
-   - Enlaces internos a otras páginas
+   - Añade enlaces a otras páginas (botón 🔗)
    - Tags relevantes (3-6 por post)
 
 ### Flujo de Trabajo Recomendado
 
-1. **Borrador**: Escribe todo el contenido
-2. **Revisión**: Lee, corrige ortografía
-3. **Imágenes**: Añade imagen de portada
-4. **Preview**: Revisa cómo se ve
-5. **Publicación**: Publica cuando esté listo
+1. **Completar información básica**: Título, categoría, autor, extracto
+2. **Subir imagen de portada**: Arrastra o selecciona la imagen principal
+3. **Escribir contenido**: Usa el editor visual para escribir tu post
+4. **Formatear**: Aplica negritas, subtítulos, listas con los botones
+5. **Añadir imágenes**: Inserta 2-3 imágenes relevantes en el contenido
+6. **Revisar preview**: Comprueba que todo se ve bien en el panel derecho
+7. **Guardar borrador**: Si no está terminado, guarda como borrador
+8. **Publicar**: Cuando esté listo, haz click en "Publicar"
+
+### Atajos de Teclado del Editor
+
+Mientras escribes en el editor visual, puedes usar:
+
+- **Ctrl/Cmd + B**: Aplicar negrita al texto seleccionado
+- **Ctrl/Cmd + I**: Aplicar cursiva al texto seleccionado
+- **Enter**: Nueva línea
+- **Shift + Enter**: Salto de línea sin crear nuevo párrafo
+- **Backspace en lista vacía**: Salir de la lista
 
 ---
 
