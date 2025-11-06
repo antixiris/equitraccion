@@ -1,5 +1,5 @@
 ---
-// Admin New Post Editor
+// Admin New Post Editor v2 - Con Editor Visual WYSIWYG
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const title = 'Nuevo Post | Equitracción CMS';
@@ -23,73 +23,39 @@ const title = 'Nuevo Post | Equitracción CMS';
         </div>
         <div class="flex items-center gap-3">
           <button id="save-draft-btn" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-gray-700">
-            Guardar Borrador
+            💾 Guardar Borrador
           </button>
           <button id="publish-btn" class="px-4 py-2 bg-[rgb(var(--color-brand-primary))] text-white rounded-lg hover:opacity-90 font-medium">
-            Publicar
+            ✅ Publicar
           </button>
         </div>
       </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-6 py-8">
-      <div class="grid lg:grid-cols-2 gap-8">
-        <!-- Editor Panel -->
-        <div class="space-y-6">
-          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 class="text-lg font-bold text-gray-900 mb-6">Información del Post</h2>
+    <main class="max-w-6xl mx-auto px-6 py-8">
+      <div class="space-y-6">
+        <!-- Basic Information -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 class="text-lg font-bold text-gray-900 mb-6">📋 Información Básica</h2>
 
+          <div class="grid md:grid-cols-2 gap-6">
             <!-- Title -->
-            <div class="mb-6">
+            <div class="md:col-span-2">
               <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">
-                Título *
+                Título del Post *
               </label>
               <input
                 type="text"
                 id="title"
                 required
-                placeholder="Escribe un título atractivo..."
+                placeholder="Ej: Beneficios de la Tracción Equina en Bosques"
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))] text-lg"
               />
-              <p class="text-xs text-gray-500 mt-1">El título aparecerá en el listado del blog</p>
-            </div>
-
-            <!-- Slug -->
-            <div class="mb-6">
-              <label for="slug" class="block text-sm font-semibold text-gray-700 mb-2">
-                URL (Slug) *
-              </label>
-              <div class="flex items-center gap-2">
-                <span class="text-sm text-gray-500">/blog/</span>
-                <input
-                  type="text"
-                  id="slug"
-                  required
-                  placeholder="mi-post-url"
-                  class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
-                />
-              </div>
-              <p class="text-xs text-gray-500 mt-1">Solo minúsculas, números y guiones. Se genera automáticamente del título.</p>
-            </div>
-
-            <!-- Excerpt -->
-            <div class="mb-6">
-              <label for="excerpt" class="block text-sm font-semibold text-gray-700 mb-2">
-                Extracto / Resumen *
-              </label>
-              <textarea
-                id="excerpt"
-                required
-                rows="3"
-                placeholder="Breve descripción del post (2-3 frases)..."
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))] resize-none"
-              ></textarea>
-              <p class="text-xs text-gray-500 mt-1">Aparecerá en el listado del blog y SEO</p>
             </div>
 
             <!-- Category -->
-            <div class="mb-6">
+            <div>
               <label for="category" class="block text-sm font-semibold text-gray-700 mb-2">
                 Categoría *
               </label>
@@ -99,15 +65,15 @@ const title = 'Nuevo Post | Equitracción CMS';
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
               >
                 <option value="">Selecciona una categoría</option>
-                <option value="forestales">Silvicultura (B2B)</option>
-                <option value="desarrollo">Desarrollo Personal (B2C)</option>
-                <option value="formacion">Formación</option>
-                <option value="fundacion">Fundación</option>
+                <option value="forestales">🌲 Silvicultura (Empresas)</option>
+                <option value="desarrollo">🐴 Desarrollo Personal</option>
+                <option value="formacion">📚 Formación</option>
+                <option value="fundacion">❤️ Fundación</option>
               </select>
             </div>
 
             <!-- Author -->
-            <div class="mb-6">
+            <div>
               <label for="author" class="block text-sm font-semibold text-gray-700 mb-2">
                 Autor *
               </label>
@@ -120,132 +86,177 @@ const title = 'Nuevo Post | Equitracción CMS';
               />
             </div>
 
+            <!-- Excerpt -->
+            <div class="md:col-span-2">
+              <label for="excerpt" class="block text-sm font-semibold text-gray-700 mb-2">
+                Resumen del Post *
+              </label>
+              <textarea
+                id="excerpt"
+                required
+                rows="3"
+                placeholder="Escribe un breve resumen de 2-3 frases. Esto aparecerá en el listado del blog."
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))] resize-none"
+              ></textarea>
+            </div>
+
             <!-- Tags -->
-            <div class="mb-6">
+            <div class="md:col-span-2">
               <label for="tags" class="block text-sm font-semibold text-gray-700 mb-2">
-                Etiquetas (Tags)
+                Etiquetas (separadas por comas)
               </label>
               <input
                 type="text"
                 id="tags"
-                placeholder="tracción equina, sostenibilidad, gestión forestal"
+                placeholder="Ej: tracción equina, sostenibilidad, gestión forestal"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
               />
-              <p class="text-xs text-gray-500 mt-1">Separados por comas</p>
             </div>
-
-            <!-- Cover Image -->
-            <div class="mb-6">
-              <label for="cover_image" class="block text-sm font-semibold text-gray-700 mb-2">
-                Imagen de Portada
-              </label>
-              <input
-                type="text"
-                id="cover_image"
-                placeholder="/images/blog/mi-imagen.jpg"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
-              />
-              <p class="text-xs text-gray-500 mt-1">URL de la imagen o ruta local</p>
-            </div>
-
-            <!-- Reading Time -->
-            <div class="mb-6">
-              <label for="reading_time" class="block text-sm font-semibold text-gray-700 mb-2">
-                Tiempo de Lectura (minutos)
-              </label>
-              <input
-                type="number"
-                id="reading_time"
-                placeholder="8"
-                min="1"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
-              />
-              <p class="text-xs text-gray-500 mt-1">Opcional: se calcula automáticamente</p>
-            </div>
-          </div>
-
-          <!-- Markdown Editor -->
-          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-lg font-bold text-gray-900">Contenido (Markdown)</h2>
-              <a
-                href="https://www.markdownguide.org/cheat-sheet/"
-                target="_blank"
-                class="text-sm text-blue-600 hover:underline"
-              >
-                Guía Markdown
-              </a>
-            </div>
-
-            <!-- Markdown Toolbar -->
-            <div class="flex flex-wrap gap-2 mb-4 pb-4 border-b border-gray-200">
-              <button onclick="insertMarkdown('**', '**')" class="p-2 hover:bg-gray-100 rounded" title="Negrita">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 12h12M6 6h12M6 18h12" />
-                </svg>
-              </button>
-              <button onclick="insertMarkdown('*', '*')" class="p-2 hover:bg-gray-100 rounded italic" title="Cursiva">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6L8 18M14 6l-2 12M4 6h16M4 18h16" />
-                </svg>
-              </button>
-              <button onclick="insertMarkdown('## ', '')" class="p-2 hover:bg-gray-100 rounded font-bold" title="Título H2">
-                H2
-              </button>
-              <button onclick="insertMarkdown('### ', '')" class="p-2 hover:bg-gray-100 rounded font-bold" title="Título H3">
-                H3
-              </button>
-              <button onclick="insertMarkdown('[', '](url)')" class="p-2 hover:bg-gray-100 rounded" title="Enlace">
-                🔗
-              </button>
-              <button onclick="insertMarkdown('- ', '')" class="p-2 hover:bg-gray-100 rounded" title="Lista">
-                • Lista
-              </button>
-              <button onclick="insertMarkdown('> ', '')" class="p-2 hover:bg-gray-100 rounded" title="Cita">
-                ""
-              </button>
-            </div>
-
-            <textarea
-              id="content"
-              rows="20"
-              required
-              placeholder="# Título Principal
-
-Escribe aquí el contenido de tu post usando Markdown...
-
-## Subtítulo
-
-- Lista de items
-- Otro item
-
-**Texto en negrita** y *texto en cursiva*.
-
-[Enlace a página](https://ejemplo.com)"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))] font-mono text-sm resize-none"
-            ></textarea>
           </div>
         </div>
 
-        <!-- Preview Panel -->
-        <div class="lg:sticky lg:top-24 lg:h-[calc(100vh-8rem)] lg:overflow-y-auto">
-          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 class="text-lg font-bold text-gray-900 mb-6">Vista Previa</h2>
-            <div id="preview-container" class="prose prose-lg max-w-none
-              prose-headings:font-heading prose-headings:font-bold
-              prose-p:leading-relaxed
-              prose-a:text-[rgb(var(--color-brand-primary))] prose-a:no-underline hover:prose-a:underline
-              prose-ul:text-[rgb(var(--color-gray-dark))]
-              prose-ol:text-[rgb(var(--color-gray-dark))]
-              prose-blockquote:border-l-4 prose-blockquote:border-[rgb(var(--color-brand-primary))]
-              prose-blockquote:text-[rgb(var(--color-gray-medium))] prose-blockquote:italic
-            ">
-              <p class="text-gray-400 italic">El contenido aparecerá aquí mientras escribes...</p>
+        <!-- Cover Image -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 class="text-lg font-bold text-gray-900 mb-6">🖼️ Imagen de Portada</h2>
+
+          <div id="cover-upload-area" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-[rgb(var(--color-brand-primary))] transition-colors cursor-pointer">
+            <input type="file" id="cover-image-input" accept="image/*" class="hidden" />
+            <div id="cover-upload-prompt">
+              <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <p class="text-lg font-medium text-gray-900 mb-2">Haz click o arrastra una imagen aquí</p>
+              <p class="text-sm text-gray-500">JPG, PNG o WebP • Máximo 5MB</p>
+            </div>
+            <div id="cover-preview" class="hidden">
+              <img id="cover-preview-img" class="max-w-full max-h-64 mx-auto rounded-lg shadow-lg mb-4" />
+              <button type="button" id="remove-cover" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                🗑️ Eliminar Imagen
+              </button>
             </div>
           </div>
+          <input type="hidden" id="cover_image" />
+        </div>
+
+        <!-- Content Editor -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 class="text-lg font-bold text-gray-900 mb-6">✏️ Contenido del Post</h2>
+
+          <!-- Toolbar -->
+          <div class="border border-gray-300 rounded-t-lg bg-gray-50 p-3 flex flex-wrap gap-2">
+            <div class="flex gap-1 border-r border-gray-300 pr-2">
+              <button type="button" onclick="formatText('h1')" class="px-3 py-2 hover:bg-gray-200 rounded font-bold text-2xl" title="Título Principal">
+                T
+              </button>
+              <button type="button" onclick="formatText('h2')" class="px-3 py-2 hover:bg-gray-200 rounded font-bold text-xl" title="Subtítulo">
+                T
+              </button>
+              <button type="button" onclick="formatText('h3')" class="px-3 py-2 hover:bg-gray-200 rounded font-bold text-lg" title="Sección">
+                T
+              </button>
+            </div>
+
+            <div class="flex gap-1 border-r border-gray-300 pr-2">
+              <button type="button" onclick="formatText('bold')" class="px-3 py-2 hover:bg-gray-200 rounded font-bold" title="Negrita">
+                <strong>N</strong>
+              </button>
+              <button type="button" onclick="formatText('italic')" class="px-3 py-2 hover:bg-gray-200 rounded italic" title="Cursiva">
+                <em>C</em>
+              </button>
+            </div>
+
+            <div class="flex gap-1 border-r border-gray-300 pr-2">
+              <button type="button" onclick="formatText('ul')" class="px-3 py-2 hover:bg-gray-200 rounded" title="Lista">
+                • Lista
+              </button>
+              <button type="button" onclick="formatText('ol')" class="px-3 py-2 hover:bg-gray-200 rounded" title="Lista Numerada">
+                1. Numerada
+              </button>
+            </div>
+
+            <div class="flex gap-1 border-r border-gray-300 pr-2">
+              <button type="button" onclick="formatText('blockquote')" class="px-3 py-2 hover:bg-gray-200 rounded" title="Cita">
+                💬 Cita
+              </button>
+              <button type="button" onclick="formatText('link')" class="px-3 py-2 hover:bg-gray-200 rounded" title="Enlace">
+                🔗 Enlace
+              </button>
+            </div>
+
+            <div class="flex gap-1">
+              <button type="button" id="insert-image-btn" class="px-3 py-2 hover:bg-gray-200 rounded bg-blue-50 text-blue-700 font-medium" title="Insertar Imagen">
+                🖼️ Añadir Imagen
+              </button>
+            </div>
+          </div>
+
+          <!-- Editor Area -->
+          <div
+            id="editor"
+            contenteditable="true"
+            class="border border-gray-300 border-t-0 rounded-b-lg p-6 min-h-[500px] focus:outline-none prose prose-lg max-w-none"
+            placeholder="Empieza a escribir aquí tu contenido..."
+          ></div>
+
+          <input type="hidden" id="content" />
+
+          <p class="text-sm text-gray-500 mt-4">
+            💡 <strong>Consejo:</strong> Escribe como en Word. Usa los botones de arriba para dar formato al texto. Puedes añadir imágenes directamente en el contenido.
+          </p>
         </div>
       </div>
     </main>
+  </div>
+
+  <!-- Image Upload Modal -->
+  <div id="image-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4 p-6">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">📷 Insertar Imagen</h3>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">
+            Subir desde tu ordenador
+          </label>
+          <input type="file" id="content-image-input" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+        </div>
+
+        <div class="text-center text-gray-500">— o —</div>
+
+        <div>
+          <label for="image-url-input" class="block text-sm font-semibold text-gray-700 mb-2">
+            URL de imagen externa
+          </label>
+          <input
+            type="url"
+            id="image-url-input"
+            placeholder="https://ejemplo.com/imagen.jpg"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+
+        <div>
+          <label for="image-alt-input" class="block text-sm font-semibold text-gray-700 mb-2">
+            Descripción (opcional)
+          </label>
+          <input
+            type="text"
+            id="image-alt-input"
+            placeholder="Describe la imagen para accesibilidad"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+      </div>
+
+      <div class="flex gap-3 justify-end mt-6">
+        <button id="cancel-image" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium">
+          Cancelar
+        </button>
+        <button id="insert-image-confirm" class="px-4 py-2 bg-[rgb(var(--color-brand-primary))] text-white rounded-lg hover:opacity-90 font-medium">
+          Insertar Imagen
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Loading Modal -->
@@ -259,9 +270,12 @@ Escribe aquí el contenido de tu post usando Markdown...
 
 <script>
   import { supabase } from '../../../lib/supabase';
-  import MarkdownIt from 'markdown-it';
+  import TurndownService from 'turndown';
 
-  const md = new MarkdownIt();
+  const turndownService = new TurndownService({
+    headingStyle: 'atx',
+    codeBlockStyle: 'fenced'
+  });
 
   // Check authentication
   const checkAuth = () => {
@@ -281,74 +295,222 @@ Escribe aquí el contenido de tu post usando Markdown...
       .replace(/^-+|-+$/g, '');
   };
 
-  // Insert markdown
-  (window as any).insertMarkdown = (before: string, after: string) => {
-    const textarea = document.getElementById('content') as HTMLTextAreaElement;
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const text = textarea.value;
-    const selectedText = text.substring(start, end) || 'texto';
+  // Cover image upload
+  const coverUploadArea = document.getElementById('cover-upload-area')!;
+  const coverImageInput = document.getElementById('cover-image-input') as HTMLInputElement;
+  const coverPreview = document.getElementById('cover-preview')!;
+  const coverPreviewImg = document.getElementById('cover-preview-img') as HTMLImageElement;
+  const coverUploadPrompt = document.getElementById('cover-upload-prompt')!;
+  const removeCoverBtn = document.getElementById('remove-cover')!;
+  const coverImageField = document.getElementById('cover_image') as HTMLInputElement;
 
-    textarea.value = text.substring(0, start) + before + selectedText + after + text.substring(end);
-    textarea.focus();
-    textarea.selectionStart = start + before.length;
-    textarea.selectionEnd = start + before.length + selectedText.length;
+  coverUploadArea.addEventListener('click', () => {
+    if (coverPreview.classList.contains('hidden')) {
+      coverImageInput.click();
+    }
+  });
 
-    updatePreview();
+  coverUploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    coverUploadArea.classList.add('border-[rgb(var(--color-brand-primary))]');
+  });
+
+  coverUploadArea.addEventListener('dragleave', () => {
+    coverUploadArea.classList.remove('border-[rgb(var(--color-brand-primary))]');
+  });
+
+  coverUploadArea.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    coverUploadArea.classList.remove('border-[rgb(var(--color-brand-primary))]');
+
+    const files = e.dataTransfer?.files;
+    if (files && files.length > 0) {
+      await uploadCoverImage(files[0]);
+    }
+  });
+
+  coverImageInput.addEventListener('change', async (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      await uploadCoverImage(files[0]);
+    }
+  });
+
+  removeCoverBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    coverPreview.classList.add('hidden');
+    coverUploadPrompt.classList.remove('hidden');
+    coverImageField.value = '';
+    coverImageInput.value = '';
+  });
+
+  const uploadCoverImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.error || 'Error al subir la imagen');
+        return;
+      }
+
+      coverImageField.value = result.url;
+      coverPreviewImg.src = result.url;
+      coverUploadPrompt.classList.add('hidden');
+      coverPreview.classList.remove('hidden');
+    } catch (error) {
+      console.error('Error uploading cover image:', error);
+      alert('Error al subir la imagen');
+    }
   };
 
-  // Update preview
-  const updatePreview = () => {
-    const content = (document.getElementById('content') as HTMLTextAreaElement).value;
-    const preview = document.getElementById('preview-container')!;
+  // Text formatting
+  (window as any).formatText = (command: string) => {
+    const editor = document.getElementById('editor')!;
+    editor.focus();
 
-    if (content.trim()) {
-      preview.innerHTML = md.render(content);
+    switch (command) {
+      case 'h1':
+      case 'h2':
+      case 'h3':
+        document.execCommand('formatBlock', false, command);
+        break;
+      case 'bold':
+        document.execCommand('bold', false);
+        break;
+      case 'italic':
+        document.execCommand('italic', false);
+        break;
+      case 'ul':
+        document.execCommand('insertUnorderedList', false);
+        break;
+      case 'ol':
+        document.execCommand('insertOrderedList', false);
+        break;
+      case 'blockquote':
+        document.execCommand('formatBlock', false, 'blockquote');
+        break;
+      case 'link':
+        const url = prompt('Introduce la URL del enlace:');
+        if (url) {
+          document.execCommand('createLink', false, url);
+        }
+        break;
+    }
+  };
+
+  // Insert image in content
+  document.getElementById('insert-image-btn')?.addEventListener('click', () => {
+    document.getElementById('image-modal')!.classList.remove('hidden');
+  });
+
+  document.getElementById('cancel-image')?.addEventListener('click', () => {
+    document.getElementById('image-modal')!.classList.add('hidden');
+    (document.getElementById('content-image-input') as HTMLInputElement).value = '';
+    (document.getElementById('image-url-input') as HTMLInputElement).value = '';
+    (document.getElementById('image-alt-input') as HTMLInputElement).value = '';
+  });
+
+  document.getElementById('insert-image-confirm')?.addEventListener('click', async () => {
+    const fileInput = document.getElementById('content-image-input') as HTMLInputElement;
+    const urlInput = document.getElementById('image-url-input') as HTMLInputElement;
+    const altInput = document.getElementById('image-alt-input') as HTMLInputElement;
+
+    let imageUrl = urlInput.value.trim();
+
+    // Upload file if provided
+    if (fileInput.files && fileInput.files.length > 0) {
+      const formData = new FormData();
+      formData.append('image', fileInput.files[0]);
+
+      try {
+        const response = await fetch('/api/upload-image', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          alert(result.error || 'Error al subir la imagen');
+          return;
+        }
+
+        imageUrl = result.url;
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        alert('Error al subir la imagen');
+        return;
+      }
+    }
+
+    if (!imageUrl) {
+      alert('Por favor proporciona una imagen');
+      return;
+    }
+
+    const editor = document.getElementById('editor')!;
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.alt = altInput.value || '';
+    img.className = 'max-w-full h-auto rounded-lg shadow-lg my-4';
+
+    editor.focus();
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      range.insertNode(img);
+      range.collapse(false);
     } else {
-      preview.innerHTML = '<p class="text-gray-400 italic">El contenido aparecerá aquí mientras escribes...</p>';
+      editor.appendChild(img);
     }
-  };
 
-  // Auto-generate slug
-  document.getElementById('title')?.addEventListener('input', (e) => {
-    const title = (e.target as HTMLInputElement).value;
-    const slugInput = document.getElementById('slug') as HTMLInputElement;
-    if (!slugInput.dataset.manuallyEdited) {
-      slugInput.value = generateSlug(title);
-    }
+    document.getElementById('image-modal')!.classList.add('hidden');
+    fileInput.value = '';
+    urlInput.value = '';
+    altInput.value = '';
   });
-
-  document.getElementById('slug')?.addEventListener('input', () => {
-    (document.getElementById('slug') as HTMLInputElement).dataset.manuallyEdited = 'true';
-  });
-
-  // Update preview on content change
-  document.getElementById('content')?.addEventListener('input', updatePreview);
 
   // Save post
   const savePost = async (published: boolean) => {
     const title = (document.getElementById('title') as HTMLInputElement).value.trim();
-    const slug = (document.getElementById('slug') as HTMLInputElement).value.trim();
-    const excerpt = (document.getElementById('excerpt') as HTMLTextAreaElement).value.trim();
-    const content = (document.getElementById('content') as HTMLTextAreaElement).value.trim();
     const category = (document.getElementById('category') as HTMLSelectElement).value;
     const author = (document.getElementById('author') as HTMLInputElement).value.trim();
+    const excerpt = (document.getElementById('excerpt') as HTMLTextAreaElement).value.trim();
     const tagsInput = (document.getElementById('tags') as HTMLInputElement).value.trim();
     const coverImage = (document.getElementById('cover_image') as HTMLInputElement).value.trim();
-    const readingTimeInput = (document.getElementById('reading_time') as HTMLInputElement).value;
+
+    // Get content from editor and convert to Markdown
+    const editorHtml = document.getElementById('editor')!.innerHTML;
+    const content = turndownService.turndown(editorHtml);
 
     // Validation
-    if (!title || !slug || !excerpt || !content || !category || !author) {
+    if (!title || !category || !author || !excerpt) {
       alert('Por favor completa todos los campos obligatorios (*)');
+      return;
+    }
+
+    if (!content || content.trim() === '') {
+      alert('El contenido del post no puede estar vacío');
       return;
     }
 
     // Parse tags
     const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
 
-    // Calculate reading time if not provided
+    // Generate slug
+    const slug = generateSlug(title);
+
+    // Calculate reading time
     const wordCount = content.split(/\s+/).length;
-    const readingTime = readingTimeInput ? parseInt(readingTimeInput) : Math.ceil(wordCount / 200);
+    const readingTime = Math.ceil(wordCount / 200);
 
     document.getElementById('loading-modal')!.classList.remove('hidden');
 
@@ -378,7 +540,7 @@ Escribe aquí el contenido de tu post usando Markdown...
     } catch (error: any) {
       console.error('Error saving post:', error);
       if (error.code === '23505') {
-        alert('Ya existe un post con ese slug. Por favor usa uno diferente.');
+        alert('Ya existe un post con ese título. Por favor usa uno diferente.');
       } else {
         alert('Error al guardar el post: ' + error.message);
       }
@@ -391,7 +553,35 @@ Escribe aquí el contenido de tu post usando Markdown...
   document.getElementById('save-draft-btn')?.addEventListener('click', () => savePost(false));
   document.getElementById('publish-btn')?.addEventListener('click', () => savePost(true));
 
+  // Placeholder behavior
+  const editor = document.getElementById('editor')!;
+  editor.addEventListener('focus', () => {
+    if (editor.innerHTML === '') {
+      editor.innerHTML = '<p><br></p>';
+    }
+  });
+
   // Initialize
   checkAuth();
 </script>
+
+<style>
+  #editor:empty:before {
+    content: attr(placeholder);
+    color: #9CA3AF;
+    pointer-events: none;
+  }
+
+  #editor img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  #editor blockquote {
+    border-left: 4px solid #2F5233;
+    padding-left: 1rem;
+    font-style: italic;
+    color: #6B7280;
+  }
+</style>
 </BaseLayout>
