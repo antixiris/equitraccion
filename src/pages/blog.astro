@@ -3,70 +3,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
+import { supabase } from '../lib/supabase';
+import type { BlogPost } from '../lib/supabase';
 
-// Artículos de blog (más adelante vendrán de Supabase)
-const articles = [
-  {
-    slug: 'traccion-animal-sostenibilidad-forestal',
-    title: 'Tracción animal: la tecnología olvidada que regenera bosques',
-    excerpt: 'Mientras la maquinaria pesada compacta el suelo y destroza raíces, los caballos de tiro ofrecen una alternativa que la ciencia forestal moderna está redescubriendo.',
-    category: 'Silvicultura',
-    date: '2025-10-15',
-    readTime: '8 min',
-    image: '/images/blog/traccion-animal-bosque.jpg',
-    mode: 'b2b'
-  },
-  {
-    slug: 'caballos-espejos-emocionales',
-    title: 'Los caballos como espejos emocionales: neurociencia de la conexión',
-    excerpt: 'La investigación neurocientífica está confirmando lo que los profesionales del coaching equino sabían: los caballos tienen una capacidad única para reflejar estados emocionales humanos.',
-    category: 'Desarrollo Personal',
-    date: '2025-09-28',
-    readTime: '6 min',
-    image: '/images/blog/caballo-humano-conexion.jpg',
-    mode: 'b2c'
-  },
-  {
-    slug: 'reduccion-huella-carbono-silvicultura',
-    title: '78% menos emisiones: datos reales de 1,200 hectáreas gestionadas',
-    excerpt: 'Análisis comparativo de nuestras operaciones forestales vs. maquinaria convencional. Los números hablan por sí solos.',
-    category: 'Impacto',
-    date: '2025-09-12',
-    readTime: '10 min',
-    image: '/images/blog/datos-carbono.jpg',
-    mode: 'b2b'
-  },
-  {
-    slug: 'transiciones-profesionales-coaching-equino',
-    title: 'Cambiar de carrera a los 40: cuando los caballos te ayudan a decidir',
-    excerpt: 'Historias reales de profesionales que utilizaron el coaching asistido por caballos para navegar transiciones de vida complejas.',
-    category: 'Historias',
-    date: '2025-08-30',
-    readTime: '12 min',
-    image: '/images/blog/transicion-profesional.jpg',
-    mode: 'b2c'
-  },
-  {
-    slug: 'amish-amazonia-ibiza',
-    title: 'De los Amish a la Amazonía: el viaje que fundó Equitracción',
-    excerpt: 'La historia de cómo un empresario náutico abandonó todo para aprender de comunidades que nunca perdieron el vínculo con la tierra y los animales.',
-    category: 'Fundación',
-    date: '2025-08-18',
-    readTime: '15 min',
-    image: '/images/blog/historia-roberto.jpg',
-    mode: 'hybrid'
-  },
-  {
-    slug: 'espacios-protegidos-sin-huellas',
-    title: 'Trabajar en Parques Nacionales sin dejar huella',
-    excerpt: 'Casos de estudio: cómo la tracción animal permite realizar trabajos forestales en espacios donde la maquinaria está prohibida.',
-    category: 'Silvicultura',
-    date: '2025-07-22',
-    readTime: '9 min',
-    image: '/images/blog/parque-nacional.jpg',
-    mode: 'b2b'
+// Fetch blog posts from Supabase
+const { data: posts, error } = await supabase
+  .from('blog_posts')
+  .select('*')
+  .eq('published', true)
+  .order('published_at', { ascending: false });
+
+if (error) {
+  console.error('Error fetching blog posts:', error);
+}
+
+// Map Supabase posts to article format
+const articles = (posts || []).map((post: BlogPost) => {
+  // Map category to display name
+  const categoryMap: Record<string, string> = {
+    'forestales': 'Silvicultura',
+    'desarrollo': 'Desarrollo Personal',
+    'formacion': 'Formación',
+    'fundacion': 'Fundación'
+  };
+
+  // Determine mode based on category
+  let mode: 'b2b' | 'b2c' | 'hybrid' = 'hybrid';
+  if (post.category === 'forestales' || post.category === 'formacion') {
+    mode = 'b2b';
+  } else if (post.category === 'desarrollo') {
+    mode = 'b2c';
   }
-];
+
+  return {
+    slug: post.slug,
+    title: post.title,
+    excerpt: post.excerpt,
+    category: categoryMap[post.category] || post.category,
+    date: post.published_at || post.created_at,
+    readTime: `${post.reading_time || 5} min`,
+    image: post.cover_image || '/images/blog/default.jpg',
+    mode
+  };
+});
 
 // Categorías únicas para filtrado
 const categories = ['Todas', ...new Set(articles.map(a => a.category))];
