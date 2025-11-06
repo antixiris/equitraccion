@@ -1,0 +1,265 @@
+---
+// Admin Dashboard - Panel de Control del CMS
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Panel de Administración | Equitracción CMS';
+---
+
+<BaseLayout title={title} mode="hybrid">
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <svg class="w-8 h-8 text-[rgb(var(--color-brand-primary))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <div>
+            <h1 class="text-xl font-bold text-gray-900">Equitracción CMS</h1>
+            <p class="text-sm text-gray-500">Panel de Administración</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="/" target="_blank" class="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            Ver Sitio Web
+          </a>
+          <button id="logout-btn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium">
+            Cerrar Sesión
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+      <!-- Welcome Section -->
+      <div class="mb-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Bienvenido al Panel de Control</h2>
+        <p class="text-gray-600">Gestiona el contenido de tu sitio web de forma sencilla</p>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="grid md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-2xl font-bold text-gray-900" id="total-posts">0</p>
+          <p class="text-sm text-gray-600">Posts Totales</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-2xl font-bold text-gray-900" id="published-posts">0</p>
+          <p class="text-sm text-gray-600">Publicados</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-2xl font-bold text-gray-900" id="draft-posts">0</p>
+          <p class="text-sm text-gray-600">Borradores</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-2xl font-bold text-gray-900" id="total-categories">4</p>
+          <p class="text-sm text-gray-600">Categorías</p>
+        </div>
+      </div>
+
+      <!-- Main Actions -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Gestionar Posts -->
+        <a href="/admin/posts" class="group bg-white rounded-xl shadow-sm p-8 border border-gray-200 hover:shadow-md hover:border-[rgb(var(--color-brand-primary))] transition-all">
+          <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-200 transition-colors">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Gestionar Posts del Blog</h3>
+          <p class="text-gray-600 mb-4">Ver, editar y eliminar posts existentes</p>
+          <span class="text-[rgb(var(--color-brand-primary))] font-semibold flex items-center gap-2">
+            Ir a Posts
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </a>
+
+        <!-- Crear Nuevo Post -->
+        <a href="/admin/posts/new" class="group bg-gradient-to-br from-[rgb(var(--color-brand-primary))] to-[rgb(var(--color-b2c-primary))] rounded-xl shadow-sm p-8 border border-transparent hover:shadow-lg transition-all">
+          <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-white/30 transition-colors">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Crear Nuevo Post</h3>
+          <p class="text-white/90 mb-4">Escribe y publica un nuevo artículo</p>
+          <span class="text-white font-semibold flex items-center gap-2">
+            Crear Post
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </a>
+
+        <!-- Mensajes de Contacto -->
+        <a href="/admin/messages" class="group bg-white rounded-xl shadow-sm p-8 border border-gray-200 hover:shadow-md hover:border-[rgb(var(--color-brand-primary))] transition-all">
+          <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-200 transition-colors">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Mensajes de Contacto</h3>
+          <p class="text-gray-600 mb-4">Ver mensajes recibidos del formulario</p>
+          <span class="text-[rgb(var(--color-brand-primary))] font-semibold flex items-center gap-2">
+            Ver Mensajes
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- Recent Posts -->
+      <div class="mt-12">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">Posts Recientes</h2>
+          <a href="/admin/posts" class="text-[rgb(var(--color-brand-primary))] hover:underline font-medium">Ver todos →</a>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div id="recent-posts" class="divide-y divide-gray-200">
+            <!-- Posts will be loaded here -->
+            <div class="p-8 text-center text-gray-500">
+              Cargando posts...
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<script>
+  import { supabase } from '../../lib/supabase';
+
+  // Check authentication
+  const checkAuth = () => {
+    const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+    if (!isAuthenticated) {
+      window.location.href = '/admin/login';
+    }
+  };
+
+  // Load stats
+  const loadStats = async () => {
+    try {
+      const { data: posts, error } = await supabase
+        .from('blog_posts')
+        .select('id, published');
+
+      if (error) throw error;
+
+      const total = posts?.length || 0;
+      const published = posts?.filter(p => p.published).length || 0;
+      const drafts = total - published;
+
+      document.getElementById('total-posts')!.textContent = total.toString();
+      document.getElementById('published-posts')!.textContent = published.toString();
+      document.getElementById('draft-posts')!.textContent = drafts.toString();
+    } catch (error) {
+      console.error('Error loading stats:', error);
+    }
+  };
+
+  // Load recent posts
+  const loadRecentPosts = async () => {
+    try {
+      const { data: posts, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (error) throw error;
+
+      const container = document.getElementById('recent-posts')!;
+
+      if (!posts || posts.length === 0) {
+        container.innerHTML = '<div class="p-8 text-center text-gray-500">No hay posts todavía</div>';
+        return;
+      }
+
+      container.innerHTML = posts.map(post => `
+        <div class="p-6 hover:bg-gray-50 transition-colors">
+          <div class="flex items-center justify-between">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <h3 class="font-semibold text-gray-900">${post.title}</h3>
+                <span class="px-2 py-1 rounded-full text-xs font-medium ${
+                  post.published
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-yellow-100 text-yellow-700'
+                }">
+                  ${post.published ? 'Publicado' : 'Borrador'}
+                </span>
+              </div>
+              <p class="text-sm text-gray-600 mb-2">${post.excerpt || 'Sin descripción'}</p>
+              <div class="flex items-center gap-4 text-xs text-gray-500">
+                <span>${new Date(post.created_at).toLocaleDateString('es-ES')}</span>
+                <span>Categoría: ${post.category}</span>
+                <span>${post.reading_time || 5} min lectura</span>
+              </div>
+            </div>
+            <a
+              href="/admin/posts/edit/${post.id}"
+              class="ml-4 px-4 py-2 bg-[rgb(var(--color-brand-primary))] text-white rounded-lg hover:opacity-90 text-sm font-medium"
+            >
+              Editar
+            </a>
+          </div>
+        </div>
+      `).join('');
+    } catch (error) {
+      console.error('Error loading recent posts:', error);
+      document.getElementById('recent-posts')!.innerHTML =
+        '<div class="p-8 text-center text-red-500">Error al cargar los posts</div>';
+    }
+  };
+
+  // Logout
+  document.getElementById('logout-btn')?.addEventListener('click', () => {
+    sessionStorage.removeItem('admin_authenticated');
+    window.location.href = '/admin/login';
+  });
+
+  // Initialize
+  checkAuth();
+  loadStats();
+  loadRecentPosts();
+</script>

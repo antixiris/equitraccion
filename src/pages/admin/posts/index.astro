@@ -1,0 +1,356 @@
+---
+// Admin Posts List - Gestión de Posts
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const title = 'Gestión de Posts | Equitracción CMS';
+---
+
+<BaseLayout title={title} mode="hybrid">
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <a href="/admin" class="text-gray-600 hover:text-gray-900">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </a>
+          <div>
+            <h1 class="text-xl font-bold text-gray-900">Gestión de Posts</h1>
+            <p class="text-sm text-gray-500">Administra todos los artículos del blog</p>
+          </div>
+        </div>
+        <a href="/admin/posts/new" class="px-4 py-2 bg-[rgb(var(--color-brand-primary))] text-white rounded-lg hover:opacity-90 font-medium flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Nuevo Post
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+      <!-- Filters -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+        <div class="flex flex-wrap gap-4 items-center">
+          <div class="flex-1 min-w-[200px]">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Buscar posts..."
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
+            />
+          </div>
+          <select id="category-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]">
+            <option value="">Todas las categorías</option>
+            <option value="forestales">Silvicultura</option>
+            <option value="desarrollo">Desarrollo Personal</option>
+            <option value="formacion">Formación</option>
+            <option value="fundacion">Fundación</option>
+          </select>
+          <select id="status-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]">
+            <option value="">Todos los estados</option>
+            <option value="published">Publicados</option>
+            <option value="draft">Borradores</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Posts Table -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Post
+                </th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Categoría
+                </th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Estado
+                </th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Fecha
+                </th>
+                <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody id="posts-table-body" class="divide-y divide-gray-200">
+              <tr>
+                <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+                  Cargando posts...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">No hay posts</h3>
+        <p class="text-gray-600 mb-6">Comienza creando tu primer artículo</p>
+        <a href="/admin/posts/new" class="inline-flex items-center gap-2 px-6 py-3 bg-[rgb(var(--color-brand-primary))] text-white rounded-lg hover:opacity-90 font-medium">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Crear Primer Post
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="delete-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6">
+      <h3 class="text-lg font-bold text-gray-900 mb-2">¿Eliminar post?</h3>
+      <p class="text-gray-600 mb-6">Esta acción no se puede deshacer. El post será eliminado permanentemente.</p>
+      <div class="flex gap-3 justify-end">
+        <button id="cancel-delete" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium">
+          Cancelar
+        </button>
+        <button id="confirm-delete" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { supabase } from '../../../lib/supabase';
+
+  let allPosts: any[] = [];
+  let postToDelete: string | null = null;
+
+  // Check authentication
+  const checkAuth = () => {
+    const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+    if (!isAuthenticated) {
+      window.location.href = '/admin/login';
+    }
+  };
+
+  // Category mapping
+  const categoryMap: Record<string, string> = {
+    'forestales': 'Silvicultura',
+    'desarrollo': 'Desarrollo Personal',
+    'formacion': 'Formación',
+    'fundacion': 'Fundación'
+  };
+
+  // Load posts
+  const loadPosts = async () => {
+    try {
+      const { data: posts, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      allPosts = posts || [];
+      renderPosts(allPosts);
+    } catch (error) {
+      console.error('Error loading posts:', error);
+      document.getElementById('posts-table-body')!.innerHTML = `
+        <tr>
+          <td colspan="5" class="px-6 py-12 text-center text-red-500">
+            Error al cargar los posts
+          </td>
+        </tr>
+      `;
+    }
+  };
+
+  // Render posts
+  const renderPosts = (posts: any[]) => {
+    const tbody = document.getElementById('posts-table-body')!;
+    const emptyState = document.getElementById('empty-state')!;
+
+    if (posts.length === 0) {
+      tbody.closest('table')!.closest('.bg-white')!.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      return;
+    }
+
+    tbody.closest('table')!.closest('.bg-white')!.classList.remove('hidden');
+    emptyState.classList.add('hidden');
+
+    tbody.innerHTML = posts.map(post => `
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-4">
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
+              ${post.cover_image
+                ? `<img src="${post.cover_image}" alt="" class="w-full h-full object-cover" />`
+                : `<div class="w-full h-full flex items-center justify-center text-gray-400">
+                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                     </svg>
+                   </div>`
+              }
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-semibold text-gray-900 mb-1">${post.title}</h3>
+              <p class="text-sm text-gray-600 line-clamp-2">${post.excerpt || 'Sin descripción'}</p>
+            </div>
+          </div>
+        </td>
+        <td class="px-6 py-4">
+          <span class="inline-flex px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+            ${categoryMap[post.category] || post.category}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <button
+            onclick="togglePublished('${post.id}', ${post.published})"
+            class="inline-flex px-3 py-1 rounded-full text-xs font-medium cursor-pointer transition-colors ${
+              post.published
+                ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                : 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200'
+            }"
+          >
+            ${post.published ? 'Publicado' : 'Borrador'}
+          </button>
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-600">
+          ${new Date(post.created_at).toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+          })}
+        </td>
+        <td class="px-6 py-4">
+          <div class="flex items-center justify-end gap-2">
+            <a
+              href="/blog/${post.slug}"
+              target="_blank"
+              class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Ver post"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </a>
+            <a
+              href="/admin/posts/edit/${post.id}"
+              class="p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors"
+              title="Editar"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+            </a>
+            <button
+              onclick="confirmDelete('${post.id}')"
+              class="p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors"
+              title="Eliminar"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  };
+
+  // Filter posts
+  const filterPosts = () => {
+    const searchTerm = (document.getElementById('search-input') as HTMLInputElement).value.toLowerCase();
+    const categoryFilter = (document.getElementById('category-filter') as HTMLSelectElement).value;
+    const statusFilter = (document.getElementById('status-filter') as HTMLSelectElement).value;
+
+    const filtered = allPosts.filter(post => {
+      const matchesSearch = post.title.toLowerCase().includes(searchTerm) ||
+                           post.excerpt?.toLowerCase().includes(searchTerm);
+      const matchesCategory = !categoryFilter || post.category === categoryFilter;
+      const matchesStatus = !statusFilter ||
+                           (statusFilter === 'published' && post.published) ||
+                           (statusFilter === 'draft' && !post.published);
+
+      return matchesSearch && matchesCategory && matchesStatus;
+    });
+
+    renderPosts(filtered);
+  };
+
+  // Toggle published status
+  (window as any).togglePublished = async (id: string, currentStatus: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('blog_posts')
+        .update({ published: !currentStatus })
+        .eq('id', id);
+
+      if (error) throw error;
+
+      await loadPosts();
+    } catch (error) {
+      console.error('Error updating post:', error);
+      alert('Error al actualizar el estado del post');
+    }
+  };
+
+  // Delete post
+  (window as any).confirmDelete = (id: string) => {
+    postToDelete = id;
+    document.getElementById('delete-modal')!.classList.remove('hidden');
+  };
+
+  const deletePost = async () => {
+    if (!postToDelete) return;
+
+    try {
+      const { error } = await supabase
+        .from('blog_posts')
+        .delete()
+        .eq('id', postToDelete);
+
+      if (error) throw error;
+
+      document.getElementById('delete-modal')!.classList.add('hidden');
+      postToDelete = null;
+      await loadPosts();
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      alert('Error al eliminar el post');
+    }
+  };
+
+  // Event listeners
+  document.getElementById('search-input')?.addEventListener('input', filterPosts);
+  document.getElementById('category-filter')?.addEventListener('change', filterPosts);
+  document.getElementById('status-filter')?.addEventListener('change', filterPosts);
+  document.getElementById('cancel-delete')?.addEventListener('click', () => {
+    document.getElementById('delete-modal')!.classList.add('hidden');
+    postToDelete = null;
+  });
+  document.getElementById('confirm-delete')?.addEventListener('click', deletePost);
+
+  // Initialize
+  checkAuth();
+  loadPosts();
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
+</BaseLayout>
