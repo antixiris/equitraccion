@@ -101,7 +101,7 @@ Se ha implementado completamente el backend del sitio web de Equitracción utili
 
 **Meta Tags Mejorados** (`BaseLayout.astro`)
 - Keywords relevantes
-- Geolocalización (Ibiza, España)
+- Geolocalización (Talaveruela de la Vera, Extremadura, España)
 - Open Graph completo
 - Twitter Cards
 - Schema.org Organization markup
