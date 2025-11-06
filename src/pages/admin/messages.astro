@@ -134,14 +134,6 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
 </BaseLayout>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
-
-  // Create Supabase client with public env vars
-  const supabase = createClient(
-    import.meta.env.PUBLIC_SUPABASE_URL,
-    import.meta.env.PUBLIC_SUPABASE_ANON_KEY
-  );
-
   let allMessages: any[] = [];
   let currentMessage: any = null;
 
@@ -172,14 +164,14 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
   // Load messages
   const loadMessages = async () => {
     try {
-      const { data: messages, error } = await supabase
-        .from('contact_submissions')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const response = await fetch('/api/messages');
+      const result = await response.json();
 
-      if (error) throw error;
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Error al cargar mensajes');
+      }
 
-      allMessages = messages || [];
+      allMessages = result.data || [];
       renderMessages(allMessages);
     } catch (error) {
       console.error('Error loading messages:', error);
@@ -303,12 +295,19 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
   // Update message status
   const updateMessageStatus = async (id: string, status: string) => {
     try {
-      const { error } = await supabase
-        .from('contact_submissions')
-        .update({ status })
-        .eq('id', id);
+      const response = await fetch('/api/messages', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id, status })
+      });
 
-      if (error) throw error;
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Error al actualizar estado');
+      }
 
       await loadMessages();
       if (currentMessage && currentMessage.id === id) {
