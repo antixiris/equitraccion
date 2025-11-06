@@ -269,8 +269,14 @@ const title = 'Nuevo Post | Equitracción CMS';
 </BaseLayout>
 
 <script>
-  import { supabase } from '../../../lib/supabase';
+  import { createClient } from '@supabase/supabase-js';
   import TurndownService from 'turndown';
+
+  // Create Supabase client with public env vars
+  const supabase = createClient(
+    import.meta.env.PUBLIC_SUPABASE_URL,
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+  );
 
   const turndownService = new TurndownService({
     headingStyle: 'atx',

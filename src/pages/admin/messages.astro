@@ -1,0 +1,366 @@
+---
+// Admin Messages - Mensajes de Contacto
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Mensajes de Contacto | Equitracción CMS';
+---
+
+<BaseLayout title={title} mode="hybrid">
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <a href="/admin" class="text-gray-600 hover:text-gray-900">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </a>
+          <div>
+            <h1 class="text-xl font-bold text-gray-900">Mensajes de Contacto</h1>
+            <p class="text-sm text-gray-500">Consultas recibidas del formulario de contacto</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+      <!-- Filters -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+        <div class="flex flex-wrap gap-4 items-center">
+          <div class="flex-1 min-w-[200px]">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Buscar por nombre, email o asunto..."
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
+            />
+          </div>
+          <select id="category-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]">
+            <option value="">Todas las categorías</option>
+            <option value="forestales">Servicios Forestales</option>
+            <option value="desarrollo">Desarrollo Personal</option>
+            <option value="formacion">Formación</option>
+            <option value="general">General</option>
+          </select>
+          <select id="status-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]">
+            <option value="">Todos los estados</option>
+            <option value="new">Nuevos</option>
+            <option value="read">Leídos</option>
+            <option value="replied">Respondidos</option>
+            <option value="archived">Archivados</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Messages List -->
+      <div class="space-y-4" id="messages-container">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+          <p class="text-gray-500">Cargando mensajes...</p>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">No hay mensajes</h3>
+        <p class="text-gray-600">Los mensajes del formulario de contacto aparecerán aquí</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Message Detail Modal -->
+  <div id="message-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="sticky top-0 bg-white border-b border-gray-200 p-6">
+        <div class="flex items-start justify-between">
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-gray-900" id="modal-subject">Asunto</h3>
+            <div class="flex items-center gap-4 mt-2 text-sm text-gray-600">
+              <span id="modal-name">Nombre</span>
+              <span>•</span>
+              <a href="#" id="modal-email" class="text-blue-600 hover:underline">email@ejemplo.com</a>
+              <span>•</span>
+              <span id="modal-phone">Teléfono</span>
+            </div>
+            <div class="flex items-center gap-2 mt-2">
+              <span id="modal-category" class="inline-flex px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                Categoría
+              </span>
+              <span id="modal-date" class="text-xs text-gray-500">Fecha</span>
+            </div>
+          </div>
+          <button id="close-modal" class="text-gray-400 hover:text-gray-600 ml-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <div class="bg-gray-50 rounded-lg p-4 mb-6">
+          <h4 class="text-sm font-semibold text-gray-900 mb-2">Mensaje:</h4>
+          <p id="modal-message" class="text-gray-700 whitespace-pre-wrap">Contenido del mensaje</p>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            id="mark-read-btn"
+            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
+          >
+            ✓ Marcar como Leído
+          </button>
+          <button
+            id="mark-replied-btn"
+            class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium"
+          >
+            ✉️ Marcar como Respondido
+          </button>
+          <button
+            id="archive-btn"
+            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+            title="Archivar"
+          >
+            📦
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+
+  // Create Supabase client with public env vars
+  const supabase = createClient(
+    import.meta.env.PUBLIC_SUPABASE_URL,
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+  );
+
+  let allMessages: any[] = [];
+  let currentMessage: any = null;
+
+  // Check authentication
+  const checkAuth = () => {
+    const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+    if (!isAuthenticated) {
+      window.location.href = '/admin/login';
+    }
+  };
+
+  // Category mapping
+  const categoryMap: Record<string, string> = {
+    'forestales': 'Servicios Forestales',
+    'desarrollo': 'Desarrollo Personal',
+    'formacion': 'Formación',
+    'general': 'General'
+  };
+
+  // Status mapping
+  const statusMap: Record<string, { label: string, class: string }> = {
+    'new': { label: 'Nuevo', class: 'bg-blue-100 text-blue-700' },
+    'read': { label: 'Leído', class: 'bg-gray-100 text-gray-700' },
+    'replied': { label: 'Respondido', class: 'bg-green-100 text-green-700' },
+    'archived': { label: 'Archivado', class: 'bg-yellow-100 text-yellow-700' }
+  };
+
+  // Load messages
+  const loadMessages = async () => {
+    try {
+      const { data: messages, error } = await supabase
+        .from('contact_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      allMessages = messages || [];
+      renderMessages(allMessages);
+    } catch (error) {
+      console.error('Error loading messages:', error);
+      document.getElementById('messages-container')!.innerHTML = `
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+          <p class="text-red-500">Error al cargar los mensajes</p>
+        </div>
+      `;
+    }
+  };
+
+  // Render messages
+  const renderMessages = (messages: any[]) => {
+    const container = document.getElementById('messages-container')!;
+    const emptyState = document.getElementById('empty-state')!;
+
+    if (messages.length === 0) {
+      container.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      return;
+    }
+
+    container.classList.remove('hidden');
+    emptyState.classList.add('hidden');
+
+    container.innerHTML = messages.map(msg => {
+      const status = statusMap[msg.status] || statusMap['new'];
+      return `
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+             onclick="openMessage('${msg.id}')">
+          <div class="flex items-start justify-between">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <h3 class="font-semibold text-gray-900 text-lg">${msg.subject || 'Sin asunto'}</h3>
+                <span class="inline-flex px-3 py-1 rounded-full text-xs font-medium ${status.class}">
+                  ${status.label}
+                </span>
+              </div>
+              <div class="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                <span class="font-medium">${msg.name}</span>
+                <span>•</span>
+                <a href="mailto:${msg.email}" class="text-blue-600 hover:underline" onclick="event.stopPropagation()">
+                  ${msg.email}
+                </a>
+                ${msg.phone ? `<span>•</span><span>${msg.phone}</span>` : ''}
+              </div>
+              <p class="text-gray-700 line-clamp-2">${msg.message}</p>
+            </div>
+            <div class="ml-4 text-right">
+              <span class="inline-flex px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                ${categoryMap[msg.category] || msg.category}
+              </span>
+              <p class="text-xs text-gray-500 mt-2">
+                ${new Date(msg.created_at).toLocaleDateString('es-ES', {
+                  day: '2-digit',
+                  month: 'short',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  };
+
+  // Filter messages
+  const filterMessages = () => {
+    const searchTerm = (document.getElementById('search-input') as HTMLInputElement).value.toLowerCase();
+    const categoryFilter = (document.getElementById('category-filter') as HTMLSelectElement).value;
+    const statusFilter = (document.getElementById('status-filter') as HTMLSelectElement).value;
+
+    const filtered = allMessages.filter(msg => {
+      const matchesSearch = msg.name.toLowerCase().includes(searchTerm) ||
+                           msg.email.toLowerCase().includes(searchTerm) ||
+                           msg.subject?.toLowerCase().includes(searchTerm) ||
+                           msg.message.toLowerCase().includes(searchTerm);
+      const matchesCategory = !categoryFilter || msg.category === categoryFilter;
+      const matchesStatus = !statusFilter || msg.status === statusFilter;
+
+      return matchesSearch && matchesCategory && matchesStatus;
+    });
+
+    renderMessages(filtered);
+  };
+
+  // Open message modal
+  (window as any).openMessage = async (id: string) => {
+    const message = allMessages.find(m => m.id === id);
+    if (!message) return;
+
+    currentMessage = message;
+
+    // Update modal content
+    document.getElementById('modal-subject')!.textContent = message.subject || 'Sin asunto';
+    document.getElementById('modal-name')!.textContent = message.name;
+    (document.getElementById('modal-email') as HTMLAnchorElement).href = `mailto:${message.email}`;
+    (document.getElementById('modal-email') as HTMLAnchorElement).textContent = message.email;
+    document.getElementById('modal-phone')!.textContent = message.phone || 'No proporcionado';
+    document.getElementById('modal-category')!.textContent = categoryMap[message.category] || message.category;
+    document.getElementById('modal-date')!.textContent = new Date(message.created_at).toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    document.getElementById('modal-message')!.textContent = message.message;
+
+    // Show modal
+    document.getElementById('message-modal')!.classList.remove('hidden');
+
+    // Mark as read if it's new
+    if (message.status === 'new') {
+      await updateMessageStatus(id, 'read');
+    }
+  };
+
+  // Update message status
+  const updateMessageStatus = async (id: string, status: string) => {
+    try {
+      const { error } = await supabase
+        .from('contact_submissions')
+        .update({ status })
+        .eq('id', id);
+
+      if (error) throw error;
+
+      await loadMessages();
+      if (currentMessage && currentMessage.id === id) {
+        currentMessage.status = status;
+      }
+    } catch (error) {
+      console.error('Error updating message status:', error);
+      alert('Error al actualizar el estado del mensaje');
+    }
+  };
+
+  // Event listeners
+  document.getElementById('search-input')?.addEventListener('input', filterMessages);
+  document.getElementById('category-filter')?.addEventListener('change', filterMessages);
+  document.getElementById('status-filter')?.addEventListener('change', filterMessages);
+
+  document.getElementById('close-modal')?.addEventListener('click', () => {
+    document.getElementById('message-modal')!.classList.add('hidden');
+  });
+
+  document.getElementById('mark-read-btn')?.addEventListener('click', async () => {
+    if (currentMessage) {
+      await updateMessageStatus(currentMessage.id, 'read');
+      document.getElementById('message-modal')!.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('mark-replied-btn')?.addEventListener('click', async () => {
+    if (currentMessage) {
+      await updateMessageStatus(currentMessage.id, 'replied');
+      document.getElementById('message-modal')!.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('archive-btn')?.addEventListener('click', async () => {
+    if (currentMessage) {
+      await updateMessageStatus(currentMessage.id, 'archived');
+      document.getElementById('message-modal')!.classList.add('hidden');
+    }
+  });
+
+  // Initialize
+  checkAuth();
+  loadMessages();
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
+</BaseLayout>
