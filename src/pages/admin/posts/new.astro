@@ -521,9 +521,12 @@ const title = 'Nuevo Post | Equitracción CMS';
     document.getElementById('loading-modal')!.classList.remove('hidden');
 
     try {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .insert([{
+      const response = await fetch('/api/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
           title,
           slug,
           excerpt,
@@ -535,17 +538,20 @@ const title = 'Nuevo Post | Equitracción CMS';
           reading_time: readingTime,
           published,
           published_at: published ? new Date().toISOString() : null
-        }])
-        .select()
-        .single();
+        })
+      });
 
-      if (error) throw error;
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Error al guardar');
+      }
 
       alert(published ? '¡Post publicado con éxito!' : '¡Borrador guardado con éxito!');
       window.location.href = '/admin/posts';
     } catch (error: any) {
       console.error('Error saving post:', error);
-      if (error.code === '23505') {
+      if (error.message?.includes('slug') || error.message?.includes('título')) {
         alert('Ya existe un post con ese título. Por favor usa uno diferente.');
       } else {
         alert('Error al guardar el post: ' + error.message);
