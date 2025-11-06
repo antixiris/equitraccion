@@ -110,19 +110,22 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
         <div class="flex gap-3">
           <button
             id="mark-read-btn"
-            class="flex-1 px-4 py-2 border-2 border-gray-400 text-gray-700 rounded-lg hover:bg-gray-100 font-medium"
+            class="flex-1 px-4 py-2 border-2 border-gray-400 text-gray-700 rounded-lg hover:bg-gray-100 font-medium transition-colors"
           >
             Marcar leído
           </button>
           <button
             id="mark-replied-btn"
-            class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium"
+            class="flex-1 px-4 py-2 rounded-lg font-medium transition-colors"
+            style="background-color: #16a34a; color: white;"
+            onmouseover="this.style.backgroundColor='#15803d'"
+            onmouseout="this.style.backgroundColor='#16a34a'"
           >
             Marcar respondido
           </button>
           <button
             id="archive-btn"
-            class="flex-1 px-4 py-2 border-2 border-gray-400 text-gray-700 rounded-lg hover:bg-gray-100 font-medium"
+            class="flex-1 px-4 py-2 border-2 border-gray-400 text-gray-700 rounded-lg hover:bg-gray-100 font-medium transition-colors"
           >
             Archivar
           </button>
