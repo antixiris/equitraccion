@@ -23,6 +23,12 @@ const { mode = 'hybrid' } = Astro.props;
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-8">
         <a
+          href="/fundacion"
+          class="text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+        >
+          La Fundación
+        </a>
+        <a
           href="/servicios-forestales"
           class="text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
         >
@@ -39,12 +45,6 @@ const { mode = 'hybrid' } = Astro.props;
           class="text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
         >
           Formación
-        </a>
-        <a
-          href="/fundacion"
-          class="text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
-        >
-          Fundación
         </a>
         <a
           href="/blog"
@@ -74,6 +74,12 @@ const { mode = 'hybrid' } = Astro.props;
   <div id="mobile-menu" class="hidden md:hidden border-t border-[rgb(var(--color-gray-light))]">
     <nav class="px-6 py-4 space-y-3">
       <a
+        href="/fundacion"
+        class="block py-2 text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
+      >
+        La Fundación
+      </a>
+      <a
         href="/servicios-forestales"
         class="block py-2 text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
       >
@@ -90,12 +96,6 @@ const { mode = 'hybrid' } = Astro.props;
         class="block py-2 text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
       >
         Formación
-      </a>
-      <a
-        href="/fundacion"
-        class="block py-2 text-[rgb(var(--color-text-primary))] hover:text-[rgb(var(--color-brand-primary))] font-medium transition-colors"
-      >
-        Fundación
       </a>
       <a
         href="/blog"

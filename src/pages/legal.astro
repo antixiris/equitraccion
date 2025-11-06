@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Aviso Legal | Equitracción"
+  description="Aviso legal de la Fundación Equitracción"
+  mode="hybrid"
+>
+  <Header mode="hybrid" />
+
+  <main class="mode-hybrid">
+    <!-- Hero Section -->
+    <section class="py-24 bg-gradient-to-br from-[rgb(var(--color-brand-primary))] to-[rgb(var(--color-brand-secondary))] text-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16 text-center">
+        <h1 class="font-heading font-bold text-5xl md:text-6xl mb-6">
+          Aviso Legal
+        </h1>
+        <p class="text-xl text-white/90">
+          Información legal sobre el uso de este sitio web
+        </p>
+      </div>
+    </section>
+
+    <!-- Contenido Legal -->
+    <section class="py-16 bg-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16">
+        <div class="prose prose-lg max-w-none">
+          <h2>1. Datos Identificativos</h2>
+          <p>
+            En cumplimiento con el deber de información dispuesto en la Ley 34/2002 de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSI-CE) de 11 de julio, se facilitan a continuación los siguientes datos de información general de este sitio web:
+          </p>
+          <ul>
+            <li><strong>Titular:</strong> Fundación Equitracción</li>
+            <li><strong>NIF:</strong> G56894538</li>
+            <li><strong>Domicilio social:</strong> Talaveruela de la Vera, Cáceres, España</li>
+            <li><strong>Correo electrónico:</strong> info@equitraccion.com</li>
+            <li><strong>Teléfono:</strong> +34 681 298 028</li>
+            <li><strong>Sitio web:</strong> www.equitraccion.com</li>
+          </ul>
+
+          <h2>2. Objeto</h2>
+          <p>
+            La Fundación Equitracción pone a disposición de los usuarios el presente documento con el que pretende dar cumplimiento a las obligaciones dispuestas en la Ley 34/2002 de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSI-CE), así como informar a todos los usuarios del sitio web respecto a cuáles son las condiciones de uso del sitio web.
+          </p>
+          <p>
+            Toda persona que acceda a este sitio web asume el papel de usuario, comprometiéndose a la observancia y cumplimiento riguroso de las disposiciones aquí dispuestas, así como a cualquier otra disposición legal que fuera de aplicación.
+          </p>
+
+          <h2>3. Propiedad Intelectual e Industrial</h2>
+          <p>
+            El sitio web, incluyendo a título enunciativo pero no limitativo su programación, edición, compilación y demás elementos necesarios para su funcionamiento, los diseños, logotipos, texto y/o gráficos son propiedad de la Fundación Equitracción o en su caso dispone de licencia o autorización expresa por parte de los autores.
+          </p>
+          <p>
+            Todos los contenidos del sitio web se encuentran debidamente protegidos por la normativa de propiedad intelectual e industrial, así como inscritos en los registros públicos correspondientes.
+          </p>
+          <p>
+            Independientemente de la finalidad para la que fueran destinados, la reproducción total o parcial, uso, explotación, distribución y comercialización, requiere en todo caso de la autorización escrita previa por parte de la Fundación Equitracción. Cualquier uso no autorizado previamente por parte de la Fundación será considerado un incumplimiento grave de los derechos de propiedad intelectual o industrial del autor.
+          </p>
+
+          <h2>4. Responsabilidad</h2>
+          <p>
+            La Fundación Equitracción no se hace responsable en ningún caso de los daños y perjuicios de cualquier naturaleza que pudieran ocasionar, a título enunciativo: errores u omisiones en los contenidos, falta de disponibilidad del sitio web o la transmisión de virus o programas maliciosos o lesivos en los contenidos, a pesar de haber adoptado todas las medidas tecnológicas necesarias para evitarlo.
+          </p>
+
+          <h2>5. Modificaciones</h2>
+          <p>
+            La Fundación Equitracción se reserva el derecho de efectuar sin previo aviso las modificaciones que considere oportunas en su sitio web, pudiendo cambiar, suprimir o añadir tanto los contenidos y servicios que se presten a través de la misma como la forma en la que éstos aparezcan presentados o localizados en su sitio web.
+          </p>
+
+          <h2>6. Enlaces</h2>
+          <p>
+            En el caso de que en el sitio web se dispusiesen enlaces o hipervínculos hacia otros sitios de Internet, la Fundación Equitracción no ejercerá ningún tipo de control sobre dichos sitios y contenidos. En ningún caso asumirá responsabilidad alguna por los contenidos de algún enlace perteneciente a un sitio web ajeno, ni garantizará la disponibilidad técnica, calidad, fiabilidad, exactitud, amplitud, veracidad, validez y constitucionalidad de cualquier material o información contenida en ninguno de dichos hipervínculos u otros sitios de Internet.
+          </p>
+
+          <h2>7. Derecho de Exclusión</h2>
+          <p>
+            La Fundación Equitracción se reserva el derecho a denegar o retirar el acceso al sitio web y/o los servicios ofrecidos sin necesidad de preaviso, a instancia propia o de un tercero, a aquellos usuarios que incumplan las presentes Condiciones Generales de Uso.
+          </p>
+
+          <h2>8. Generalidades</h2>
+          <p>
+            La Fundación Equitracción perseguirá el incumplimiento de las presentes condiciones así como cualquier utilización indebida de su sitio web ejerciendo todas las acciones civiles y penales que le puedan corresponder en derecho.
+          </p>
+
+          <h2>9. Legislación Aplicable y Jurisdicción</h2>
+          <p>
+            La relación entre la Fundación Equitracción y el usuario se regirá por la normativa española vigente y cualquier controversia se someterá a los Juzgados y Tribunales de la ciudad de Cáceres.
+          </p>
+
+          <p class="text-sm text-gray-500 mt-12">
+            <strong>Última actualización:</strong> {new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .prose h2 {
+    color: rgb(var(--color-text-primary));
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.875rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .prose p {
+    color: rgb(var(--color-gray-medium));
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .prose li {
+    color: rgb(var(--color-gray-medium));
+    margin-bottom: 0.5rem;
+  }
+
+  .prose strong {
+    color: rgb(var(--color-text-primary));
+    font-weight: 600;
+  }
+</style>

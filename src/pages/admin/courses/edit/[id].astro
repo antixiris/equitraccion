@@ -1,0 +1,449 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { isAuthenticated } from '../../../../lib/auth/jwt';
+import { supabaseAdmin } from '../../../../lib/supabase';
+import type { Course } from '../../../../lib/supabase';
+
+if (!isAuthenticated(Astro)) {
+  return Astro.redirect('/admin/login');
+}
+
+const { id } = Astro.params;
+
+const { data: course, error } = await supabaseAdmin
+  .from('courses')
+  .select('*')
+  .eq('id', id)
+  .single();
+
+if (error || !course) {
+  return Astro.redirect('/admin/courses');
+}
+---
+
+<BaseLayout
+  title="Editar Curso | Admin"
+  description="Editar curso"
+  mode="hybrid"
+>
+  <main class="min-h-screen bg-gray-50">
+    <header class="bg-white shadow-sm">
+      <div class="max-w-4xl mx-auto px-6 py-4">
+        <div class="flex items-center gap-4">
+          <a href="/admin/courses" class="text-gray-600 hover:text-gray-900">← Volver</a>
+          <div>
+            <h1 class="font-heading font-bold text-2xl text-gray-900">Editar Curso</h1>
+            <p class="text-sm text-gray-600">{course.title}</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+      <form id="course-form" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+        <input type="hidden" id="course-id" value={course.id} />
+
+        <!-- Información básica -->
+        <section class="mb-8">
+          <h2 class="font-heading font-bold text-lg mb-4">Información Básica</h2>
+          
+          <div class="mb-4">
+            <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+              Título del curso *
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              required
+              value={course.title}
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800 focus:border-transparent"
+            />
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4 mb-4">
+            <div>
+              <label for="duration_days" class="block text-sm font-medium text-gray-700 mb-2">
+                Duración (días) *
+              </label>
+              <input
+                type="number"
+                id="duration_days"
+                name="duration_days"
+                required
+                min="1"
+                value={course.duration_days}
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              />
+            </div>
+
+            <div>
+              <label for="level" class="block text-sm font-medium text-gray-700 mb-2">
+                Nivel (número) *
+              </label>
+              <input
+                type="number"
+                id="level"
+                name="level"
+                required
+                min="1"
+                value={course.level}
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              />
+            </div>
+
+            <div>
+              <label for="experience_level" class="block text-sm font-medium text-gray-700 mb-2">
+                Experiencia *
+              </label>
+              <select
+                id="experience_level"
+                name="experience_level"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              >
+                <option value="Iniciación" selected={course.experience_level === 'Iniciación'}>Iniciación</option>
+                <option value="Intermedio" selected={course.experience_level === 'Intermedio'}>Intermedio</option>
+                <option value="Avanzado" selected={course.experience_level === 'Avanzado'}>Avanzado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="max_participants" class="block text-sm font-medium text-gray-700 mb-2">
+                Plazas máximas *
+              </label>
+              <input
+                type="number"
+                id="max_participants"
+                name="max_participants"
+                required
+                min="1"
+                value={course.max_participants}
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              />
+            </div>
+
+            <div>
+              <label for="price" class="block text-sm font-medium text-gray-700 mb-2">
+                Precio (€) *
+              </label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                required
+                min="0"
+                step="0.01"
+                value={course.price}
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              />
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="location" class="block text-sm font-medium text-gray-700 mb-2">
+              Ubicación *
+            </label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              required
+              value={course.location}
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+            />
+          </div>
+        </section>
+
+        <!-- Contenido del curso -->
+        <section class="mb-8">
+          <h2 class="font-heading font-bold text-lg mb-4">Contenido del Curso</h2>
+
+          <div class="mb-4">
+            <label for="target_audience" class="block text-sm font-medium text-gray-700 mb-2">
+              ¿Para quién? *
+            </label>
+            <textarea
+              id="target_audience"
+              name="target_audience"
+              required
+              rows="3"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+            >{course.target_audience}</textarea>
+          </div>
+
+          <div class="mb-4">
+            <label for="contents" class="block text-sm font-medium text-gray-700 mb-2">
+              Contenidos *
+            </label>
+            <textarea
+              id="contents"
+              name="contents"
+              required
+              rows="6"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+            >{course.contents}</textarea>
+          </div>
+
+          <div class="mb-4">
+            <label for="requirements" class="block text-sm font-medium text-gray-700 mb-2">
+              Requisitos
+            </label>
+            <textarea
+              id="requirements"
+              name="requirements"
+              rows="3"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+            >{course.requirements || ''}</textarea>
+          </div>
+        </section>
+
+        <!-- Convocatorias -->
+        <section class="mb-8">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-heading font-bold text-lg">Convocatorias</h2>
+            <button
+              type="button"
+              id="add-date"
+              class="px-4 py-2 text-sm bg-amber-800 text-white rounded-lg hover:bg-amber-900"
+            >
+              + Añadir Fecha
+            </button>
+          </div>
+
+          <div id="dates-container" class="space-y-4">
+            <!-- Las fechas se cargarán con JavaScript -->
+          </div>
+        </section>
+
+        <!-- Estado -->
+        <section class="mb-8">
+          <label class="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="active"
+              name="active"
+              checked={course.active}
+              class="w-4 h-4 text-amber-800 rounded focus:ring-amber-800"
+            />
+            <span class="text-sm font-medium text-gray-700">Curso activo</span>
+          </label>
+        </section>
+
+        <!-- Mensajes -->
+        <div id="form-message" class="hidden mb-4 p-4 rounded-lg"></div>
+
+        <!-- Acciones -->
+        <div class="flex gap-4">
+          <button
+            type="submit"
+            id="submit-button"
+            class="flex-1 px-6 py-3 bg-amber-800 text-white rounded-lg font-medium hover:bg-amber-900 disabled:opacity-50"
+          >
+            <span id="submit-text">Guardar Cambios</span>
+            <span id="submit-loading" class="hidden">Guardando...</span>
+          </button>
+          <a
+            href="/admin/courses"
+            class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50"
+          >
+            Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
+  </main>
+</BaseLayout>
+
+<script define:vars={{ courseDates: course.dates }}>
+  let dateCounter = 0;
+
+  // Crear elemento de fecha
+  function createDateElement(index, data = null) {
+    const dateDiv = document.createElement('div');
+    dateDiv.className = 'border border-gray-200 rounded-lg p-4';
+    dateDiv.dataset.dateIndex = index.toString();
+
+    dateDiv.innerHTML = `
+      <div class="flex items-start justify-between mb-3">
+        <h3 class="font-semibold text-sm">Convocatoria ${index + 1}</h3>
+        <button
+          type="button"
+          class="text-sm text-red-600 hover:text-red-800 remove-date"
+          data-index="${index}"
+        >
+          Eliminar
+        </button>
+      </div>
+      <div class="grid md:grid-cols-3 gap-3">
+        <div>
+          <label class="block text-xs text-gray-600 mb-1">Fecha inicio *</label>
+          <input
+            type="date"
+            name="date_start_${index}"
+            required
+            value="${data?.start || ''}"
+            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+          />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600 mb-1">Fecha fin *</label>
+          <input
+            type="date"
+            name="date_end_${index}"
+            required
+            value="${data?.end || ''}"
+            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+          />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600 mb-1">Plazas *</label>
+          <input
+            type="number"
+            name="date_spots_${index}"
+            required
+            min="1"
+            value="${data?.spots_available || ''}"
+            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+          />
+        </div>
+      </div>
+      <div class="mt-3">
+        <label class="block text-xs text-gray-600 mb-1">Notas (opcional)</label>
+        <input
+          type="text"
+          name="date_notes_${index}"
+          value="${data?.notes || ''}"
+          class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+        />
+    </div>
+    `;
+
+    dateDiv.querySelector('.remove-date')?.addEventListener('click', (e) => {
+      const target = e.target;
+      const idx = target.getAttribute('data-index');
+      const divToRemove = document.querySelector(`[data-date-index="${idx}"]`);
+      divToRemove?.remove();
+    });
+
+    return dateDiv;
+  }
+
+  // Cargar fechas existentes
+  function loadExistingDates() {
+    const container = document.getElementById('dates-container');
+
+    courseDates.forEach((date, index) => {
+      const dateDiv = createDateElement(index, date);
+      container?.appendChild(dateDiv);
+      dateCounter++;
+    });
+  }
+
+  // Inicializar cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', () => {
+    // Cargar fechas existentes al iniciar
+    loadExistingDates();
+
+    // Añadir fecha
+    const addDateButton = document.getElementById('add-date');
+    console.log('Button found:', addDateButton); // Debug
+    if (addDateButton) {
+      addDateButton.addEventListener('click', () => {
+        console.log('Add date clicked, counter:', dateCounter); // Debug
+        const container = document.getElementById('dates-container');
+        const dateDiv = createDateElement(dateCounter);
+        container?.appendChild(dateDiv);
+        dateCounter++;
+      });
+    }
+
+    // Submit form
+    document.getElementById('course-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+      const courseId = document.getElementById('course-id').value;
+      const submitButton = document.getElementById('submit-button');
+      const submitText = document.getElementById('submit-text');
+      const submitLoading = document.getElementById('submit-loading');
+      const formMessage = document.getElementById('form-message');
+
+      // Recopilar dates
+      const dates = [];
+      const allDateIndices = Array.from(document.querySelectorAll('[data-date-index]'))
+        .map(el => parseInt(el.getAttribute('data-date-index') || '0'));
+
+      for (const i of allDateIndices) {
+        const startInput = form.querySelector(`[name="date_start_${i}"]`);
+        const endInput = form.querySelector(`[name="date_end_${i}"]`);
+        const spotsInput = form.querySelector(`[name="date_spots_${i}"]`);
+        const notesInput = form.querySelector(`[name="date_notes_${i}"]`);
+
+        if (startInput && endInput && spotsInput) {
+          dates.push({
+            start: startInput.value,
+            end: endInput.value,
+            spots_available: parseInt(spotsInput.value),
+            notes: notesInput?.value || ''
+          });
+        }
+      }
+
+      if (dates.length === 0) {
+        alert('Debe añadir al menos una convocatoria');
+        return;
+      }
+
+      const courseData = {
+        title: formData.get('title'),
+        duration_days: parseInt(formData.get('duration_days')),
+        level: parseInt(formData.get('level')),
+        experience_level: formData.get('experience_level'),
+        max_participants: parseInt(formData.get('max_participants')),
+        price: parseFloat(formData.get('price')),
+        target_audience: formData.get('target_audience'),
+        contents: formData.get('contents'),
+        requirements: formData.get('requirements') || '',
+        location: formData.get('location'),
+        dates: dates,
+        active: formData.get('active') === 'on'
+      };
+
+      submitButton.disabled = true;
+      submitText?.classList.add('hidden');
+      submitLoading?.classList.remove('hidden');
+      formMessage?.classList.add('hidden');
+
+      try {
+        const response = await fetch(`/api/courses/${courseId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(courseData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          window.location.href = '/admin/courses';
+        } else {
+          formMessage.textContent = data.message || 'Error al actualizar el curso';
+          formMessage.className = 'mb-4 p-4 rounded-lg bg-red-50 text-red-700';
+          formMessage.classList.remove('hidden');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        formMessage.textContent = 'Error de conexión';
+        formMessage.className = 'mb-4 p-4 rounded-lg bg-red-50 text-red-700';
+        formMessage.classList.remove('hidden');
+      } finally {
+        submitButton.disabled = false;
+        submitText?.classList.remove('hidden');
+        submitLoading?.classList.add('hidden');
+      }
+    });
+  }); // Cierre de DOMContentLoaded
+</script>

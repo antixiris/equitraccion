@@ -8,26 +8,34 @@ const title = 'Panel de Administración | Equitracción CMS';
 <BaseLayout title={title} mode="hybrid">
   <div class="min-h-screen bg-gray-50">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
-      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-[rgb(var(--color-brand-primary))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          <div>
-            <h1 class="text-xl font-bold text-gray-900">Equitracción CMS</h1>
-            <p class="text-sm text-gray-500">Panel de Administración</p>
+    <header class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-8">
+            <nav class="flex items-center gap-6">
+              <a href="/admin" class="text-base font-semibold text-amber-800 border-b-2 border-amber-800 pb-1">
+                Dashboard
+              </a>
+              <a href="/admin/posts" class="text-base text-gray-600 hover:text-amber-800 transition-colors">
+                Blog
+              </a>
+              <a href="/admin/courses" class="text-base text-gray-600 hover:text-amber-800 transition-colors">
+                Cursos
+              </a>
+              <a href="/admin/newsletter" class="text-base text-gray-600 hover:text-amber-800 transition-colors">
+                Newsletter
+              </a>
+              <a href="/admin/messages" class="text-base text-gray-600 hover:text-amber-800 transition-colors">
+                Mensajes
+              </a>
+            </nav>
+            <div class="border-l pl-8">
+              <h1 class="font-heading font-bold text-2xl text-gray-900">Panel de Administración</h1>
+              <p class="text-sm text-gray-600">Gestiona el contenido de tu sitio web</p>
+            </div>
           </div>
-        </div>
-        <div class="flex items-center gap-4">
-          <a href="/" target="_blank" class="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-            Ver Sitio Web
-          </a>
-          <button id="logout-btn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium">
-            Cerrar Sesión
+          <button id="logout-btn" class="text-base text-gray-600 hover:text-gray-900">
+            Cerrar sesión
           </button>
         </div>
       </div>
@@ -36,13 +44,13 @@ const title = 'Panel de Administración | Equitracción CMS';
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-6 py-8">
       <!-- Welcome Section -->
-      <div class="mb-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-2">Bienvenido al Panel de Control</h2>
-        <p class="text-gray-600">Gestiona el contenido de tu sitio web de forma sencilla</p>
+      <div class="mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Resumen General</h2>
+        <p class="text-lg text-gray-600">Vista rápida de tu contenido y actividad</p>
       </div>
 
       <!-- Quick Stats -->
-      <div class="grid md:grid-cols-4 gap-6 mb-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
         <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
           <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -52,98 +60,232 @@ const title = 'Panel de Administración | Equitracción CMS';
             </div>
           </div>
           <p class="text-2xl font-bold text-gray-900" id="total-posts">0</p>
-          <p class="text-sm text-gray-600">Posts Totales</p>
+          <p class="text-sm text-gray-600">Posts Blog</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-2xl font-bold text-gray-900" id="total-courses">0</p>
+          <p class="text-sm text-gray-600">Cursos Activos</p>
         </div>
 
         <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
           <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
               <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
               </svg>
             </div>
           </div>
-          <p class="text-2xl font-bold text-gray-900" id="published-posts">0</p>
-          <p class="text-sm text-gray-600">Publicados</p>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-          <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-          </div>
-          <p class="text-2xl font-bold text-gray-900" id="draft-posts">0</p>
-          <p class="text-sm text-gray-600">Borradores</p>
+          <p class="text-2xl font-bold text-gray-900" id="total-subscribers">0</p>
+          <p class="text-sm text-gray-600">Suscriptores</p>
         </div>
 
         <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
           <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
               <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
           </div>
-          <p class="text-2xl font-bold text-gray-900" id="total-categories">4</p>
-          <p class="text-sm text-gray-600">Categorías</p>
+          <p class="text-2xl font-bold text-gray-900" id="total-messages">0</p>
+          <p class="text-sm text-gray-600">Mensajes</p>
         </div>
       </div>
 
-      <!-- Main Actions -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Gestionar Posts -->
-        <a href="/admin/posts" class="group bg-white rounded-xl shadow-sm p-8 border border-gray-200 hover:shadow-md hover:border-[rgb(var(--color-brand-primary))] transition-all">
-          <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-200 transition-colors">
-            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+      <!-- Main Sections -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Gestión de Contenidos</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Blog Section -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Blog</h3>
+                  </div>
+                  <p class="text-blue-100 text-sm">Gestiona artículos y publicaciones</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <a href="/admin/posts" class="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                    <svg class="w-5 h-5 text-gray-600 group-hover:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    </svg>
+                  </div>
+                  <span class="font-medium text-gray-900">Ver todos los posts</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a href="/admin/posts/new" class="flex items-center justify-between p-4 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                  </div>
+                  <span class="font-semibold text-blue-900">Crear nuevo post</span>
+                </div>
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
           </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Gestionar Posts del Blog</h3>
-          <p class="text-gray-600 mb-4">Ver, editar y eliminar posts existentes</p>
-          <span class="text-[rgb(var(--color-brand-primary))] font-semibold flex items-center gap-2">
-            Ir a Posts
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
-        </a>
 
-        <!-- Crear Nuevo Post -->
-        <a href="/admin/posts/new" class="group bg-gradient-to-br from-[rgb(var(--color-brand-primary))] to-[rgb(var(--color-b2c-primary))] rounded-xl shadow-sm p-8 border border-transparent hover:shadow-lg transition-all">
-          <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-white/30 transition-colors">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
+          <!-- Courses Section -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-gradient-to-r from-amber-500 to-amber-600 p-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Cursos</h3>
+                  </div>
+                  <p class="text-amber-100 text-sm">Administra formaciones y convocatorias</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <a href="/admin/courses" class="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-amber-100 transition-colors">
+                    <svg class="w-5 h-5 text-gray-600 group-hover:text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    </svg>
+                  </div>
+                  <span class="font-medium text-gray-900">Ver todos los cursos</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-amber-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a href="/admin/courses/new" class="flex items-center justify-between p-4 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center group-hover:bg-amber-200 transition-colors">
+                    <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                  </div>
+                  <span class="font-semibold text-amber-900">Crear nuevo curso</span>
+                </div>
+                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2">Crear Nuevo Post</h3>
-          <p class="text-white/90 mb-4">Escribe y publica un nuevo artículo</p>
-          <span class="text-white font-semibold flex items-center gap-2">
-            Crear Post
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
-        </a>
+        </div>
+      </div>
 
-        <!-- Mensajes de Contacto -->
-        <a href="/admin/messages" class="group bg-white rounded-xl shadow-sm p-8 border border-gray-200 hover:shadow-md hover:border-[rgb(var(--color-brand-primary))] transition-all">
-          <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-200 transition-colors">
-            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
+      <!-- Communication Section -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Comunicación</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Newsletter Section -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                      </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Newsletter</h3>
+                  </div>
+                  <p class="text-green-100 text-sm">Gestiona suscriptores y envíos</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <a href="/admin/newsletter" class="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-green-100 transition-colors">
+                    <svg class="w-5 h-5 text-gray-600 group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <span class="font-medium text-gray-900">Gestionar suscriptores</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a href="/api/newsletter/send?preview=true" target="_blank" class="flex items-center justify-between p-4 rounded-lg bg-green-50 hover:bg-green-100 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  </div>
+                  <span class="font-semibold text-green-900">Preview newsletter</span>
+                </div>
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
           </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Mensajes de Contacto</h3>
-          <p class="text-gray-600 mb-4">Ver mensajes recibidos del formulario</p>
-          <span class="text-[rgb(var(--color-brand-primary))] font-semibold flex items-center gap-2">
-            Ver Mensajes
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
-        </a>
+
+          <!-- Messages Section -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Mensajes</h3>
+                  </div>
+                  <p class="text-purple-100 text-sm">Responde consultas de contacto</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <a href="/admin/messages" class="flex items-center justify-between p-4 rounded-lg bg-purple-50 hover:bg-purple-100 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                    </svg>
+                  </div>
+                  <span class="font-semibold text-purple-900">Ver mensajes de contacto</span>
+                </div>
+                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Recent Posts -->
@@ -185,19 +327,47 @@ const title = 'Panel de Administración | Equitracción CMS';
   // Load stats
   const loadStats = async () => {
     try {
-      const { data: posts, error } = await supabase
+      // Load blog posts stats
+      const { data: posts, error: postsError } = await supabase
         .from('blog_posts')
         .select('id, published');
 
-      if (error) throw error;
+      if (postsError) throw postsError;
 
-      const total = posts?.length || 0;
-      const published = posts?.filter(p => p.published).length || 0;
-      const drafts = total - published;
+      const totalPosts = posts?.length || 0;
+      document.getElementById('total-posts')!.textContent = totalPosts.toString();
 
-      document.getElementById('total-posts')!.textContent = total.toString();
-      document.getElementById('published-posts')!.textContent = published.toString();
-      document.getElementById('draft-posts')!.textContent = drafts.toString();
+      // Load courses stats
+      const { data: courses, error: coursesError } = await supabase
+        .from('courses')
+        .select('id, active')
+        .eq('active', true);
+
+      if (!coursesError) {
+        const totalCourses = courses?.length || 0;
+        document.getElementById('total-courses')!.textContent = totalCourses.toString();
+      }
+
+      // Load newsletter subscribers stats
+      const { data: subscribers, error: subscribersError } = await supabase
+        .from('newsletter_subscriptions')
+        .select('id, status')
+        .eq('status', 'active');
+
+      if (!subscribersError) {
+        const totalSubscribers = subscribers?.length || 0;
+        document.getElementById('total-subscribers').textContent = totalSubscribers.toString();
+      }
+
+      // Load contact messages stats
+      const { data: messages, error: messagesError } = await supabase
+        .from('contact_submissions')
+        .select('id');
+
+      if (!messagesError) {
+        const totalMessages = messages?.length || 0;
+        document.getElementById('total-messages')!.textContent = totalMessages.toString();
+      }
     } catch (error) {
       console.error('Error loading stats:', error);
     }

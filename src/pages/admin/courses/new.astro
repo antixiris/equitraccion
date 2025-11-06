@@ -1,0 +1,402 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { isAuthenticated } from '../../../lib/auth/jwt';
+
+if (!isAuthenticated(Astro)) {
+  return Astro.redirect('/admin/login');
+}
+---
+
+<BaseLayout
+  title="Nuevo Curso | Admin"
+  description="Crear nuevo curso"
+  mode="hybrid"
+>
+  <main class="min-h-screen bg-gray-50">
+    <header class="bg-white shadow-sm">
+      <div class="max-w-4xl mx-auto px-6 py-4">
+        <div class="flex items-center gap-4">
+          <a href="/admin/courses" class="text-gray-600 hover:text-gray-900">← Volver</a>
+          <div>
+            <h1 class="font-heading font-bold text-2xl text-gray-900">Nuevo Curso</h1>
+            <p class="text-sm text-gray-600">Crea un nuevo curso de formación</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+      <form id="course-form" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+        <!-- Información básica -->
+        <section class="mb-8">
+          <h2 class="font-heading font-bold text-lg mb-4">Información Básica</h2>
+          
+          <div class="mb-4">
+            <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+              Título del curso *
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800 focus:border-transparent"
+              placeholder="Ej: Tracción Animal Aplicada a la Silvicultura"
+            />
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4 mb-4">
+            <div>
+              <label for="duration_days" class="block text-sm font-medium text-gray-700 mb-2">
+                Duración (días) *
+              </label>
+              <input
+                type="number"
+                id="duration_days"
+                name="duration_days"
+                required
+                min="1"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              />
+            </div>
+
+            <div>
+              <label for="level" class="block text-sm font-medium text-gray-700 mb-2">
+                Nivel (número) *
+              </label>
+              <input
+                type="number"
+                id="level"
+                name="level"
+                required
+                min="1"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              />
+            </div>
+
+            <div>
+              <label for="experience_level" class="block text-sm font-medium text-gray-700 mb-2">
+                Experiencia *
+              </label>
+              <select
+                id="experience_level"
+                name="experience_level"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              >
+                <option value="">Seleccionar...</option>
+                <option value="Iniciación">Iniciación</option>
+                <option value="Intermedio">Intermedio</option>
+                <option value="Avanzado">Avanzado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="max_participants" class="block text-sm font-medium text-gray-700 mb-2">
+                Plazas máximas *
+              </label>
+              <input
+                type="number"
+                id="max_participants"
+                name="max_participants"
+                required
+                min="1"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              />
+            </div>
+
+            <div>
+              <label for="price" class="block text-sm font-medium text-gray-700 mb-2">
+                Precio (€) *
+              </label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                required
+                min="0"
+                step="0.01"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              />
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="location" class="block text-sm font-medium text-gray-700 mb-2">
+              Ubicación *
+            </label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              placeholder="Ej: Monte Esquela, Talaveruela de la Vera, Cáceres"
+            />
+          </div>
+        </section>
+
+        <!-- Contenido del curso -->
+        <section class="mb-8">
+          <h2 class="font-heading font-bold text-lg mb-4">Contenido del Curso</h2>
+
+          <div class="mb-4">
+            <label for="target_audience" class="block text-sm font-medium text-gray-700 mb-2">
+              ¿Para quién? *
+            </label>
+            <textarea
+              id="target_audience"
+              name="target_audience"
+              required
+              rows="3"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              placeholder="Ej: Profesionales forestales, propietarios de fincas..."
+            ></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label for="contents" class="block text-sm font-medium text-gray-700 mb-2">
+              Contenidos *
+            </label>
+            <textarea
+              id="contents"
+              name="contents"
+              required
+              rows="6"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              placeholder="Ej: - Fundamentos de tracción equina&#10;- Selección y cuidado de los animales&#10;- Técnicas de trabajo..."
+            ></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label for="requirements" class="block text-sm font-medium text-gray-700 mb-2">
+              Requisitos
+            </label>
+            <textarea
+              id="requirements"
+              name="requirements"
+              rows="3"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+              placeholder="Ej: No se requiere experiencia previa. Edad mínima 18 años..."
+            ></textarea>
+          </div>
+        </section>
+
+        <!-- Convocatorias -->
+        <section class="mb-8">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-heading font-bold text-lg">Convocatorias</h2>
+            <button
+              type="button"
+              id="add-date"
+              class="px-4 py-2 text-sm bg-amber-800 text-white rounded-lg hover:bg-amber-900"
+            >
+              + Añadir Fecha
+            </button>
+          </div>
+
+          <div id="dates-container" class="space-y-4">
+            <!-- Las fechas se añadirán aquí dinámicamente -->
+          </div>
+        </section>
+
+        <!-- Estado -->
+        <section class="mb-8">
+          <label class="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="active"
+              name="active"
+              checked
+              class="w-4 h-4 text-amber-800 rounded focus:ring-amber-800"
+            />
+            <span class="text-sm font-medium text-gray-700">Curso activo</span>
+          </label>
+        </section>
+
+        <!-- Mensajes -->
+        <div id="form-message" class="hidden mb-4 p-4 rounded-lg"></div>
+
+        <!-- Acciones -->
+        <div class="flex gap-4">
+          <button
+            type="submit"
+            id="submit-button"
+            class="flex-1 px-6 py-3 bg-amber-800 text-white rounded-lg font-medium hover:bg-amber-900 disabled:opacity-50"
+          >
+            <span id="submit-text">Crear Curso</span>
+            <span id="submit-loading" class="hidden">Guardando...</span>
+          </button>
+          <a
+            href="/admin/courses"
+            class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50"
+          >
+            Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  let dateCounter = 0;
+
+  // Añadir fecha
+  document.getElementById('add-date')?.addEventListener('click', () => {
+    const container = document.getElementById('dates-container');
+    const dateDiv = document.createElement('div');
+    dateDiv.className = 'border border-gray-200 rounded-lg p-4';
+    dateDiv.dataset.dateIndex = dateCounter.toString();
+
+    dateDiv.innerHTML = `
+      <div class="flex items-start justify-between mb-3">
+        <h3 class="font-semibold text-sm">Convocatoria ${dateCounter + 1}</h3>
+        <button
+          type="button"
+          class="text-sm text-red-600 hover:text-red-800 remove-date"
+          data-index="${dateCounter}"
+        >
+          Eliminar
+        </button>
+      </div>
+      <div class="grid md:grid-cols-3 gap-3">
+        <div>
+          <label class="block text-xs text-gray-600 mb-1">Fecha inicio *</label>
+          <input
+            type="date"
+            name="date_start_${dateCounter}"
+            required
+            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+          />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600 mb-1">Fecha fin *</label>
+          <input
+            type="date"
+            name="date_end_${dateCounter}"
+            required
+            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+          />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600 mb-1">Plazas *</label>
+          <input
+            type="number"
+            name="date_spots_${dateCounter}"
+            required
+            min="1"
+            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+          />
+        </div>
+      </div>
+      <div class="mt-3">
+        <label class="block text-xs text-gray-600 mb-1">Notas (opcional)</label>
+        <input
+          type="text"
+          name="date_notes_${dateCounter}"
+          class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-800"
+          placeholder="Ej: Convocatoria primavera"
+        />
+      </div>
+    `;
+
+    container?.appendChild(dateDiv);
+    dateCounter++;
+
+    // Event listener para eliminar
+    dateDiv.querySelector('.remove-date')?.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const index = target.getAttribute('data-index');
+      const divToRemove = document.querySelector(`[data-date-index="${index}"]`);
+      divToRemove?.remove();
+    });
+  });
+
+  // Añadir primera fecha automáticamente
+  document.getElementById('add-date')?.click();
+
+  // Submit form
+  document.getElementById('course-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
+    const submitText = document.getElementById('submit-text');
+    const submitLoading = document.getElementById('submit-loading');
+    const formMessage = document.getElementById('form-message');
+
+    // Recopilar dates
+    const dates = [];
+    for (let i = 0; i < dateCounter; i++) {
+      const startInput = form.querySelector(`[name="date_start_${i}"]`) as HTMLInputElement;
+      const endInput = form.querySelector(`[name="date_end_${i}"]`) as HTMLInputElement;
+      const spotsInput = form.querySelector(`[name="date_spots_${i}"]`) as HTMLInputElement;
+      const notesInput = form.querySelector(`[name="date_notes_${i}"]`) as HTMLInputElement;
+
+      if (startInput && endInput && spotsInput) {
+        dates.push({
+          start: startInput.value,
+          end: endInput.value,
+          spots_available: parseInt(spotsInput.value),
+          notes: notesInput?.value || ''
+        });
+      }
+    }
+
+    if (dates.length === 0) {
+      alert('Debe añadir al menos una convocatoria');
+      return;
+    }
+
+    const courseData = {
+      title: formData.get('title'),
+      duration_days: parseInt(formData.get('duration_days') as string),
+      level: parseInt(formData.get('level') as string),
+      experience_level: formData.get('experience_level'),
+      max_participants: parseInt(formData.get('max_participants') as string),
+      price: parseFloat(formData.get('price') as string),
+      target_audience: formData.get('target_audience'),
+      contents: formData.get('contents'),
+      requirements: formData.get('requirements') || '',
+      location: formData.get('location'),
+      dates: dates,
+      active: formData.get('active') === 'on'
+    };
+
+    submitButton.disabled = true;
+    submitText?.classList.add('hidden');
+    submitLoading?.classList.remove('hidden');
+    formMessage?.classList.add('hidden');
+
+    try {
+      const response = await fetch('/api/courses', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(courseData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        window.location.href = '/admin/courses';
+      } else {
+        formMessage!.textContent = data.message || 'Error al crear el curso';
+        formMessage!.className = 'mb-4 p-4 rounded-lg bg-red-50 text-red-700';
+        formMessage!.classList.remove('hidden');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      formMessage!.textContent = 'Error de conexión';
+      formMessage!.className = 'mb-4 p-4 rounded-lg bg-red-50 text-red-700';
+      formMessage!.classList.remove('hidden');
+    } finally {
+      submitButton.disabled = false;
+      submitText?.classList.remove('hidden');
+      submitLoading?.classList.add('hidden');
+    }
+  });
+</script>

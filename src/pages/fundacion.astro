@@ -18,7 +18,7 @@ import Button from '../components/Button.astro';
       <!-- Background Image -->
       <div class="absolute inset-0">
         <img
-          src="/images/Fundacion-Equitraccion-05.jpeg"
+          src="/images/isabel.jpeg"
           alt="Equitracción fundación"
           class="w-full h-full object-cover"
         />
@@ -35,8 +35,81 @@ import Button from '../components/Button.astro';
       </div>
     </section>
 
+    <!-- Propósito y Visión -->
+    <section class="py-24 bg-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16">
+        <!-- Video introductorio con CTA elegante -->
+        <div class="mb-16">
+          <!-- CTA para revelar el video -->
+          <div id="video-cta" class="cursor-pointer group">
+            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-12 text-center transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
+              <!-- Icono de claqueta/escaleta de director -->
+              <div class="inline-flex items-center justify-center w-24 h-24 mb-6 rounded-full bg-gradient-to-br from-[rgb(var(--color-brand-primary))] to-[rgb(var(--color-brand-secondary))] text-white shadow-lg transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                  <!-- Claqueta cerrada -->
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0118 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 016 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-15.75 0h1.5c.621 0 1.125-.504 1.125-1.125M3.375 12h1.5c.621 0 1.125.504 1.125 1.125"/>
+                </svg>
+              </div>
+
+              <!-- Texto invitación -->
+              <h3 class="font-heading font-bold text-2xl md:text-3xl mb-3 text-[rgb(var(--color-text-primary))] group-hover:text-[rgb(var(--color-brand-primary))] transition-colors duration-300">
+                Descubre nuestra historia
+              </h3>
+              <p class="text-lg text-[rgb(var(--color-gray-medium))] mb-4">
+                Un viaje visual por los orígenes y evolución de la Fundación EquiTracción
+              </p>
+
+              <!-- Indicador de acción -->
+              <div class="inline-flex items-center gap-2 text-[rgb(var(--color-brand-primary))] font-semibold">
+                <span>Ver video</span>
+                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contenedor del video (oculto inicialmente) -->
+          <div id="video-container" class="hidden">
+            <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl">
+              <video
+                id="historia-video"
+                class="w-full h-full object-cover"
+                controls
+                preload="metadata"
+              >
+                <source src="/videos/historia.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mb-12">
+          <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
+            Nuestra razón de ser
+          </span>
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Propósito, visión e innovación
+          </h2>
+        </div>
+
+        <div class="space-y-6 text-lg text-[rgb(var(--color-gray-medium))]">
+          <p>
+            El propósito fundamental de la Fundación se centra en la autogestión ecológica y regeneración de entornos naturales trabajando en áreas como la prevención de incendios mediante la evolución de sus prácticas, así como el desarrollo y consolidación de municipios y comunidades afectados por el fenómeno de la "España vaciada" en un contexto en el que el mundo se encuentra en transformación hacia la inteligencia artificial, la automatización y la innovación tecnológica.
+          </p>
+          <p>
+            Roberto sostiene que en este escenario es imprescindible que el "trabajador del campo" —y en general todas los agentes implicados en la recuperación ambiental— adopten una actitud regenerativa, coherente, holística, es decir que tenga en cuenta no solo la técnica, sino también la dimensión emocional, humana y de vínculo con los seres vivos, máquinas incluidas.
+          </p>
+          <p>
+            El enfoque holístico de la Fundación parte de la base de que <strong class="text-[rgb(var(--color-text-primary))]">no podemos regenerar si no adoptamos una actitud regenerativa</strong>, contemplando todos los factores: humanos, animales, máquinas, tierra, agua, ecosistemas.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- Origen: La historia de Roberto -->
-    <section id="roberto-contaldo" class="py-24 bg-white">
+    <section id="roberto-contaldo" class="py-24 bg-[rgb(var(--color-beige-linen))]">
       <div class="max-w-7xl mx-auto px-6 lg:px-16">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -48,16 +121,22 @@ import Button from '../components/Button.astro';
             </h2>
             <div class="space-y-4 text-lg text-[rgb(var(--color-gray-medium))]">
               <p>
-                A los 28 años, Roberto dirigía una próspera empresa náutica. Tenía todo lo que la sociedad considera "éxito", pero algo esencial faltaba.
+                Roberto Contaldo nació en Italia en 1968, en la periferia de Milán. Desde muy joven tuvo contacto con la naturaleza a través del entorno de sus padres, que gestionaban un parque natural, lo cual le permitió un vínculo directo con los caballos, la tierra y los procesos vivos.
               </p>
               <p>
-                La búsqueda de sentido lo llevó primero a una comunidad Amish en Estados Unidos, donde descubrió el poder transformador del trabajo con caballos. Luego, cinco años en la Amazonía peruana le enseñaron la interdependencia entre humanos y naturaleza.
+                Durante su infancia practicó doma clásica, lo que lo familiarizó de cerca con la vida equina. Más adelante, viajó por el continente americano para integrarse con comunidades rurales donde aprender técnicas tradicionales de doma y agricultura ecológica. Estos viajes le llevaron a pasar largas estadías con diversas culturas que compartían todas ellas un punto en común: la conexión con la vida natural: desde los Amish en Grand Rapids, Michigan, en Estados Unidos hasta la selva amazónica junto a la etnia Kaxinawá, donde recibió una inmersión profunda en ecología y relación con sistemas complejos de biodiversidad.
               </p>
               <p>
-                Al regresar a España en 2010, fundó Equitracción con una visión clara: <strong>demostrar que la tracción animal no es un retroceso tecnológico, sino una solución avanzada</strong> que responde simultáneamente a la crisis ecológica y a la desconexión humana.
+                Después de este largo periplo de viajes y estudios de campo motivados por sus inquietudes personales, volvió a Europa donde trabajó como empresario en los sectores de náutica y hostelería, aunque a partir de 2010 fue dejando la esfera de los negocios para centrarse cada vez con más pasión en el trabajo con la naturaleza, el mundo equino y el crecimiento personal.
               </p>
               <p>
-                Hoy, 15 años después, Equitracción es referente internacional en silvicultura sostenible y desarrollo personal asistido por caballos.
+                Se formó como técnico equino bajo la guía de maestros como Francesco Vedani, Oscar Scarpati, Lussy Rees y David Alonso. En 2011 fundó el centro OMCAVALIA en Ibiza, orientado al trabajo de meditación con animales y al vínculo humano-equino.
+              </p>
+              <p>
+                En 2023 Roberto Contaldo impulsó la creación de la Fundación EquiTracción, una institución sin ánimo de lucro dedicada a investigar, difundir y promover la "energía de la fuerza animal" en ámbitos agro-forestales y ecológicos.
+              </p>
+              <p>
+                Recientemente, la sede de la Fundación ha sido trasladada desde Ibiza hasta el municipio de Talaveruela de la Vera, en la comarca de La Vera (Extremadura), integrándose con el proyecto de la eco-aldea "La Covacha" junto a Isabel Vizcaíno.
               </p>
             </div>
           </div>
@@ -80,8 +159,84 @@ import Button from '../components/Button.astro';
       </div>
     </section>
 
+    <!-- Aportaciones y Filosofía -->
+    <section class="pt-24 pb-12 bg-white">
+      <div class="max-w-5xl mx-auto px-6 lg:px-16">
+        <div class="text-center mb-12">
+          <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
+            Marco conceptual
+          </span>
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-6 text-[rgb(var(--color-text-primary))]">
+            Aportaciones y filosofía
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))] max-w-3xl mx-auto">
+            La filosofía de Roberto Contaldo articula tres ejes:
+          </p>
+        </div>
+
+        <div class="space-y-8">
+          <!-- Eje 1 -->
+          <div class="bg-[rgb(var(--color-beige-linen))] p-8 rounded-2xl">
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-[rgb(var(--color-b2c-primary))] flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-heading font-bold text-xl mb-3 text-[rgb(var(--color-text-primary))]">
+                  Bienestar y vínculo humano-equino
+                </h3>
+                <p class="text-lg text-[rgb(var(--color-gray-medium))]">
+                  Considera que los caballos no son meras herramientas, sino compañeros de aprendizaje y conexión con lo vivo.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Eje 2 -->
+          <div class="bg-[rgb(var(--color-beige-linen))] p-8 rounded-2xl">
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-[rgb(var(--color-b2b-primary))] flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-heading font-bold text-xl mb-3 text-[rgb(var(--color-text-primary))]">
+                  Innovación ecológica
+                </h3>
+                <p class="text-lg text-[rgb(var(--color-gray-medium))]">
+                  La tracción animal moderna y los robots forestales se combinan con técnicas tradicionales para un modelo productivo sostenible que reduzca impacto, evite compactación, y reintegre la naturaleza al trabajo del campo.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Eje 3 -->
+          <div class="bg-[rgb(var(--color-beige-linen))] p-8 rounded-2xl">
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-[rgb(var(--color-brand-primary))] flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-heading font-bold text-xl mb-3 text-[rgb(var(--color-text-primary))]">
+                  Actitud regenerativa y holística
+                </h3>
+                <p class="text-lg text-[rgb(var(--color-gray-medium))]">
+                  El trabajo técnico debe venir acompañado de una transformación interna del operador, del vínculo con la máquina, con el animal, con el bosque y con la comunidad. La coherencia emocional del "trabajador del campo" es clave.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Misión y Valores -->
-    <section id="valores" class="py-24 bg-[rgb(var(--color-beige-linen))]">
+    <section id="valores" class="pt-12 pb-24 bg-white">
       <div class="max-w-7xl mx-auto px-6 lg:px-16">
         <div class="text-center mb-16">
           <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
@@ -94,7 +249,7 @@ import Button from '../components/Button.astro';
 
         <div class="grid md:grid-cols-2 gap-12 mb-16">
           <!-- Misión -->
-          <div class="bg-white p-8 rounded-2xl shadow-sm">
+          <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
             <div class="w-14 h-14 rounded-lg bg-[rgb(var(--color-brand-primary))] flex items-center justify-center mb-6">
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -109,7 +264,7 @@ import Button from '../components/Button.astro';
           </div>
 
           <!-- Visión -->
-          <div class="bg-white p-8 rounded-2xl shadow-sm">
+          <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
             <div class="w-14 h-14 rounded-lg bg-[rgb(var(--color-b2c-primary))] flex items-center justify-center mb-6">
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -186,124 +341,365 @@ import Button from '../components/Button.astro';
       </div>
     </section>
 
-    <!-- Línea de tiempo -->
+    <!-- Proyecto Monte Esquela -->
+    <section class="py-24 bg-[rgb(var(--color-beige-linen))]">
+      <div class="max-w-4xl mx-auto px-6 lg:px-16">
+        <!-- Subtítulo -->
+        <div class="text-center mb-8">
+          <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm block">
+            Innovación en acción
+          </span>
+        </div>
+
+        <!-- Imagen -->
+        <div class="mb-10">
+          <div class="bg-white p-6 rounded-2xl shadow-lg">
+            <img
+              src="/images/monte-esquela.png"
+              alt="Monte Esquela - Coto Sierra Monte Protector de Talaveruela y Valverde"
+              class="w-full h-auto rounded-xl"
+            />
+          </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="space-y-4 text-lg text-[rgb(var(--color-gray-medium))]">
+          <p>
+            En la ladera de La Vera, la Fundación desarrolla un proyecto piloto en el monte denominado "Monte Esquela", orientado a la prevención de incendios y la regeneración productiva del paisaje. Entre sus componentes se encuentran:
+          </p>
+
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[rgb(var(--color-brand-primary))] flex items-center justify-center mt-1">
+                <span class="text-white text-xs">✓</span>
+              </span>
+              <span><strong class="text-[rgb(var(--color-text-primary))]">Robots forestales de última generación:</strong> vehículos teledirigidos para intervención en el sotobosque, en zonas de difícil acceso o de riesgo para el operario.</span>
+            </li>
+
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[rgb(var(--color-brand-primary))] flex items-center justify-center mt-1">
+                <span class="text-white text-xs">✓</span>
+              </span>
+              <span><strong class="text-[rgb(var(--color-text-primary))]">Tracción animal moderna y métodos tradicionales:</strong> caballos, mulos, burros como medio de trabajo respetuoso con el suelo, complementando la maquinaria convencional.</span>
+            </li>
+
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[rgb(var(--color-brand-primary))] flex items-center justify-center mt-1">
+                <span class="text-white text-xs">✓</span>
+              </span>
+              <span><strong class="text-[rgb(var(--color-text-primary))]">Ganado "bombero":</strong> en este caso la raza autóctona Cabra Verata, utilizada para control de vegetación, limpieza de sotobosque, recuperación de pastizales.</span>
+            </li>
+
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[rgb(var(--color-brand-primary))] flex items-center justify-center mt-1">
+                <span class="text-white text-xs">✓</span>
+              </span>
+              <span><strong class="text-[rgb(var(--color-text-primary))]">Recuperación de líneas de agua y manantiales,</strong> rehabilitación de caminos, majadas, con el doble fin de ecoturismo (vivencias como "cabrero por un fin de semana", "fin de semana entre mulos", "tracking con cabras portadoras") y educación ambiental.</span>
+            </li>
+          </ul>
+
+          <p class="pt-4">
+            Este enfoque combina la prevención activa (robots + animales + técnicas), la regeneración del territorio, la oferta de experiencias para ecoturistas y voluntarios que contribuyan a difundir conciencia ambiental.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Línea de tiempo: Journey Map Evolutivo -->
     <section class="py-24 bg-white">
-      <div class="max-w-5xl mx-auto px-6 lg:px-16">
+      <div class="max-w-7xl mx-auto px-6 lg:px-16">
         <div class="text-center mb-16">
           <span class="text-[rgb(var(--color-brand-secondary))] font-semibold uppercase tracking-wider text-sm mb-4 block">
             Nuestro camino
           </span>
-          <h2 class="font-heading font-bold text-4xl md:text-5xl text-[rgb(var(--color-text-primary))]">
+          <h2 class="font-heading font-bold text-4xl md:text-5xl mb-4 text-[rgb(var(--color-text-primary))]">
             15 años de evolución
           </h2>
+          <p class="text-xl text-[rgb(var(--color-gray-medium))] max-w-2xl mx-auto">
+            Un viaje de transformación desde las raíces hasta el bosque completo
+          </p>
         </div>
 
-        <div class="space-y-12">
-          <!-- 2010 -->
-          <div class="flex gap-6 items-start">
-            <div class="flex-shrink-0 w-24 text-right">
-              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2010</span>
+        <!-- Barra de progreso visual superior - STICKY -->
+        <div id="journey-progress-bar" class="mb-16 sticky top-20 z-30 bg-white/95 backdrop-blur-sm py-6 -mx-6 px-6 lg:-mx-16 lg:px-16 transition-all duration-300">
+          <div class="relative max-w-4xl mx-auto">
+            <!-- Fases visuales del journey - Minimalistas -->
+            <div class="flex justify-between mb-4">
+              <div class="flex-1 text-center phase-indicator" data-phase="0">
+                <div class="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-300 bg-white text-gray-400 mb-2 transform transition-all duration-300">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <!-- Icono de raíces: líneas que bajan como raíces -->
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m0 0l-4-4m4 4l4-4M8 12l-2 2m10-2l2 2M8 8l-3 3m14-3l3 3"/>
+                  </svg>
+                </div>
+                <p class="font-heading font-medium text-xs text-gray-400">Raíces</p>
+              </div>
+
+              <div class="flex-1 text-center phase-indicator" data-phase="1">
+                <div class="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-300 bg-white text-gray-400 mb-2 transform transition-all duration-300">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <!-- Icono de planta creciendo: tallo con hojas -->
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20V4m0 0C10 6 8 8 6 10c0 0 2-1 6-1m0-5c2 2 4 4 6 6 0 0-2-1-6-1m-3 7c0 0 1.5 2 3 2s3-2 3-2"/>
+                  </svg>
+                </div>
+                <p class="font-heading font-medium text-xs text-gray-400">Crecimiento</p>
+              </div>
+
+              <div class="flex-1 text-center phase-indicator" data-phase="2">
+                <div class="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-300 bg-white text-gray-400 mb-2 transform transition-all duration-300">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <!-- Icono de flor: pétalos alrededor de centro -->
+                    <circle cx="12" cy="12" r="2" stroke-width="2"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v3m0 14v3M2 12h3m14 0h3M4.929 4.929l2.121 2.121m9.9 9.9l2.121 2.121M4.929 19.071l2.121-2.121m9.9-9.9l2.121-2.121"/>
+                  </svg>
+                </div>
+                <p class="font-heading font-medium text-xs text-gray-400">Florecimiento</p>
+              </div>
             </div>
-            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
-              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-brand-primary))]"></div>
+
+            <!-- Barra de progreso animada - Minimalista -->
+            <div class="relative h-1 bg-gray-100 rounded-full overflow-hidden">
+              <div id="journey-progress" class="absolute top-0 left-0 h-full bg-[rgb(var(--color-brand-primary))] rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
             </div>
-            <div class="flex-1 pb-12">
-              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
-                Fundación de Equitracción
-              </h3>
-              <p class="text-[rgb(var(--color-gray-medium))]">
-                Roberto regresa de la Amazonía y establece Equitracción en Talaveruela de la Vera, Extremadura. Primeros contratos forestales con administraciones locales.
+
+            <!-- Indicador de progreso numérico - Discreto -->
+            <div class="text-center mt-3">
+              <p class="text-xs text-gray-400">
+                <span id="progress-percentage" class="font-medium text-gray-600">0%</span>
               </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline Cards -->
+        <div class="space-y-8" id="timeline-container">
+          <!-- FASE 1: RAÍCES (2010-2013) -->
+
+          <!-- 2010 -->
+          <div class="timeline-card opacity-0 transform translate-y-8" data-year="2010" data-phase="0" data-index="0">
+            <div class="bg-white rounded-xl transition-all duration-300 overflow-hidden">
+              <div class="p-8 md:p-10 text-center">
+                <div class="flex flex-col items-center gap-6">
+                  <!-- Icono discreto -->
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Contenido -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                      <span class="font-bold text-gray-900" style="font-size: 30px;">2010</span>
+                      <span class="text-gray-400" style="font-size: 30px;">Raíces</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-2xl mb-3 text-gray-900">
+                      Regreso de la Amazonía
+                    </h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                      Roberto Contaldo regresa de su periplo vital por el Norte y el Sur de América y va integrando los conocimientos adquiridos mientras se desenvuelve profesionalmente al mando de empresas en el sector náutico y la hostelería en Ibiza.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- 2013 -->
-          <div class="flex gap-6 items-start">
-            <div class="flex-shrink-0 w-24 text-right">
-              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2013</span>
-            </div>
-            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
-              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-b2b-primary))]"></div>
-            </div>
-            <div class="flex-1 pb-12">
-              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
-                Expansión a Península Ibérica
-              </h3>
-              <p class="text-[rgb(var(--color-gray-medium))]">
-                Primeros proyectos en espacios naturales protegidos. Colaboración con Parques Nacionales.
-              </p>
+          <div class="timeline-card opacity-0 transform translate-y-8" data-year="2013" data-phase="0" data-index="1">
+            <div class="bg-white rounded-xl transition-all duration-300 overflow-hidden">
+              <div class="p-8 md:p-10 text-center">
+                <div class="flex flex-col items-center gap-6">
+                  <!-- Icono discreto -->
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Contenido -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                      <span class="font-bold text-gray-900" style="font-size: 30px;">2013</span>
+                      <span class="text-gray-400" style="font-size: 30px;">Raíces</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-2xl mb-3 text-gray-900">
+                      Expansión a Península Ibérica
+                    </h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                      Primeros proyectos en espacios naturales protegidos. Colaboración con Parques Nacionales.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
+          <!-- FASE 2: CRECIMIENTO (2016-2019) -->
+
           <!-- 2016 -->
-          <div class="flex gap-6 items-start">
-            <div class="flex-shrink-0 w-24 text-right">
-              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2016</span>
-            </div>
-            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
-              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-b2c-primary))]"></div>
-            </div>
-            <div class="flex-1 pb-12">
-              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
-                Inicio Desarrollo Personal
-              </h3>
-              <p class="text-[rgb(var(--color-gray-medium))]">
-                Lanzamiento de programas de crecimiento personal asistido por caballos. Primera formación en tracción animal.
-              </p>
+          <div class="timeline-card opacity-0 transform translate-y-8" data-year="2016" data-phase="1" data-index="2">
+            <div class="bg-white rounded-xl transition-all duration-300 overflow-hidden">
+              <div class="p-8 md:p-10 text-center">
+                <div class="flex flex-col items-center gap-6">
+                  <!-- Icono discreto -->
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Contenido -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                      <span class="font-bold text-gray-900" style="font-size: 30px;">2016</span>
+                      <span class="text-gray-400" style="font-size: 30px;">Crecimiento</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-2xl mb-3 text-gray-900">
+                      Implementación de Coaching Personal
+                    </h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                      Lanzamiento de programas de crecimiento personal asistido por caballos. Primera formación en tracción animal.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- 2019 -->
-          <div class="flex gap-6 items-start">
-            <div class="flex-shrink-0 w-24 text-right">
-              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2019</span>
-            </div>
-            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
-              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-b2b-accent))]"></div>
-            </div>
-            <div class="flex-1 pb-12">
-              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
-                Reconocimiento Internacional
-              </h3>
-              <p class="text-[rgb(var(--color-gray-medium))]">
-                Participación en congresos europeos de silvicultura sostenible. Superamos las 1,000 hectáreas gestionadas.
-              </p>
+          <div class="timeline-card opacity-0 transform translate-y-8" data-year="2019" data-phase="1" data-index="3">
+            <div class="bg-white rounded-xl transition-all duration-300 overflow-hidden">
+              <div class="p-8 md:p-10 text-center">
+                <div class="flex flex-col items-center gap-6">
+                  <!-- Icono discreto -->
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Contenido -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                      <span class="font-bold text-gray-900" style="font-size: 30px;">2019</span>
+                      <span class="text-gray-400" style="font-size: 30px;">Crecimiento</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-2xl mb-3 text-gray-900">
+                      Reconocimiento Internacional
+                    </h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                      Participación en congresos europeos de silvicultura sostenible. Superamos las 1,000 hectáreas gestionadas.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
+          <!-- FASE 3: FLORECIMIENTO (2022-2025) -->
+
           <!-- 2022 -->
-          <div class="flex gap-6 items-start">
-            <div class="flex-shrink-0 w-24 text-right">
-              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2022</span>
+          <div class="timeline-card opacity-0 transform translate-y-8" data-year="2022" data-phase="2" data-index="4">
+            <div class="bg-white rounded-xl transition-all duration-300 overflow-hidden">
+              <div class="p-8 md:p-10 text-center">
+                <div class="flex flex-col items-center gap-6">
+                  <!-- Icono discreto -->
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Contenido -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                      <span class="font-bold text-gray-900" style="font-size: 30px;">2022</span>
+                      <span class="text-gray-400" style="font-size: 30px;">Florecimiento</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-2xl mb-3 text-gray-900">
+                      Modelo Dual Consolidado
+                    </h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                      Equilibrio perfecto entre servicios forestales B2B y desarrollo personal B2C. Más de 350 personas acompañadas.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
-              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-b2c-accent))]"></div>
-            </div>
-            <div class="flex-1 pb-12">
-              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
-                Modelo Dual Consolidado
-              </h3>
-              <p class="text-[rgb(var(--color-gray-medium))]">
-                Equilibrio perfecto entre servicios forestales B2B y desarrollo personal B2C. +350 personas acompañadas.
-              </p>
+          </div>
+
+          <!-- 2023 -->
+          <div class="timeline-card opacity-0 transform translate-y-8" data-year="2023" data-phase="2" data-index="5">
+            <div class="bg-white rounded-xl transition-all duration-300 overflow-hidden">
+              <div class="p-8 md:p-10 text-center">
+                <div class="flex flex-col items-center gap-6">
+                  <!-- Icono discreto -->
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Contenido -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                      <span class="font-bold text-gray-900" style="font-size: 30px;">2023</span>
+                      <span class="text-gray-400" style="font-size: 30px;">Florecimiento</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-2xl mb-3 text-gray-900">
+                      Convenio con la Universidad de Granada
+                    </h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                      La Fundación firma un convenio de formación y acciones de voluntariado en áreas rurales en colaboración con la Universidad de Granada.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- 2025 -->
-          <div class="flex gap-6 items-start">
-            <div class="flex-shrink-0 w-24 text-right">
-              <span class="font-heading font-bold text-2xl text-[rgb(var(--color-brand-primary))]">2025</span>
-            </div>
-            <div class="flex-shrink-0 w-px bg-[rgb(var(--color-gray-light))] h-full relative">
-              <div class="absolute -left-2 top-0 w-5 h-5 rounded-full bg-[rgb(var(--color-brand-secondary))]"></div>
-            </div>
-            <div class="flex-1">
-              <h3 class="font-heading font-semibold text-xl mb-2 text-[rgb(var(--color-text-primary))]">
-                Presente y Futuro
-              </h3>
-              <p class="text-[rgb(var(--color-gray-medium))]">
-                Consolidación como referente en tracción animal. Nuevos programas formativos y expansión de servicios de consultoría.
-              </p>
+          <div class="timeline-card opacity-0 transform translate-y-8" data-year="2025" data-phase="2" data-index="6">
+            <div class="bg-white rounded-xl transition-all duration-300 overflow-hidden">
+              <div class="p-8 md:p-10 text-center">
+                <div class="flex flex-col items-center gap-6">
+                  <!-- Icono discreto -->
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Contenido -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                      <span class="font-bold text-gray-900" style="font-size: 30px;">2025</span>
+                      <span class="text-gray-400" style="font-size: 30px;">Florecimiento</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-2xl mb-3 text-gray-900">
+                      Presente y Futuro
+                    </h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                      Consolidación como referente en tracción animal. Nuevos programas formativos y expansión de servicios de consultoría.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -405,10 +801,10 @@ import Button from '../components/Button.astro';
           Ya sea para un proyecto forestal o para explorar tu propio proceso de transformación.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button href="/servicios-forestales" variant="secondary" mode="hybrid" class="text-lg">
+          <Button href="/servicios-forestales" variant="secondary" mode="hybrid" class="text-lg !text-white !border-white">
             Servicios Forestales
           </Button>
-          <Button href="/desarrollo-personal" variant="secondary" mode="hybrid" class="text-lg">
+          <Button href="/desarrollo-personal" variant="secondary" mode="hybrid" class="text-lg !text-white !border-white">
             Desarrollo Personal
           </Button>
           <Button href="/contacto" variant="primary" mode="hybrid" class="text-lg">
@@ -421,3 +817,299 @@ import Button from '../components/Button.astro';
 
   <Footer />
 </BaseLayout>
+
+<style>
+  /* Animaciones minimalistas para el Journey Map */
+
+  /* Cards de timeline - Transición suave */
+  .timeline-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .timeline-card.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Efecto hover discreto en las cards */
+  .timeline-card:hover {
+    transform: translateY(-2px) !important;
+  }
+
+  /* Animación de los phase indicators cuando están activos - Minimalista */
+  .phase-indicator.active > div {
+    border-color: rgb(var(--color-brand-primary));
+    background-color: rgb(var(--color-brand-primary));
+    color: white;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+  }
+
+  .phase-indicator.active > p {
+    color: rgb(var(--color-brand-primary));
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  /* Transición suave del progreso */
+  #journey-progress {
+    transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Sticky progress bar - Shadow cuando está pegado */
+  #journey-progress-bar {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    transition: box-shadow 0.3s ease;
+  }
+
+  #journey-progress-bar.stuck {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Responsive: mejorar experiencia en mobile */
+  @media (max-width: 768px) {
+    .timeline-card {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    #journey-progress-bar {
+      top: 60px;
+    }
+  }
+
+  /* Accesibilidad: respetar preferencias de movimiento reducido */
+  @media (prefers-reduced-motion: reduce) {
+    .timeline-card,
+    #journey-progress,
+    .phase-indicator > div,
+    .phase-indicator > p {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Sistema de Journey Map Cognitivo - Versión minimalista
+  document.addEventListener('DOMContentLoaded', () => {
+    // Funcionalidad del video con CTA
+    const videoCta = document.getElementById('video-cta');
+    const videoContainer = document.getElementById('video-container');
+    const historiaVideo = document.getElementById('historia-video');
+
+    if (videoCta && videoContainer && historiaVideo) {
+      videoCta.addEventListener('click', () => {
+        // Ocultar el CTA con animación
+        videoCta.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
+        videoCta.style.opacity = '0';
+        videoCta.style.transform = 'scale(0.95)';
+
+        setTimeout(() => {
+          videoCta.classList.add('hidden');
+
+          // Mostrar el video con animación
+          videoContainer.classList.remove('hidden');
+          videoContainer.style.opacity = '0';
+          videoContainer.style.transform = 'translateY(20px)';
+
+          // Forzar reflow
+          videoContainer.offsetHeight;
+
+          videoContainer.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+          videoContainer.style.opacity = '1';
+          videoContainer.style.transform = 'translateY(0)';
+
+          // Reproducir el video automáticamente
+          historiaVideo.play().catch(err => {
+            console.log('Autoplay prevented:', err);
+          });
+        }, 400);
+      });
+    }
+
+    // Sistema de timeline continúa aquí...
+    const timelineCards = document.querySelectorAll('.timeline-card');
+    const progressBar = document.getElementById('journey-progress');
+    const progressPercentage = document.getElementById('progress-percentage');
+    const phaseIndicators = document.querySelectorAll('.phase-indicator');
+    const progressBarContainer = document.getElementById('journey-progress-bar');
+
+    const totalCards = timelineCards.length;
+    let visibleCards = 0;
+    let currentPhase = -1;
+
+    // Detectar cuando la barra de progreso está sticky
+    if (progressBarContainer) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) {
+            progressBarContainer.classList.add('stuck');
+          } else {
+            progressBarContainer.classList.remove('stuck');
+          }
+        },
+        { threshold: [1], rootMargin: '-80px 0px 0px 0px' }
+      );
+
+      observer.observe(progressBarContainer);
+    }
+
+    // Función para actualizar la barra de progreso
+    function updateProgress() {
+      const percentage = Math.round((visibleCards / totalCards) * 100);
+      progressBar.style.width = `${percentage}%`;
+      progressPercentage.textContent = `${percentage}%`;
+    }
+
+    // Función para activar el indicador de fase correspondiente
+    function updatePhaseIndicators(phase) {
+      if (phase !== currentPhase && phase >= 0) {
+        // Remover clase active de todos los indicadores
+        phaseIndicators.forEach(indicator => {
+          indicator.classList.remove('active');
+        });
+
+        // Activar el indicador actual y los anteriores
+        for (let i = 0; i <= phase; i++) {
+          if (phaseIndicators[i]) {
+            phaseIndicators[i].classList.add('active');
+          }
+        }
+
+        currentPhase = phase;
+      }
+    }
+
+    // Intersection Observer para las cards
+    const cardObserverOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
+          // Añadir clase visible a la card
+          entry.target.classList.add('visible');
+          visibleCards++;
+          updateProgress();
+
+          // Actualizar fase
+          const phase = parseInt(entry.target.getAttribute('data-phase'));
+          updatePhaseIndicators(phase);
+
+          // Opcional: pequeño delay entre cards para efecto cascada
+          const index = parseInt(entry.target.getAttribute('data-index'));
+          entry.target.style.transitionDelay = `${index * 0.1}s`;
+        }
+      });
+    }, cardObserverOptions);
+
+    // Observar todas las cards
+    timelineCards.forEach(card => {
+      cardObserver.observe(card);
+    });
+
+    // Sistema de detección de scroll para ajuste fino del progreso
+    let ticking = false;
+
+    function updateProgressOnScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Calcular progreso basado en el scroll actual
+          const timelineSection = document.querySelector('#timeline-container');
+          if (timelineSection) {
+            const rect = timelineSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const sectionHeight = rect.height;
+
+            // Si la sección está visible
+            if (rect.top < windowHeight && rect.bottom > 0) {
+              // Calcular qué porcentaje de la sección ha sido scrolleado
+              const scrolled = Math.max(0, windowHeight - rect.top);
+              const totalScrollable = sectionHeight + windowHeight;
+              const scrollPercentage = Math.min(100, (scrolled / totalScrollable) * 100);
+
+              // Actualizar visualmente (esto da feedback continuo mientras se hace scroll)
+              if (scrollPercentage > parseInt(progressPercentage.textContent)) {
+                progressBar.style.width = `${scrollPercentage}%`;
+                progressPercentage.textContent = `${Math.round(scrollPercentage)}%`;
+              }
+            }
+          }
+
+          ticking = false;
+        });
+
+        ticking = true;
+      }
+    }
+
+    // Escuchar scroll para actualización fluida
+    window.addEventListener('scroll', updateProgressOnScroll, { passive: true });
+
+    // Mejorar accesibilidad: anunciar progreso a lectores de pantalla
+    function announceProgress(percentage) {
+      const announcement = document.createElement('div');
+      announcement.setAttribute('role', 'status');
+      announcement.setAttribute('aria-live', 'polite');
+      announcement.className = 'sr-only';
+      announcement.textContent = `Progreso del recorrido histórico: ${percentage}%`;
+      document.body.appendChild(announcement);
+
+      setTimeout(() => {
+        document.body.removeChild(announcement);
+      }, 1000);
+    }
+
+    // Anunciar cuando se alcancen hitos importantes
+    let lastAnnouncedMilestone = 0;
+    const milestones = [25, 50, 75, 100];
+
+    const progressObserver = new MutationObserver(() => {
+      const currentProgress = parseInt(progressPercentage.textContent);
+
+      milestones.forEach(milestone => {
+        if (currentProgress >= milestone && lastAnnouncedMilestone < milestone) {
+          announceProgress(milestone);
+          lastAnnouncedMilestone = milestone;
+        }
+      });
+    });
+
+    if (progressPercentage) {
+      progressObserver.observe(progressPercentage, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    }
+
+    // Limpiar al desmontar
+    window.addEventListener('beforeunload', () => {
+      cardObserver.disconnect();
+      progressObserver.disconnect();
+    });
+  });
+
+  // Respeto por las preferencias de movimiento reducido
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .timeline-card,
+      #journey-progress,
+      .phase-indicator > div,
+      .phase-indicator > p {
+        transition: none !important;
+        animation: none !important;
+      }
+
+      .timeline-card {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+</script>

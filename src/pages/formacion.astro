@@ -3,6 +3,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
+import { supabase } from '../lib/supabase';
+import type { Course, CourseDate } from '../lib/supabase';
+
+// Obtener cursos activos con fechas futuras
+const { data: courses } = await supabase
+  .from('courses')
+  .select('*')
+  .eq('active', true)
+  .order('created_at', { ascending: false });
+
+// Procesar cursos y sus fechas
+const upcomingCourses: Array<{
+  course: Course;
+  date: CourseDate;
+}> = [];
+
+const now = new Date();
+
+courses?.forEach((course: Course) => {
+  course.dates.forEach((date: CourseDate) => {
+    if (new Date(date.start) > now) {
+      upcomingCourses.push({ course, date });
+    }
+  });
+});
+
+// Ordenar por fecha
+upcomingCourses.sort((a, b) =>
+  new Date(a.date.start).getTime() - new Date(b.date.start).getTime()
+);
 ---
 
 <BaseLayout
@@ -356,53 +386,56 @@ import Button from '../components/Button.astro';
         </div>
 
         <div class="space-y-4">
-          <!-- Fecha 1 -->
-          <div class="border-2 border-[rgb(var(--color-gray-light))] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[rgb(var(--color-brand-primary))] transition-colors">
-            <div>
-              <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-[rgb(var(--color-brand-primary),0.1)] text-[rgb(var(--color-brand-primary))] mb-2">
-                Iniciación
-              </span>
-              <h3 class="font-heading font-semibold text-xl text-[rgb(var(--color-text-primary))]">
-                15-17 Diciembre 2025
-              </h3>
-              <p class="text-[rgb(var(--color-gray-medium))]">Talaveruela de la Vera • 3 plazas disponibles</p>
-            </div>
-            <Button href="/contacto" variant="primary" mode="hybrid">
-              Reservar
-            </Button>
-          </div>
+          {upcomingCourses.length > 0 ? (
+            upcomingCourses.map(({ course, date }) => {
+              const startDate = new Date(date.start);
+              const endDate = new Date(date.end);
+              const dateFormat = new Intl.DateTimeFormat('es-ES', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              });
 
-          <!-- Fecha 2 -->
-          <div class="border-2 border-[rgb(var(--color-gray-light))] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[rgb(var(--color-brand-primary))] transition-colors">
-            <div>
-              <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-[rgb(var(--color-b2b-primary),0.1)] text-[rgb(var(--color-b2b-primary))] mb-2">
-                Avanzado
-              </span>
-              <h3 class="font-heading font-semibold text-xl text-[rgb(var(--color-text-primary))]">
-                20-24 Enero 2026
-              </h3>
-              <p class="text-[rgb(var(--color-gray-medium))]">Talaveruela de la Vera • 2 plazas disponibles</p>
+              return (
+                <div class="border-2 border-[rgb(var(--color-gray-light))] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[rgb(var(--color-brand-primary))] transition-colors">
+                  <div class="flex-1">
+                    <span class={`inline-block px-3 py-1 rounded-full text-sm font-semibold mb-2 ${
+                      course.experience_level === 'Iniciación'
+                        ? 'bg-[rgb(var(--color-brand-primary),0.1)] text-[rgb(var(--color-brand-primary))]'
+                        : course.experience_level === 'Avanzado'
+                        ? 'bg-[rgb(var(--color-b2b-primary),0.1)] text-[rgb(var(--color-b2b-primary))]'
+                        : 'bg-[rgb(var(--color-b2c-primary),0.1)] text-[rgb(var(--color-b2c-primary))]'
+                    }`}>
+                      {course.experience_level}
+                    </span>
+                    <h3 class="font-heading font-semibold text-xl text-[rgb(var(--color-text-primary))] mb-1">
+                      {course.title}
+                    </h3>
+                    <p class="text-[rgb(var(--color-text-primary))] font-medium mb-1">
+                      {startDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })} - {dateFormat.format(endDate)}
+                    </p>
+                    <p class="text-[rgb(var(--color-gray-medium))]">
+                      {course.location} · {date.spots_available} plazas disponibles · {course.price}€
+                    </p>
+                  </div>
+                  <Button href="/contacto" variant="primary" mode="hybrid">
+                    Reservar
+                  </Button>
+                </div>
+              );
+            })
+          ) : (
+            <div class="text-center py-12 bg-gray-50 rounded-xl">
+              <p class="text-[rgb(var(--color-gray-medium))] text-lg">
+                No hay convocatorias programadas en este momento.
+              </p>
+              <p class="text-[rgb(var(--color-gray-medium))] mt-2">
+                <a href="/contacto" class="text-[rgb(var(--color-brand-primary))] hover:underline font-semibold">
+                  Contáctanos
+                </a> para ser el primero en enterarte de las próximas fechas.
+              </p>
             </div>
-            <Button href="/contacto" variant="primary" mode="b2b">
-              Reservar
-            </Button>
-          </div>
-
-          <!-- Fecha 3 -->
-          <div class="border-2 border-[rgb(var(--color-gray-light))] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[rgb(var(--color-brand-primary))] transition-colors">
-            <div>
-              <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-[rgb(var(--color-brand-primary),0.1)] text-[rgb(var(--color-brand-primary))] mb-2">
-                Iniciación
-              </span>
-              <h3 class="font-heading font-semibold text-xl text-[rgb(var(--color-text-primary))]">
-                10-12 Marzo 2026
-              </h3>
-              <p class="text-[rgb(var(--color-gray-medium))]">Talaveruela de la Vera • 6 plazas disponibles</p>
-            </div>
-            <Button href="/contacto" variant="primary" mode="hybrid">
-              Reservar
-            </Button>
-          </div>
+          )}
         </div>
 
         <p class="text-center text-[rgb(var(--color-gray-medium))] mt-8">
@@ -477,7 +510,7 @@ import Button from '../components/Button.astro';
           Reserva tu plaza o solicita más información sobre nuestros programas formativos.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button href="/contacto" variant="secondary" mode="hybrid" class="text-lg">
+          <Button href="/contacto" variant="secondary" mode="hybrid" class="text-lg !border-white !text-white">
             Solicitar información
           </Button>
           <Button href="tel:+34681298028" variant="primary" mode="hybrid" class="text-lg">

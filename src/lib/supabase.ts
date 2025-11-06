@@ -49,3 +49,28 @@ export interface Newsletter {
   status: 'active' | 'unsubscribed';
   source?: string;
 }
+
+export interface CourseDate {
+  start: string;
+  end: string;
+  spots_available: number;
+  notes?: string;
+}
+
+export interface Course {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  title: string;
+  duration_days: number;
+  level: number;
+  experience_level: 'Iniciación' | 'Intermedio' | 'Avanzado';
+  max_participants: number;
+  price: number;
+  target_audience: string;
+  contents: string;
+  requirements?: string;
+  dates: CourseDate[];
+  location: string;
+  active: boolean;
+}

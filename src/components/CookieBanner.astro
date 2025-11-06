@@ -1,0 +1,116 @@
+---
+---
+
+<div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 z-50 bg-white shadow-2xl border-t border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 py-6 lg:px-16">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <!-- Texto informativo -->
+      <div class="flex-1">
+        <h3 class="font-heading font-bold text-lg text-[rgb(var(--color-text-primary))] mb-2">
+          🍪 Usamos cookies
+        </h3>
+        <p class="text-sm text-[rgb(var(--color-gray-medium))] leading-relaxed">
+          Utilizamos cookies propias y de terceros para mejorar nuestros servicios y mostrarle publicidad relacionada con sus preferencias mediante el análisis de sus hábitos de navegación. Si continua navegando, consideramos que acepta su uso. Puede obtener más información en nuestra
+          <a href="/cookies" class="text-[rgb(var(--color-brand-primary))] hover:underline font-medium">Política de Cookies</a>.
+        </p>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button
+          id="cookie-reject"
+          class="px-6 py-3 border-2 border-gray-300 text-[rgb(var(--color-text-primary))] rounded-lg font-medium hover:bg-gray-50 transition-colors"
+        >
+          Rechazar
+        </button>
+        <button
+          id="cookie-accept"
+          class="px-6 py-3 bg-[rgb(var(--color-brand-primary))] text-white rounded-lg font-medium hover:bg-[rgb(var(--color-brand-secondary))] transition-colors"
+        >
+          Aceptar todas
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Gestión del banner de cookies
+  document.addEventListener('DOMContentLoaded', () => {
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptButton = document.getElementById('cookie-accept');
+    const rejectButton = document.getElementById('cookie-reject');
+
+    // Verificar si el usuario ya ha dado su consentimiento
+    const cookiesAccepted = localStorage.getItem('equitraccion_cookies_accepted');
+
+    if (!cookiesAccepted) {
+      // Mostrar el banner si no hay consentimiento previo
+      cookieBanner?.classList.remove('hidden');
+    }
+
+    // Función para establecer el consentimiento
+    function setCookieConsent(accepted) {
+      const expiryDate = new Date();
+      expiryDate.setFullYear(expiryDate.getFullYear() + 1); // 1 año de validez
+
+      localStorage.setItem('equitraccion_cookies_accepted', accepted ? 'true' : 'false');
+      localStorage.setItem('equitraccion_cookies_date', expiryDate.toISOString());
+
+      // Ocultar el banner
+      cookieBanner?.classList.add('hidden');
+
+      // Si acepta, cargar Google Analytics
+      if (accepted) {
+        loadGoogleAnalytics();
+      }
+    }
+
+    // Función para cargar Google Analytics
+    function loadGoogleAnalytics() {
+      // Descomentar cuando tengas el ID de Google Analytics
+      /*
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+      */
+    }
+
+    // Event listeners
+    acceptButton?.addEventListener('click', () => {
+      setCookieConsent(true);
+    });
+
+    rejectButton?.addEventListener('click', () => {
+      setCookieConsent(false);
+    });
+
+    // Si ya había aceptado antes, cargar Analytics
+    if (cookiesAccepted === 'true') {
+      loadGoogleAnalytics();
+    }
+  });
+</script>
+
+<style>
+  #cookie-banner {
+    animation: slideUp 0.5s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>

@@ -103,11 +103,12 @@ const categories = ['Todas', ...new Set(articles.map(a => a.category))];
               <a href={`/blog/${article.slug}`} class="block group">
                 {/* Imagen */}
                 <div class="aspect-[16/10] bg-[rgb(var(--color-gray-very-light))] overflow-hidden">
-                  <div class="w-full h-full flex items-center justify-center text-[rgb(var(--color-gray-light))]">
-                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
                 </div>
 
                 {/* Contenido */}
@@ -164,21 +165,26 @@ const categories = ['Todas', ...new Set(articles.map(a => a.category))];
           <p class="text-xl text-white/90 mb-8">
             Un email mensual con artículos, casos de estudio y reflexiones sobre silvicultura y crecimiento personal.
           </p>
-          <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <input
               type="email"
+              id="newsletter-email"
+              name="email"
               placeholder="tu@email.com"
               class="flex-1 px-6 py-3 rounded-full text-[rgb(var(--color-text-primary))] focus:outline-none focus:ring-2 focus:ring-white"
               required
             />
             <button
               type="submit"
-              class="px-8 py-3 bg-white text-[rgb(var(--color-brand-primary))] rounded-full font-semibold hover:bg-white/90 transition-colors"
+              id="newsletter-submit"
+              class="px-8 py-3 bg-white text-[rgb(var(--color-brand-primary))] rounded-full font-semibold hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Suscribirme
+              <span id="newsletter-button-text">Suscribirme</span>
+              <span id="newsletter-button-loading" class="hidden">Enviando...</span>
             </button>
           </form>
-          <p class="text-sm text-white/70 mt-4">
+          <p id="newsletter-message" class="text-sm text-white/90 mt-4 hidden"></p>
+          <p id="newsletter-info" class="text-sm text-white/70 mt-4">
             Sin spam. Cancela cuando quieras.
           </p>
         </div>
@@ -218,12 +224,63 @@ const categories = ['Todas', ...new Set(articles.map(a => a.category))];
     });
   });
 
-  // Newsletter form handler (placeholder)
-  const newsletterForm = document.querySelector('form');
-  newsletterForm?.addEventListener('submit', (e) => {
+  // Newsletter form handler
+  const newsletterForm = document.getElementById('newsletter-form') as HTMLFormElement;
+  const newsletterEmail = document.getElementById('newsletter-email') as HTMLInputElement;
+  const newsletterSubmit = document.getElementById('newsletter-submit') as HTMLButtonElement;
+  const newsletterButtonText = document.getElementById('newsletter-button-text') as HTMLSpanElement;
+  const newsletterButtonLoading = document.getElementById('newsletter-button-loading') as HTMLSpanElement;
+  const newsletterMessage = document.getElementById('newsletter-message') as HTMLParagraphElement;
+  const newsletterInfo = document.getElementById('newsletter-info') as HTMLParagraphElement;
+
+  newsletterForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    alert('¡Gracias por suscribirte! (funcionalidad backend pendiente)');
-    newsletterForm.reset();
+
+    const email = newsletterEmail.value.trim();
+
+    // Mostrar estado de carga
+    newsletterSubmit.disabled = true;
+    newsletterButtonText.classList.add('hidden');
+    newsletterButtonLoading.classList.remove('hidden');
+    newsletterMessage.classList.add('hidden');
+
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Éxito
+        newsletterMessage.textContent = data.message;
+        newsletterMessage.classList.remove('hidden');
+        newsletterMessage.classList.remove('text-red-300');
+        newsletterMessage.classList.add('text-white');
+        newsletterInfo.classList.add('hidden');
+        newsletterForm.reset();
+      } else {
+        // Error
+        newsletterMessage.textContent = data.message;
+        newsletterMessage.classList.remove('hidden');
+        newsletterMessage.classList.add('text-red-300');
+        newsletterMessage.classList.remove('text-white');
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      newsletterMessage.textContent = 'Error de conexión. Por favor, intenta de nuevo.';
+      newsletterMessage.classList.remove('hidden');
+      newsletterMessage.classList.add('text-red-300');
+    } finally {
+      // Restaurar botón
+      newsletterSubmit.disabled = false;
+      newsletterButtonText.classList.remove('hidden');
+      newsletterButtonLoading.classList.add('hidden');
+    }
   });
 </script>
 

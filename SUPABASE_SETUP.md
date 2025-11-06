@@ -161,3 +161,111 @@ Para gestionar el blog de forma visual, considera:
 - [Documentación de Supabase](https://supabase.com/docs)
 - [Guía de RLS](https://supabase.com/docs/guides/auth/row-level-security)
 - [Supabase JavaScript Client](https://supabase.com/docs/reference/javascript/introduction)
+
+## 6. Tabla de Cursos (courses)
+
+Esta tabla almacena los cursos de formación con sus convocatorias.
+
+### Crear la tabla
+
+```sql
+-- Tabla de cursos
+CREATE TABLE courses (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  title VARCHAR(200) NOT NULL,
+  duration_days INTEGER NOT NULL,
+  level INTEGER NOT NULL CHECK (level > 0),
+  experience_level VARCHAR(50) NOT NULL, -- 'Iniciación', 'Intermedio', 'Avanzado'
+  max_participants INTEGER NOT NULL CHECK (max_participants > 0),
+  price DECIMAL(10,2) NOT NULL CHECK (price >= 0),
+  target_audience TEXT NOT NULL,
+  contents TEXT NOT NULL,
+  requirements TEXT,
+  dates JSONB NOT NULL, -- Array de fechas de convocatorias
+  location VARCHAR(200) NOT NULL,
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Índices
+CREATE INDEX idx_courses_active ON courses(active);
+CREATE INDEX idx_courses_dates ON courses USING GIN (dates);
+
+-- Trigger para updated_at
+CREATE TRIGGER update_courses_updated_at
+  BEFORE UPDATE ON courses
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
+-- RLS Policies
+ALTER TABLE courses ENABLE ROW LEVEL SECURITY;
+
+-- Lectura pública de cursos activos
+CREATE POLICY "Public read access for active courses" ON courses
+  FOR SELECT USING (active = true);
+
+-- Escritura solo para service_role
+CREATE POLICY "Service role full access" ON courses
+  FOR ALL USING (auth.role() = 'service_role');
+
+-- Comentarios
+COMMENT ON TABLE courses IS 'Cursos de formación con sus convocatorias';
+COMMENT ON COLUMN courses.dates IS 'Array JSON con fechas de convocatorias [{"start": "2025-03-15", "end": "2025-03-18", "spots_available": 12}]';
+```
+
+### Ejemplo de inserción
+
+```sql
+INSERT INTO courses (
+  title,
+  duration_days,
+  level,
+  experience_level,
+  max_participants,
+  price,
+  target_audience,
+  contents,
+  requirements,
+  dates,
+  location
+) VALUES (
+  'Tracción Animal Aplicada a la Silvicultura',
+  4,
+  1,
+  'Iniciación',
+  12,
+  450.00,
+  'Profesionales forestales, propietarios de fincas, personas interesadas en silvicultura sostenible',
+  '- Fundamentos de tracción equina
+- Selección y cuidado de los animales
+- Técnicas de trabajo en bosque
+- Seguridad y prevención de riesgos
+- Práctica en terreno real',
+  'No se requiere experiencia previa. Edad mínima 18 años. Condición física básica.',
+  '[
+    {"start": "2025-03-15", "end": "2025-03-18", "spots_available": 12},
+    {"start": "2025-05-10", "end": "2025-05-13", "spots_available": 12}
+  ]'::jsonb,
+  'Monte Esquela, Talaveruela de la Vera, Cáceres'
+);
+```
+
+### Estructura del campo dates (JSONB)
+
+```json
+[
+  {
+    "start": "2025-03-15",
+    "end": "2025-03-18",
+    "spots_available": 12,
+    "notes": "Convocatoria primavera"
+  },
+  {
+    "start": "2025-05-10",
+    "end": "2025-05-13",
+    "spots_available": 10,
+    "notes": "Última convocatoria antes del verano"
+  }
+]
+```
