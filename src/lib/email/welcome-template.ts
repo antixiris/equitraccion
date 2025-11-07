@@ -24,7 +24,7 @@ export function generateWelcomeEmailHTML(
           <!-- Logo -->
           <tr>
             <td align="left" style="padding-bottom: 32px;">
-              <img src="${baseUrl}/images/logo-equitraccion.png" alt="Equitracción" width="120" height="auto" style="display: block;" />
+              <img src="https://equitraccion.vercel.app/images/logo-equitraccion.png" alt="Equitracción" width="120" height="auto" style="display: block;" />
             </td>
           </tr>
 
