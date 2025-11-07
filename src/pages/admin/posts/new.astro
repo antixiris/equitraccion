@@ -270,18 +270,12 @@ const title = 'Nuevo Post | Equitracción CMS';
 
 <script>
   import { createClient } from '@supabase/supabase-js';
-  import TurndownService from 'turndown';
 
   // Create Supabase client with public env vars
   const supabase = createClient(
     import.meta.env.PUBLIC_SUPABASE_URL,
     import.meta.env.PUBLIC_SUPABASE_ANON_KEY
   );
-
-  const turndownService = new TurndownService({
-    headingStyle: 'atx',
-    codeBlockStyle: 'fenced'
-  });
 
   // Check authentication
   const checkAuth = () => {
@@ -493,9 +487,9 @@ const title = 'Nuevo Post | Equitracción CMS';
     const tagsInput = (document.getElementById('tags') as HTMLInputElement).value.trim();
     const coverImage = (document.getElementById('cover_image') as HTMLInputElement).value.trim();
 
-    // Get content from editor and convert to Markdown
+    // Get content from editor as HTML (keep formatting)
     const editorHtml = document.getElementById('editor')!.innerHTML;
-    const content = turndownService.turndown(editorHtml);
+    const content = editorHtml;
 
     // Validation
     if (!title || !category || !author || !excerpt) {
@@ -503,7 +497,7 @@ const title = 'Nuevo Post | Equitracción CMS';
       return;
     }
 
-    if (!content || content.trim() === '') {
+    if (!content || content.trim() === '' || content.trim() === '<p><br></p>') {
       alert('El contenido del post no puede estar vacío');
       return;
     }
@@ -514,8 +508,11 @@ const title = 'Nuevo Post | Equitracción CMS';
     // Generate slug
     const slug = generateSlug(title);
 
-    // Calculate reading time
-    const wordCount = content.split(/\s+/).length;
+    // Calculate reading time (extract text from HTML for word count)
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content;
+    const textContent = tempDiv.textContent || tempDiv.innerText || '';
+    const wordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
     const readingTime = Math.ceil(wordCount / 200);
 
     document.getElementById('loading-modal')!.classList.remove('hidden');

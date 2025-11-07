@@ -6,10 +6,10 @@ import { supabase } from '../../lib/supabase';
 import type { BlogPost } from '../../lib/supabase';
 import { marked } from 'marked';
 
-// Configure marked options
+// Configure marked options for backward compatibility with old posts
 marked.setOptions({
-  breaks: true,  // Convertir saltos de línea en <br>
-  gfm: true,     // GitHub Flavored Markdown
+  breaks: true,
+  gfm: true,
 });
 
 // Get the slug from the URL
@@ -28,8 +28,9 @@ if (error || !post) {
   return Astro.redirect('/404');
 }
 
-// Convert Markdown to HTML
-const contentHtml = marked.parse(post.content || '');
+// Check if content is HTML or Markdown (HTML starts with tags)
+const isHtml = post.content && post.content.trim().startsWith('<');
+const contentHtml = isHtml ? post.content : marked.parse(post.content || '');
 
 // Map category to display name
 const categoryMap: Record<string, string> = {
