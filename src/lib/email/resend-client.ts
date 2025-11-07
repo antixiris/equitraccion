@@ -9,7 +9,10 @@ const resend = new Resend(import.meta.env.RESEND_API_KEY);
  */
 export async function sendWelcomeEmail(email: string): Promise<{ success: boolean; error?: string }> {
   try {
-    const baseUrl = import.meta.env.SITE_URL || 'https://equitraccion.com';
+    // Usar VERCEL_URL si está disponible, sino SITE_URL, sino fallback
+    const baseUrl = import.meta.env.VERCEL_URL
+      ? `https://${import.meta.env.VERCEL_URL}`
+      : import.meta.env.SITE_URL || 'https://equitraccion.vercel.app';
 
     const { data, error } = await resend.emails.send({
       from: 'Equitracción <newsletter@equitraccion.iasanmiguel.com>',
