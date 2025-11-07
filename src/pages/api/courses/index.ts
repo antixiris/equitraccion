@@ -54,8 +54,16 @@ export const POST: APIRoute = async ({ request, ...context }) => {
   }
 };
 
-export const GET: APIRoute = async () => {
-  try {
+export const GET: APIRoute = async (context) => {
+  // 🔐 Verificar autenticación
+  if (!isAuthenticated(context)) {
+    return new Response(
+      JSON.stringify({ success: false, message: 'No autorizado' }),
+      { status: 401, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  try{
     const { data, error } = await supabaseAdmin
       .from('courses')
       .select('*')

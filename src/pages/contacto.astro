@@ -36,6 +36,16 @@ import Button from '../components/Button.astro';
             </h2>
 
             <form id="contact-form" class="space-y-6">
+              <!-- Honeypot field - hidden from humans, visible to bots -->
+              <input
+                type="text"
+                name="website"
+                id="contact-honeypot"
+                tabindex="-1"
+                autocomplete="off"
+                style="position: absolute; left: -9999px; width: 1px; height: 1px;"
+                aria-hidden="true"
+              />
               <!-- Nombre -->
               <div>
                 <label for="nombre" class="block font-semibold mb-2 text-[rgb(var(--color-text-primary))]">
@@ -301,6 +311,7 @@ import Button from '../components/Button.astro';
         subject: formData.get('asunto') as string,
         message: formData.get('mensaje') as string,
         category: formData.get('tipo') as string,
+        honeypot: formData.get('website') as string,
       };
 
       console.log('Sending data:', data);

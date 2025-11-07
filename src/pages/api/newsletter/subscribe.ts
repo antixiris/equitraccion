@@ -10,6 +10,23 @@ import { checkContactFormRateLimit, getClientIP, createRateLimitResponse } from 
  */
 export const POST: APIRoute = async ({ request }) => {
   try {
+    // Parsear body
+    const body = await request.json();
+    const { email, honeypot } = body;
+
+    // 🍯 Honeypot field - Si está lleno, es un bot
+    if (honeypot) {
+      console.warn('🤖 Bot detected via honeypot field in newsletter');
+      // Responder con éxito falso para confundir al bot
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: '¡Gracias por suscribirte!',
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Rate limiting
     const clientIP = getClientIP(request);
     const rateLimitResult = checkContactFormRateLimit(clientIP);
@@ -18,10 +35,6 @@ export const POST: APIRoute = async ({ request }) => {
       console.warn(`🚫 Rate limit exceeded for newsletter subscription from IP: ${clientIP}`);
       return createRateLimitResponse(rateLimitResult);
     }
-
-    // Parsear body
-    const body = await request.json();
-    const { email } = body;
 
     // Validar email
     const validation = validateEmail(email);

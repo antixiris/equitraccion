@@ -1,9 +1,18 @@
 import type { APIRoute } from 'astro';
 import { supabaseAdmin } from '../../lib/supabase';
+import { isAuthenticated } from '../../lib/auth/jwt';
 
 // GET - List all posts (for admin)
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async (context) => {
   try {
+    // 🔐 Verificar autenticación
+    const authenticated = isAuthenticated(context);
+    if (!authenticated) {
+      return new Response(
+        JSON.stringify({ error: 'No autorizado' }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
     const { data: posts, error } = await supabaseAdmin
       .from('blog_posts')
       .select('*')
@@ -43,8 +52,18 @@ export const GET: APIRoute = async () => {
 };
 
 // POST - Create new post
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async (context) => {
   try {
+    // 🔐 Verificar autenticación
+    const authenticated = isAuthenticated(context);
+    if (!authenticated) {
+      return new Response(
+        JSON.stringify({ error: 'No autorizado' }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const { request } = context;
     const body = await request.json();
     const {
       title,
@@ -127,8 +146,18 @@ export const POST: APIRoute = async ({ request }) => {
 };
 
 // PATCH - Update existing post
-export const PATCH: APIRoute = async ({ request }) => {
+export const PATCH: APIRoute = async (context) => {
   try {
+    // 🔐 Verificar autenticación
+    const authenticated = isAuthenticated(context);
+    if (!authenticated) {
+      return new Response(
+        JSON.stringify({ error: 'No autorizado' }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const { request } = context;
     const body = await request.json();
     const {
       id,
@@ -223,8 +252,18 @@ export const PATCH: APIRoute = async ({ request }) => {
 };
 
 // DELETE - Delete post
-export const DELETE: APIRoute = async ({ request }) => {
+export const DELETE: APIRoute = async (context) => {
   try {
+    // 🔐 Verificar autenticación
+    const authenticated = isAuthenticated(context);
+    if (!authenticated) {
+      return new Response(
+        JSON.stringify({ error: 'No autorizado' }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const { request } = context;
     const body = await request.json();
     const { id } = body;
 

@@ -2,10 +2,20 @@ import type { APIRoute } from 'astro';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
+import { isAuthenticated } from '../../lib/auth/jwt';
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async (context) => {
   try {
-    const formData = await request.formData();
+    // 🔐 Verificar autenticación
+    const authenticated = isAuthenticated(context);
+    if (!authenticated) {
+      return new Response(
+        JSON.stringify({ error: 'No autorizado. Debes iniciar sesión.' }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const formData = await context.request.formData();
     const file = formData.get('image') as File;
 
     if (!file) {
@@ -36,7 +46,17 @@ export const POST: APIRoute = async ({ request }) => {
     // Generate unique filename
     const timestamp = Date.now();
     const randomStr = Math.random().toString(36).substring(2, 8);
-    const extension = file.name.split('.').pop();
+
+    // 🛡️ Mapear MIME type a extensión (no confiar en nombre de archivo)
+    const mimeToExt: Record<string, string> = {
+      'image/jpeg': 'jpg',
+      'image/jpg': 'jpg',
+      'image/png': 'png',
+      'image/webp': 'webp',
+      'image/gif': 'gif'
+    };
+
+    const extension = mimeToExt[file.type] || 'jpg';
     const filename = `${timestamp}-${randomStr}.${extension}`;
 
     // Ensure upload directory exists

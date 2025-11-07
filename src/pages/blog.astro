@@ -166,6 +166,16 @@ const categories = ['Todas', ...new Set(articles.map(a => a.category))];
             Un email mensual con artículos, casos de estudio y reflexiones sobre silvicultura y crecimiento personal.
           </p>
           <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <!-- Honeypot field - hidden from humans, visible to bots -->
+            <input
+              type="text"
+              name="website"
+              id="newsletter-honeypot"
+              tabindex="-1"
+              autocomplete="off"
+              style="position: absolute; left: -9999px; width: 1px; height: 1px;"
+              aria-hidden="true"
+            />
             <input
               type="email"
               id="newsletter-email"
@@ -237,6 +247,7 @@ const categories = ['Todas', ...new Set(articles.map(a => a.category))];
     e.preventDefault();
 
     const email = newsletterEmail.value.trim();
+    const honeypot = document.getElementById('newsletter-honeypot').value;
 
     // Mostrar estado de carga
     newsletterSubmit.disabled = true;
@@ -250,7 +261,7 @@ const categories = ['Todas', ...new Set(articles.map(a => a.category))];
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, honeypot }),
       });
 
       const data = await response.json();
