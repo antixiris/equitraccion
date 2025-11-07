@@ -119,8 +119,8 @@ export const POST: APIRoute = async ({ request }) => {
       .from('newsletter_subscriptions')
       .insert({
         email: email.toLowerCase().trim(),
-        status: 'active',
-        subscribed_at: new Date().toISOString()
+        status: 'active'
+        // Note: created_at will be auto-populated by Supabase
       })
       .select()
       .single();
