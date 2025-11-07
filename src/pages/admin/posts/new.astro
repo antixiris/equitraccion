@@ -374,13 +374,31 @@ const title = 'Nuevo Post | Equitracción CMS';
   // Text formatting
   (window as any).formatText = (command: string) => {
     const editor = document.getElementById('editor')!;
+
+    // Ensure editor has focus
     editor.focus();
+
+    // If editor is empty, add a paragraph first
+    if (editor.innerHTML.trim() === '' || editor.innerHTML === '<br>') {
+      editor.innerHTML = '<p><br></p>';
+      // Set cursor at the end
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(editor);
+      range.collapse(false);
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+    }
 
     switch (command) {
       case 'h1':
+        document.execCommand('formatBlock', false, '<h1>');
+        break;
       case 'h2':
+        document.execCommand('formatBlock', false, '<h2>');
+        break;
       case 'h3':
-        document.execCommand('formatBlock', false, command);
+        document.execCommand('formatBlock', false, '<h3>');
         break;
       case 'bold':
         document.execCommand('bold', false);
@@ -395,7 +413,7 @@ const title = 'Nuevo Post | Equitracción CMS';
         document.execCommand('insertOrderedList', false);
         break;
       case 'blockquote':
-        document.execCommand('formatBlock', false, 'blockquote');
+        document.execCommand('formatBlock', false, '<blockquote>');
         break;
       case 'link':
         const url = prompt('Introduce la URL del enlace:');
@@ -404,6 +422,9 @@ const title = 'Nuevo Post | Equitracción CMS';
         }
         break;
     }
+
+    // Return focus to editor
+    editor.focus();
   };
 
   // Insert image in content
