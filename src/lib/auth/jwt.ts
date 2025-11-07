@@ -48,9 +48,14 @@ export function getTokenFromCookies(context: APIContext): string | null {
  */
 export function isAuthenticated(context: APIContext): boolean {
   const token = getTokenFromCookies(context);
-  if (!token) return false;
-  
+  console.log('🔐 isAuthenticated check - token exists:', !!token);
+  if (!token) {
+    console.log('❌ No token found in cookies');
+    return false;
+  }
+
   const payload = verifyToken(token);
+  console.log('🔐 Token payload:', payload ? 'valid' : 'invalid');
   return payload !== null;
 }
 
