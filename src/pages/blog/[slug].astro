@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { supabase } from '../../lib/supabase';
 import type { BlogPost } from '../../lib/supabase';
+import { marked } from 'marked';
 
 // Get the slug from the URL
 const { slug } = Astro.params;
@@ -20,6 +21,9 @@ const { data: post, error } = await supabase
 if (error || !post) {
   return Astro.redirect('/404');
 }
+
+// Convert Markdown to HTML
+const contentHtml = marked.parse(post.content || '');
 
 // Map category to display name
 const categoryMap: Record<string, string> = {
@@ -157,7 +161,7 @@ const formattedDate = publishedDate.toLocaleDateString('es-ES', {
           prose-pre:bg-[rgb(var(--color-gray-very-light))]
           prose-img:rounded-xl prose-img:shadow-lg
         ">
-          <div set:html={post.content} />
+          <div set:html={contentHtml} />
         </div>
 
         <!-- Share buttons -->
