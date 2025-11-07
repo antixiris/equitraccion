@@ -352,7 +352,7 @@ const title = 'Nuevo Post | Equitracción CMS';
 
   const uploadCoverImage = async (file: File) => {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('file', file);
 
     try {
       const response = await fetch('/api/upload-image', {
@@ -434,7 +434,7 @@ const title = 'Nuevo Post | Equitracción CMS';
     // Upload file if provided
     if (fileInput.files && fileInput.files.length > 0) {
       const formData = new FormData();
-      formData.append('image', fileInput.files[0]);
+      formData.append('file', fileInput.files[0]);
 
       try {
         const response = await fetch('/api/upload-image', {
