@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Si ya está autenticado, redirigir al panel admin
+// Si ya está autenticado, redirigir al dashboard
 import { isAuthenticated } from '../../lib/auth/jwt';
 
 if (isAuthenticated(Astro)) {
-  return Astro.redirect('/admin/posts');
+  return Astro.redirect('/admin');
 }
 ---
 
@@ -135,8 +135,8 @@ if (isAuthenticated(Astro)) {
       if (data.success) {
         // Login exitoso - establecer autenticación en sessionStorage
         sessionStorage.setItem('admin_authenticated', 'true');
-        // Redirigir
-        window.location.href = data.redirect || '/admin/posts';
+        // Redirigir al dashboard
+        window.location.href = data.redirect || '/admin';
       } else {
         // Mostrar error
         errorMessage.textContent = data.message || 'Error al iniciar sesión';

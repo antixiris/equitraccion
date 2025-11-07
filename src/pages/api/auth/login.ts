@@ -107,7 +107,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       JSON.stringify({
         success: true,
         message: 'Autenticación exitosa',
-        redirect: '/admin/posts'
+        redirect: '/admin'
       }),
       {
         status: 200,
