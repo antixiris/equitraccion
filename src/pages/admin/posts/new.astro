@@ -246,6 +246,35 @@ const title = 'Nuevo Post | Equitracción CMS';
             class="w-full px-4 py-2 border border-gray-300 rounded-lg text-base"
           />
         </div>
+
+        <div>
+          <label for="image-size-select" class="block text-base font-medium text-gray-700 mb-2">
+            Tamaño de la imagen
+          </label>
+          <select
+            id="image-size-select"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg text-base"
+          >
+            <option value="small">Pequeña (33%)</option>
+            <option value="medium">Mediana (50%)</option>
+            <option value="large" selected>Grande (75%)</option>
+            <option value="full">Ancho completo (100%)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="image-align-select" class="block text-base font-medium text-gray-700 mb-2">
+            Alineación
+          </label>
+          <select
+            id="image-align-select"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg text-base"
+          >
+            <option value="left">Izquierda</option>
+            <option value="center" selected>Centro</option>
+            <option value="right">Derecha</option>
+          </select>
+        </div>
       </div>
 
       <div class="flex gap-3 justify-end mt-6">
@@ -437,6 +466,8 @@ const title = 'Nuevo Post | Equitracción CMS';
     (document.getElementById('content-image-input') as HTMLInputElement).value = '';
     (document.getElementById('image-url-input') as HTMLInputElement).value = '';
     (document.getElementById('image-alt-input') as HTMLInputElement).value = '';
+    (document.getElementById('image-size-select') as HTMLSelectElement).value = 'large';
+    (document.getElementById('image-align-select') as HTMLSelectElement).value = 'center';
   });
 
   document.getElementById('insert-image-confirm')?.addEventListener('click', async () => {
@@ -477,11 +508,33 @@ const title = 'Nuevo Post | Equitracción CMS';
       return;
     }
 
+    // Get size and alignment preferences
+    const sizeSelect = document.getElementById('image-size-select') as HTMLSelectElement;
+    const alignSelect = document.getElementById('image-align-select') as HTMLSelectElement;
+    const size = sizeSelect.value;
+    const align = alignSelect.value;
+
+    // Map size to width class
+    const sizeClasses: Record<string, string> = {
+      'small': 'w-1/3',
+      'medium': 'w-1/2',
+      'large': 'w-3/4',
+      'full': 'w-full'
+    };
+
+    // Map alignment to classes
+    const alignClasses: Record<string, string> = {
+      'left': 'mr-auto',
+      'center': 'mx-auto',
+      'right': 'ml-auto'
+    };
+
     const editor = document.getElementById('editor')!;
     const img = document.createElement('img');
     img.src = imageUrl;
     img.alt = altInput.value || '';
-    img.className = 'max-w-full h-auto rounded-lg shadow-lg my-4';
+    img.className = `${sizeClasses[size]} h-auto rounded-lg shadow-lg my-4 block ${alignClasses[align]}`;
+    img.style.maxWidth = '100%';
 
     editor.focus();
     const selection = window.getSelection();
@@ -497,6 +550,8 @@ const title = 'Nuevo Post | Equitracción CMS';
     fileInput.value = '';
     urlInput.value = '';
     altInput.value = '';
+    sizeSelect.value = 'large';
+    alignSelect.value = 'center';
   });
 
   // Save post
