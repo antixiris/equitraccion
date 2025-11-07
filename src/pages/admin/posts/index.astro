@@ -177,17 +177,17 @@ const title = 'Gestión de Posts | Equitracción CMS';
     'fundacion': 'Fundación'
   };
 
-  // Load posts
+  // Load posts from API
   const loadPosts = async () => {
     try {
-      const { data: posts, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const response = await fetch('/api/admin/posts/list');
+      const result = await response.json();
 
-      if (error) throw error;
+      if (!result.success) {
+        throw new Error(result.message);
+      }
 
-      allPosts = posts || [];
+      allPosts = result.data || [];
       renderPosts(allPosts);
     } catch (error) {
       console.error('Error loading posts:', error);
