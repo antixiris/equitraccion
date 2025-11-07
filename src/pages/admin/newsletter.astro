@@ -34,13 +34,18 @@ const title = 'Gestionar Newsletter | Equitracción CMS';
               <p class="text-sm text-gray-600">Ver y gestionar suscriptores del boletín</p>
             </div>
           </div>
-          <a
-            href="/api/newsletter/send?preview=true"
-            target="_blank"
-            class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors"
-          >
-            Preview Newsletter
-          </a>
+          <div class="flex items-center gap-4">
+            <a
+              href="/api/newsletter/send?preview=true"
+              target="_blank"
+              class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors"
+            >
+              Preview Newsletter
+            </a>
+            <button id="logout-btn" class="text-base text-gray-600 hover:text-gray-900">
+              Cerrar sesión
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -171,6 +176,13 @@ const title = 'Gestionar Newsletter | Equitracción CMS';
       window.location.href = '/admin/login';
     }
   };
+
+  // Handle logout
+  const logoutBtn = document.getElementById('logout-btn');
+  logoutBtn?.addEventListener('click', () => {
+    sessionStorage.removeItem('admin_authenticated');
+    window.location.href = '/admin/login';
+  });
 
   // Load stats
   const loadStats = async () => {
