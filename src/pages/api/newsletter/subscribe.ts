@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { supabaseAdmin } from '../../../lib/supabase';
 import { validateEmail } from '../../../lib/validation/sanitize';
 import { checkContactFormRateLimit, getClientIP, createRateLimitResponse } from '../../../lib/security/rate-limiter';
+import { sendWelcomeEmail } from '../../../lib/email/resend-client';
 
 /**
  * Endpoint de suscripción al newsletter
@@ -104,10 +105,18 @@ export const POST: APIRoute = async ({ request }) => {
           );
         }
 
+        console.log(`🔄 Newsletter subscription reactivated: ${email}`);
+
+        // Enviar email de bienvenida de nuevo
+        const emailResult = await sendWelcomeEmail(email);
+        if (!emailResult.success) {
+          console.error('Failed to send welcome email on reactivation:', emailResult.error);
+        }
+
         return new Response(
           JSON.stringify({
             success: true,
-            message: '¡Suscripción reactivada! Recibirás nuestro próximo boletín.'
+            message: '¡Suscripción reactivada! Revisa tu email.'
           }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
@@ -138,21 +147,20 @@ export const POST: APIRoute = async ({ request }) => {
 
     console.log(`📧 New newsletter subscription: ${email}`);
 
-    // TODO: Enviar email de confirmación
-    // Aquí deberías integrar con tu servicio de email (SendGrid, Mailgun, etc.)
-    // Ejemplo:
-    /*
-    await sendConfirmationEmail(email, {
-      subject: 'Confirmación de suscripción - Equitracción Newsletter',
-      message: '¡Gracias por suscribirte! Recibirás nuestro boletín mensual con artículos y novedades.'
-    });
-    */
+    // Enviar email de bienvenida
+    const emailResult = await sendWelcomeEmail(email);
+
+    if (!emailResult.success) {
+      console.error('Failed to send welcome email:', emailResult.error);
+      // No fallar la suscripción si el email falla, solo logear
+      // El usuario ya está suscrito en la BD
+    }
 
     // Éxito
     return new Response(
       JSON.stringify({
         success: true,
-        message: '¡Gracias por suscribirte! Recibirás nuestro próximo boletín mensual.'
+        message: '¡Gracias por suscribirte! Revisa tu email para confirmar.'
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
