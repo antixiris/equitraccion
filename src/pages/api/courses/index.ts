@@ -67,7 +67,6 @@ export const GET: APIRoute = async (context) => {
     const { data, error } = await supabaseAdmin
       .from('courses')
       .select('*')
-      .eq('active', true)
       .order('created_at', { ascending: false });
 
     if (error) {

@@ -1,0 +1,366 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { isAuthenticated } from '../../../lib/auth/jwt';
+
+if (!isAuthenticated(Astro)) {
+  return Astro.redirect('/admin/login');
+}
+
+const title = 'Gestión de Cursos | Equitracción CMS';
+---
+
+<BaseLayout title={title} mode="hybrid">
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Gestión de Cursos</h1>
+          <p class="text-sm text-gray-500">Administra los cursos de formación</p>
+        </div>
+        <div class="flex gap-3">
+          <a
+            href="/admin"
+            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
+          >
+            ← Dashboard
+          </a>
+          <a
+            href="/admin/courses/new"
+            class="px-4 py-2 bg-[rgb(var(--color-brand-primary))] text-white rounded-lg hover:opacity-90 font-medium"
+          >
+            + Nuevo Curso
+          </a>
+          <button
+            id="logout-button"
+            class="px-4 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 font-medium"
+          >
+            🚪 Cerrar Sesión
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+      <!-- Stats -->
+      <div class="grid md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <p class="text-sm text-gray-600 mb-1">Total Cursos</p>
+          <p id="total-courses" class="text-3xl font-bold text-gray-900">0</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <p class="text-sm text-gray-600 mb-1">Activos</p>
+          <p id="active-courses" class="text-3xl font-bold text-green-600">0</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <p class="text-sm text-gray-600 mb-1">Inactivos</p>
+          <p id="inactive-courses" class="text-3xl font-bold text-gray-600">0</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <p class="text-sm text-gray-600 mb-1">Plazas Totales</p>
+          <p id="total-spots" class="text-3xl font-bold text-blue-600">0</p>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+        <div class="flex gap-4">
+          <div class="flex-1">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Buscar por título o ubicación..."
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
+            />
+          </div>
+          <select
+            id="filter-status"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
+          >
+            <option value="all">Todos los estados</option>
+            <option value="active">Activos</option>
+            <option value="inactive">Inactivos</option>
+          </select>
+          <select
+            id="filter-level"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-brand-primary))]"
+          >
+            <option value="all">Todos los niveles</option>
+            <option value="Iniciación">Iniciación</option>
+            <option value="Intermedio">Intermedio</option>
+            <option value="Avanzado">Avanzado</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Courses Table -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Curso
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Nivel
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Duración
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Precio
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Ubicación
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Estado
+                </th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody id="courses-tbody" class="bg-white divide-y divide-gray-200">
+              <!-- Courses will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden p-12 text-center">
+          <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">No hay cursos</h3>
+          <p class="text-gray-500 mb-4">Comienza creando tu primer curso de formación</p>
+          <a
+            href="/admin/courses/new"
+            class="inline-block px-4 py-2 bg-[rgb(var(--color-brand-primary))] text-white rounded-lg hover:opacity-90"
+          >
+            Crear Curso
+          </a>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="p-12 text-center">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[rgb(var(--color-brand-primary))] mx-auto"></div>
+          <p class="text-gray-500 mt-4">Cargando cursos...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<script>
+  let allCourses: any[] = [];
+
+  // Check authentication
+  const checkAuth = () => {
+    const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+    if (!isAuthenticated) {
+      window.location.href = '/admin/login';
+    }
+  };
+
+  // Logout
+  document.getElementById('logout-button')?.addEventListener('click', () => {
+    sessionStorage.removeItem('admin_authenticated');
+    window.location.href = '/admin/login';
+  });
+
+  // Load courses
+  const loadCourses = async () => {
+    try {
+      const response = await fetch('/api/courses');
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message);
+      }
+
+      allCourses = result.data || [];
+
+      updateStats();
+      renderCourses(allCourses);
+
+      document.getElementById('loading-state')!.classList.add('hidden');
+
+      if (allCourses.length === 0) {
+        document.getElementById('empty-state')!.classList.remove('hidden');
+      }
+
+    } catch (error) {
+      console.error('Error loading courses:', error);
+      document.getElementById('loading-state')!.innerHTML = `
+        <div class="p-12 text-center">
+          <p class="text-red-600">Error al cargar los cursos</p>
+        </div>
+      `;
+    }
+  };
+
+  // Update stats
+  const updateStats = () => {
+    const total = allCourses.length;
+    const active = allCourses.filter(c => c.active).length;
+    const inactive = total - active;
+    const totalSpots = allCourses.reduce((sum, course) => {
+      if (!course.dates) return sum;
+      const courseSpots = course.dates.reduce((s: number, d: any) => s + (d.spots_available || 0), 0);
+      return sum + courseSpots;
+    }, 0);
+
+    document.getElementById('total-courses')!.textContent = total.toString();
+    document.getElementById('active-courses')!.textContent = active.toString();
+    document.getElementById('inactive-courses')!.textContent = inactive.toString();
+    document.getElementById('total-spots')!.textContent = totalSpots.toString();
+  };
+
+  // Render courses
+  const renderCourses = (courses: any[]) => {
+    const tbody = document.getElementById('courses-tbody')!;
+
+    if (courses.length === 0) {
+      tbody.innerHTML = '';
+      document.getElementById('empty-state')!.classList.remove('hidden');
+      return;
+    }
+
+    document.getElementById('empty-state')!.classList.add('hidden');
+
+    tbody.innerHTML = courses.map(course => `
+      <tr>
+        <td class="px-6 py-4">
+          <div class="text-sm font-medium text-gray-900">${course.title}</div>
+          <div class="text-xs text-gray-500">Nivel ${course.level} · ${course.experience_level}</div>
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-900">
+          ${course.experience_level}
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-900">
+          ${course.duration_days} días
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-900">
+          ${course.price}€
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-500">
+          ${course.location}
+        </td>
+        <td class="px-6 py-4">
+          <button
+            onclick="toggleActive('${course.id}', ${course.active})"
+            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+              course.active
+                ? 'bg-green-100 text-green-800'
+                : 'bg-gray-100 text-gray-800'
+            }"
+          >
+            ${course.active ? '✓ Activo' : '✗ Inactivo'}
+          </button>
+        </td>
+        <td class="px-6 py-4 text-right text-sm font-medium space-x-2">
+          <a
+            href="/admin/courses/edit/${course.id}"
+            class="text-blue-600 hover:text-blue-900"
+          >
+            Editar
+          </a>
+          <button
+            onclick="deleteCourse('${course.id}', '${course.title.replace(/'/g, "\\'")}')"
+            class="text-red-600 hover:text-red-900"
+          >
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  };
+
+  // Toggle active status
+  (window as any).toggleActive = async (id: string, currentStatus: boolean) => {
+    try {
+      const response = await fetch(`/api/courses/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...allCourses.find(c => c.id === id),
+          active: !currentStatus
+        })
+      });
+
+      if (response.ok) {
+        await loadCourses();
+      } else {
+        alert('Error al cambiar el estado');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al cambiar el estado');
+    }
+  };
+
+  // Delete course
+  (window as any).deleteCourse = async (id: string, title: string) => {
+    if (!confirm(`¿Estás seguro de que quieres eliminar el curso "${title}"?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/courses/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        await loadCourses();
+        alert('Curso eliminado correctamente');
+      } else {
+        alert('Error al eliminar el curso');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al eliminar el curso');
+    }
+  };
+
+  // Filters
+  const applyFilters = () => {
+    const searchTerm = (document.getElementById('search-input') as HTMLInputElement).value.toLowerCase();
+    const statusFilter = (document.getElementById('filter-status') as HTMLSelectElement).value;
+    const levelFilter = (document.getElementById('filter-level') as HTMLSelectElement).value;
+
+    let filtered = allCourses;
+
+    // Search filter
+    if (searchTerm) {
+      filtered = filtered.filter(course =>
+        course.title.toLowerCase().includes(searchTerm) ||
+        course.location.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    // Status filter
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(course =>
+        statusFilter === 'active' ? course.active : !course.active
+      );
+    }
+
+    // Level filter
+    if (levelFilter !== 'all') {
+      filtered = filtered.filter(course => course.experience_level === levelFilter);
+    }
+
+    renderCourses(filtered);
+  };
+
+  document.getElementById('search-input')?.addEventListener('input', applyFilters);
+  document.getElementById('filter-status')?.addEventListener('change', applyFilters);
+  document.getElementById('filter-level')?.addEventListener('change', applyFilters);
+
+  // Initialize
+  checkAuth();
+  loadCourses();
+</script>
