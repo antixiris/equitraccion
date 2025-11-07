@@ -77,11 +77,11 @@ export const POST: APIRoute = async ({ request }) => {
 
     console.log(`🎓 Found ${upcomingCourses.length} upcoming courses`);
 
-    // 3. Generar HTML del newsletter
+    // 3. Generar HTML del newsletter (sin personalizar aún)
     // En producción, usar el dominio real desde env o config
     const baseUrl = import.meta.env.SITE_URL || 'https://equitraccion.com';
 
-    const newsletterHTML = generateNewsletterHTML(
+    const newsletterHTMLTemplate = generateNewsletterHTML(
       posts || [],
       upcomingCourses,
       monthName,
@@ -132,8 +132,9 @@ export const POST: APIRoute = async ({ request }) => {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     const emailPromises = subscribers.map(subscriber => {
-      const personalizedHTML = newsletterHTML.replace('{{email}}', subscriber.email);
-      
+      // Personalizar HTML con el email del suscriptor para el enlace de baja
+      const personalizedHTML = newsletterHTMLTemplate.replace('{{email}}', encodeURIComponent(subscriber.email));
+
       return sgMail.send({
         to: subscriber.email,
         from: 'newsletter@equitraccion.com',

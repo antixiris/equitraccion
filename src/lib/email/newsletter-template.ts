@@ -225,7 +225,7 @@ export function generateNewsletterHTML(
               <p style="margin: 0; color: #999; font-size: 13px; line-height: 1.6;">
                 Recibes este email porque te suscribiste al newsletter de Equitracción.<br>
                 <a href="${baseUrl}/newsletter/unsubscribe?email={{email}}" style="color: #999; text-decoration: underline;">
-                  Cancelar suscripción
+                  Darse de baja
                 </a>
               </p>
             </td>
