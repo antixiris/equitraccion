@@ -74,16 +74,13 @@ const { currentPage, title, subtitle } = Astro.props;
           {subtitle && <p class="text-base text-gray-600">{subtitle}</p>}
         </div>
       </div>
-      <button id="admin-logout-btn" class="text-base text-gray-600 hover:text-gray-900 font-medium cursor-pointer transition-colors">
+      <button
+        id="admin-logout-btn"
+        class="text-base text-gray-600 hover:text-gray-900 font-medium cursor-pointer transition-colors"
+        onclick="sessionStorage.removeItem('admin_authenticated'); window.location.href = '/admin/login';"
+      >
         Cerrar sesión
       </button>
     </div>
   </div>
 </header>
-
-<script>
-  document.getElementById('admin-logout-btn')?.addEventListener('click', () => {
-    sessionStorage.removeItem('admin_authenticated');
-    window.location.href = '/admin/login';
-  });
-</script>
