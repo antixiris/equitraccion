@@ -34,7 +34,7 @@ export function generateNewsletterHTML(
               <tr>
                 <td style="padding-bottom: 20px;">
                   <a href="${baseUrl}/blog/${post.slug}" style="display: block;">
-                    <img src="${baseUrl}${post.cover_image}" alt="${post.title}" style="width: 100%; height: auto; display: block; border-radius: 4px;" />
+                    <img src="${post.cover_image.startsWith('http') ? post.cover_image : baseUrl + post.cover_image}" alt="${post.title}" style="width: 100%; height: auto; display: block; border-radius: 4px;" />
                   </a>
                 </td>
               </tr>
