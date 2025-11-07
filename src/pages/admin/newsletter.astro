@@ -281,19 +281,26 @@ const title = 'Gestionar Newsletter | Equitracción CMS';
   const handleToggleStatus = async (e: Event) => {
     const btn = e.target as HTMLButtonElement;
     const id = btn.dataset.id;
-    const currentStatus = btn.dataset.current === 'true';
+    const currentStatus = btn.dataset.current;
 
-    if (!confirm(`¿Confirmar ${currentStatus ? 'desactivación' : 'activación'} del suscriptor?`)) {
+    if (!confirm(`¿Confirmar ${currentStatus === 'active' ? 'desactivación' : 'activación'} del suscriptor?`)) {
       return;
     }
 
     try {
-      const { error } = await supabase
-        .from('newsletter_subscriptions')
-        .update({ status: currentStatus === 'active' ? 'unsubscribed' : 'active' })
-        .eq('id', id);
+      const response = await fetch('/api/newsletter/toggle-status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, currentStatus }),
+      });
 
-      if (error) throw error;
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message);
+      }
 
       await loadStats();
       await loadSubscribers();
@@ -314,12 +321,19 @@ const title = 'Gestionar Newsletter | Equitracción CMS';
     }
 
     try {
-      const { error } = await supabase
-        .from('newsletter_subscriptions')
-        .delete()
-        .eq('id', id);
+      const response = await fetch('/api/newsletter/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
 
-      if (error) throw error;
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message);
+      }
 
       await loadStats();
       await loadSubscribers();
