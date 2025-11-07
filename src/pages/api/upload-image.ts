@@ -1,94 +1,107 @@
 import type { APIRoute } from 'astro';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { supabaseAdmin } from '../../lib/supabase';
 import { isAuthenticated } from '../../lib/auth/jwt';
 
+/**
+ * Upload image to Supabase Storage
+ * POST /api/upload-image
+ * Body: FormData with 'file' field
+ */
 export const POST: APIRoute = async (context) => {
-  try {
-    // 🔐 Verificar autenticación
-    const authenticated = isAuthenticated(context);
-    if (!authenticated) {
-      return new Response(
-        JSON.stringify({ error: 'No autorizado. Debes iniciar sesión.' }),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
+  // Check authentication
+  if (!isAuthenticated(context)) {
+    return new Response(
+      JSON.stringify({ success: false, message: 'No autorizado' }),
+      { status: 401, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
 
+  try {
     const formData = await context.request.formData();
-    const file = formData.get('image') as File;
+    const file = formData.get('file') as File;
 
     if (!file) {
-      return new Response(JSON.stringify({ error: 'No se proporcionó ninguna imagen' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({ success: false, message: 'No se proporcionó ningún archivo' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
     if (!allowedTypes.includes(file.type)) {
-      return new Response(JSON.stringify({ error: 'Tipo de archivo no permitido. Usa JPG, PNG, WebP o GIF' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({ success: false, message: 'Tipo de archivo no permitido. Solo se permiten imágenes (JPG, PNG, WebP, GIF)' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
     // Validate file size (max 5MB)
     const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
-      return new Response(JSON.stringify({ error: 'La imagen es demasiado grande. Máximo 5MB' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({ success: false, message: 'El archivo es demasiado grande. Tamaño máximo: 5MB' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
     // Generate unique filename
     const timestamp = Date.now();
-    const randomStr = Math.random().toString(36).substring(2, 8);
+    const randomString = Math.random().toString(36).substring(2, 8);
+    const extension = file.name.split('.').pop();
+    const filename = `${timestamp}-${randomString}.${extension}`;
 
-    // 🛡️ Mapear MIME type a extensión (no confiar en nombre de archivo)
-    const mimeToExt: Record<string, string> = {
-      'image/jpeg': 'jpg',
-      'image/jpg': 'jpg',
-      'image/png': 'png',
-      'image/webp': 'webp',
-      'image/gif': 'gif'
-    };
+    // Define storage path
+    const storagePath = `blog/${filename}`;
 
-    const extension = mimeToExt[file.type] || 'jpg';
-    const filename = `${timestamp}-${randomStr}.${extension}`;
+    // Convert File to ArrayBuffer
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
 
-    // Ensure upload directory exists
-    const uploadDir = join(process.cwd(), 'public', 'images', 'blog');
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
+    // Upload to Supabase Storage
+    const { data, error } = await supabaseAdmin.storage
+      .from('images')
+      .upload(storagePath, buffer, {
+        contentType: file.type,
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (error) {
+      console.error('Error uploading to Supabase Storage:', error);
+      return new Response(
+        JSON.stringify({ success: false, message: `Error al subir la imagen: ${error.message}` }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
-    // Save file
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const filepath = join(uploadDir, filename);
-    await writeFile(filepath, buffer);
+    // Get public URL
+    const { data: publicUrlData } = supabaseAdmin.storage
+      .from('images')
+      .getPublicUrl(storagePath);
 
-    // Return URL
-    const url = `/images/blog/${filename}`;
+    const publicUrl = publicUrlData.publicUrl;
 
-    return new Response(JSON.stringify({
-      success: true,
-      url,
-      filename
-    }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    console.log(`✅ Image uploaded successfully: ${publicUrl}`);
 
-  } catch (error: any) {
-    console.error('Error uploading image:', error);
-    return new Response(JSON.stringify({
-      error: 'Error al subir la imagen: ' + error.message
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({
+        success: true,
+        url: publicUrl,
+        path: storagePath,
+        message: 'Imagen subida correctamente'
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+
+  } catch (error) {
+    console.error('Upload image error:', error);
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: error instanceof Error ? error.message : 'Error interno del servidor'
+      }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
   }
 };
