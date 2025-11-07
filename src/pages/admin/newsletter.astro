@@ -160,13 +160,6 @@ const title = 'Gestionar Newsletter | Equitracción CMS';
 </BaseLayout>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
-
-  const supabase = createClient(
-    import.meta.env.PUBLIC_SUPABASE_URL,
-    import.meta.env.PUBLIC_SUPABASE_ANON_KEY
-  );
-
   let allSubscribers: any[] = [];
 
   // Check authentication
@@ -184,44 +177,42 @@ const title = 'Gestionar Newsletter | Equitracción CMS';
     window.location.href = '/admin/login';
   });
 
-  // Load stats
+  // Load stats and subscribers from API
   const loadStats = async () => {
     try {
-      const { data: subscribers, error } = await supabase
-        .from('newsletter_subscriptions')
-        .select('*');
+      const response = await fetch('/api/newsletter/list');
+      const result = await response.json();
 
-      if (error) throw error;
+      if (!result.success) {
+        throw new Error(result.message);
+      }
 
-      const total = subscribers?.length || 0;
-      const active = subscribers?.filter(s => s.status === 'active').length || 0;
+      const subscribers = result.data || [];
+      allSubscribers = subscribers;
+
+      const total = subscribers.length;
+      const active = subscribers.filter((s: any) => s.status === 'active').length;
       const inactive = total - active;
 
       document.getElementById('total-subscribers')!.textContent = total.toString();
       document.getElementById('active-subscribers')!.textContent = active.toString();
       document.getElementById('inactive-subscribers')!.textContent = inactive.toString();
+
+      // Render initial list
+      renderSubscribers(subscribers);
     } catch (error) {
       console.error('Error loading stats:', error);
+      const container = document.getElementById('subscribers-container');
+      if (container) {
+        container.innerHTML = '<div class="text-center py-12 text-red-600">Error al cargar suscriptores. Por favor, recarga la página.</div>';
+      }
     }
   };
 
-  // Load subscribers
+  // Load subscribers is now handled by loadStats, so this can be removed
+  // Kept for backwards compatibility but delegates to loadStats
   const loadSubscribers = async () => {
-    try {
-      const { data: subscribers, error } = await supabase
-        .from('newsletter_subscriptions')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-
-      allSubscribers = subscribers || [];
-      renderSubscribers(allSubscribers);
-    } catch (error) {
-      console.error('Error loading subscribers:', error);
-      const tbody = document.getElementById('subscribers-table')!;
-      tbody.innerHTML = '<tr><td colspan="4" class="px-6 py-12 text-center text-red-500">Error al cargar suscriptores</td></tr>';
-    }
+    await loadStats();
   };
 
   // Render subscribers table
