@@ -310,7 +310,7 @@ const title = 'Panel de Administración | Equitracción CMS';
 <script>
   import { createClient } from '@supabase/supabase-js';
 
-  // Create Supabase client with public env vars
+  // Create Supabase client with public env vars (for recent posts only)
   const supabase = createClient(
     import.meta.env.PUBLIC_SUPABASE_URL,
     import.meta.env.PUBLIC_SUPABASE_ANON_KEY
@@ -331,50 +331,22 @@ const title = 'Panel de Administración | Equitracción CMS';
     window.location.href = '/admin/login';
   });
 
-  // Load stats
+  // Load stats from API
   const loadStats = async () => {
     try {
-      // Load blog posts stats
-      const { data: posts, error: postsError } = await supabase
-        .from('blog_posts')
-        .select('id, published');
+      const response = await fetch('/api/admin/stats');
+      const result = await response.json();
 
-      if (postsError) throw postsError;
-
-      const totalPosts = posts?.length || 0;
-      document.getElementById('total-posts')!.textContent = totalPosts.toString();
-
-      // Load courses stats
-      const { data: courses, error: coursesError } = await supabase
-        .from('courses')
-        .select('id, active')
-        .eq('active', true);
-
-      if (!coursesError) {
-        const totalCourses = courses?.length || 0;
-        document.getElementById('total-courses')!.textContent = totalCourses.toString();
+      if (!result.success) {
+        throw new Error(result.message);
       }
 
-      // Load newsletter subscribers stats
-      const { data: subscribers, error: subscribersError } = await supabase
-        .from('newsletter_subscriptions')
-        .select('id, status')
-        .eq('status', 'active');
+      const stats = result.data;
+      document.getElementById('total-posts')!.textContent = stats.posts.toString();
+      document.getElementById('total-courses')!.textContent = stats.courses.toString();
+      document.getElementById('total-subscribers')!.textContent = stats.subscribers.toString();
+      document.getElementById('total-messages')!.textContent = stats.messages.toString();
 
-      if (!subscribersError) {
-        const totalSubscribers = subscribers?.length || 0;
-        document.getElementById('total-subscribers').textContent = totalSubscribers.toString();
-      }
-
-      // Load contact messages stats
-      const { data: messages, error: messagesError } = await supabase
-        .from('contact_submissions')
-        .select('id');
-
-      if (!messagesError) {
-        const totalMessages = messages?.length || 0;
-        document.getElementById('total-messages')!.textContent = totalMessages.toString();
-      }
     } catch (error) {
       console.error('Error loading stats:', error);
     }
