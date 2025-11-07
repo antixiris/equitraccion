@@ -82,9 +82,9 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
           >
             <option value="all">Todos los tipos</option>
             <option value="general">Consulta General</option>
-            <option value="servicios">Servicios Forestales</option>
+            <option value="forestales">Servicios Forestales</option>
             <option value="formacion">Formación</option>
-            <option value="patrocinio">Patrocinio</option>
+            <option value="desarrollo">Desarrollo Personal</option>
           </select>
         </div>
       </div>
@@ -221,7 +221,7 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
   // Update stats
   const updateStats = () => {
     const total = allMessages.length;
-    const unread = allMessages.filter(m => !m.read).length;
+    const unread = allMessages.filter(m => m.status === 'new').length;
     const read = total - unread;
 
     const today = new Date().toISOString().split('T')[0];
@@ -256,12 +256,12 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
       });
 
       return `
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 ${!message.read ? 'border-l-4 border-l-blue-500' : ''}">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 ${message.status === 'new' ? 'border-l-4 border-l-blue-500' : ''}">
           <div class="flex items-start justify-between mb-4">
             <div class="flex-1">
               <div class="flex items-center gap-3 mb-2">
                 <h3 class="text-lg font-bold text-gray-900">${message.subject || 'Sin asunto'}</h3>
-                ${!message.read ? '<span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full font-medium">NUEVO</span>' : ''}
+                ${message.status === 'new' ? '<span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full font-medium">NUEVO</span>' : ''}
               </div>
               <div class="flex items-center gap-4 text-sm text-gray-600">
                 <span class="flex items-center gap-1">
@@ -290,13 +290,13 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
           <p class="text-gray-700 mb-4 line-clamp-2">${message.message}</p>
 
           <div class="flex items-center justify-between">
-            <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">${message.query_type || 'general'}</span>
+            <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">${message.category || 'general'}</span>
             <div class="flex gap-2">
               <button
-                onclick="toggleRead('${message.id}', ${message.read})"
-                class="px-3 py-1 text-sm cursor-pointer ${message.read ? 'text-gray-600 hover:text-gray-900' : 'text-blue-600 hover:text-blue-900'}"
+                onclick="toggleRead('${message.id}', '${message.status}')"
+                class="px-3 py-1 text-sm cursor-pointer ${message.status === 'read' ? 'text-gray-600 hover:text-gray-900' : 'text-blue-600 hover:text-blue-900'}"
               >
-                ${message.read ? '✗ Marcar no leído' : '✓ Marcar leído'}
+                ${message.status === 'read' ? '✗ Marcar no leído' : '✓ Marcar leído'}
               </button>
               <button
                 onclick="viewMessage('${message.id}')"
@@ -318,12 +318,13 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
   };
 
   // Toggle read status
-  (window as any).toggleRead = async (id: string, currentStatus: boolean) => {
+  (window as any).toggleRead = async (id: string, currentStatus: string) => {
     try {
+      const newReadStatus = currentStatus === 'read' ? false : true;
       const response = await fetch(`/api/admin/messages/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ read: !currentStatus })
+        body: JSON.stringify({ read: newReadStatus })
       });
 
       if (response.ok) {
@@ -345,7 +346,7 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
     currentMessageId = id;
 
     // Mark as read when opening
-    if (!message.read) {
+    if (message.status === 'new') {
       await fetch(`/api/admin/messages/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -366,7 +367,7 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
     document.getElementById('modal-name')!.textContent = message.name;
     document.getElementById('modal-email')!.textContent = message.email;
     document.getElementById('modal-phone')!.textContent = message.phone || 'No proporcionado';
-    document.getElementById('modal-type')!.textContent = message.query_type || 'general';
+    document.getElementById('modal-type')!.textContent = message.category || 'general';
     document.getElementById('modal-message')!.textContent = message.message;
     document.getElementById('modal-date')!.textContent = formattedDate;
 
@@ -454,13 +455,13 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
     // Status filter
     if (statusFilter !== 'all') {
       filtered = filtered.filter(message =>
-        statusFilter === 'unread' ? !message.read : message.read
+        statusFilter === 'unread' ? message.status === 'new' : message.status === 'read'
       );
     }
 
     // Type filter
     if (typeFilter !== 'all') {
-      filtered = filtered.filter(message => message.query_type === typeFilter);
+      filtered = filtered.filter(message => message.category === typeFilter);
     }
 
     renderMessages(filtered);

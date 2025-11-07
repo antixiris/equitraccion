@@ -26,9 +26,12 @@ export const PATCH: APIRoute = async (context) => {
       );
     }
 
+    // Convert boolean read to status value
+    const status = body.read ? 'read' : 'new';
+
     const { error } = await supabaseAdmin
       .from('contact_submissions')
-      .update({ read: body.read })
+      .update({ status })
       .eq('id', id);
 
     if (error) {
