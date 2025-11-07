@@ -125,7 +125,7 @@ export function generateNewsletterHTML(
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td align="left" style="padding-bottom: 24px;">
-                    <img src="${baseUrl}/images/logo-equitraccion.png" alt="Equitracción" width="120" height="auto" style="display: block;" />
+                    <img src="https://equitraccion.vercel.app/images/logo-equitraccion.png" alt="Equitracción" width="120" height="auto" style="display: block;" />
                   </td>
                 </tr>
                 <tr>
