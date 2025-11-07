@@ -1,0 +1,89 @@
+---
+interface Props {
+  currentPage: 'dashboard' | 'posts' | 'courses' | 'newsletter' | 'messages';
+  title: string;
+  subtitle?: string;
+}
+
+const { currentPage, title, subtitle } = Astro.props;
+---
+
+<header class="bg-white shadow-sm">
+  <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-8">
+        <nav class="flex items-center gap-6">
+          <a
+            href="/admin"
+            class:list={[
+              "text-base font-semibold transition-colors pb-1",
+              currentPage === 'dashboard'
+                ? "text-amber-800 border-b-2 border-amber-800"
+                : "text-gray-600 hover:text-amber-800"
+            ]}
+          >
+            Dashboard
+          </a>
+          <a
+            href="/admin/posts"
+            class:list={[
+              "text-base font-semibold transition-colors pb-1",
+              currentPage === 'posts'
+                ? "text-amber-800 border-b-2 border-amber-800"
+                : "text-gray-600 hover:text-amber-800"
+            ]}
+          >
+            Blog
+          </a>
+          <a
+            href="/admin/courses"
+            class:list={[
+              "text-base font-semibold transition-colors pb-1",
+              currentPage === 'courses'
+                ? "text-amber-800 border-b-2 border-amber-800"
+                : "text-gray-600 hover:text-amber-800"
+            ]}
+          >
+            Cursos
+          </a>
+          <a
+            href="/admin/newsletter"
+            class:list={[
+              "text-base font-semibold transition-colors pb-1",
+              currentPage === 'newsletter'
+                ? "text-amber-800 border-b-2 border-amber-800"
+                : "text-gray-600 hover:text-amber-800"
+            ]}
+          >
+            Newsletter
+          </a>
+          <a
+            href="/admin/messages"
+            class:list={[
+              "text-base font-semibold transition-colors pb-1",
+              currentPage === 'messages'
+                ? "text-amber-800 border-b-2 border-amber-800"
+                : "text-gray-600 hover:text-amber-800"
+            ]}
+          >
+            Mensajes
+          </a>
+        </nav>
+        <div class="border-l pl-8">
+          <h1 class="font-heading font-bold text-2xl text-gray-900">{title}</h1>
+          {subtitle && <p class="text-base text-gray-600">{subtitle}</p>}
+        </div>
+      </div>
+      <button id="admin-logout-btn" class="text-base text-gray-600 hover:text-gray-900 font-medium cursor-pointer transition-colors">
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.getElementById('admin-logout-btn')?.addEventListener('click', () => {
+    sessionStorage.removeItem('admin_authenticated');
+    window.location.href = '/admin/login';
+  });
+</script>

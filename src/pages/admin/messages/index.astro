@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AdminNav from '../../../components/AdminNav.astro';
 import { isAuthenticated } from '../../../lib/auth/jwt';
 
 if (!isAuthenticated(Astro)) {
@@ -12,48 +13,27 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
 <BaseLayout title={title} mode="hybrid">
   <div class="min-h-screen bg-gray-50">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
-      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div>
-          <h1 class="text-2xl font-bold text-gray-900">Mensajes de Contacto</h1>
-          <p class="text-sm text-gray-500">Gestiona los mensajes recibidos del formulario de contacto</p>
-        </div>
-        <div class="flex gap-3">
-          <a
-            href="/admin"
-            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
-          >
-            ← Dashboard
-          </a>
-          <button
-            id="logout-button"
-            class="px-4 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 font-medium cursor-pointer"
-          >
-            🚪 Cerrar Sesión
-          </button>
-        </div>
-      </div>
-    </header>
+    <AdminNav currentPage="messages" title="Mensajes de Contacto" subtitle="Gestiona los mensajes recibidos del formulario de contacto" />
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-6 py-8">
       <!-- Stats -->
       <div class="grid md:grid-cols-4 gap-6 mb-8">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <p class="text-sm text-gray-600 mb-1">Total Mensajes</p>
-          <p id="total-messages" class="text-3xl font-bold text-gray-900">0</p>
+          <p class="text-base text-gray-600 mb-1">Total Mensajes</p>
+          <p id="total-messages" class="text-4xl font-bold text-gray-900">0</p>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <p class="text-sm text-gray-600 mb-1">No Leídos</p>
-          <p id="unread-messages" class="text-3xl font-bold text-blue-600">0</p>
+          <p class="text-base text-gray-600 mb-1">No Leídos</p>
+          <p id="unread-messages" class="text-4xl font-bold text-blue-600">0</p>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <p class="text-sm text-gray-600 mb-1">Leídos</p>
-          <p id="read-messages" class="text-3xl font-bold text-green-600">0</p>
+          <p class="text-base text-gray-600 mb-1">Leídos</p>
+          <p id="read-messages" class="text-4xl font-bold text-green-600">0</p>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <p class="text-sm text-gray-600 mb-1">Hoy</p>
-          <p id="today-messages" class="text-3xl font-bold text-amber-600">0</p>
+          <p class="text-base text-gray-600 mb-1">Hoy</p>
+          <p id="today-messages" class="text-4xl font-bold text-amber-600">0</p>
         </div>
       </div>
 
@@ -126,33 +106,33 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
       <div class="p-6 space-y-4">
         <div class="grid md:grid-cols-2 gap-4">
           <div>
-            <p class="text-sm text-gray-600">Nombre</p>
+            <p class="text-base text-gray-600">Nombre</p>
             <p id="modal-name" class="text-lg font-medium text-gray-900"></p>
           </div>
           <div>
-            <p class="text-sm text-gray-600">Email</p>
+            <p class="text-base text-gray-600">Email</p>
             <p id="modal-email" class="text-lg font-medium text-gray-900"></p>
           </div>
         </div>
 
         <div class="grid md:grid-cols-2 gap-4">
           <div>
-            <p class="text-sm text-gray-600">Teléfono</p>
+            <p class="text-base text-gray-600">Teléfono</p>
             <p id="modal-phone" class="text-lg font-medium text-gray-900"></p>
           </div>
           <div>
-            <p class="text-sm text-gray-600">Tipo de consulta</p>
+            <p class="text-base text-gray-600">Tipo de consulta</p>
             <p id="modal-type" class="text-lg font-medium text-gray-900"></p>
           </div>
         </div>
 
         <div>
-          <p class="text-sm text-gray-600 mb-2">Mensaje</p>
+          <p class="text-base text-gray-600 mb-2">Mensaje</p>
           <div id="modal-message" class="text-gray-900 p-4 bg-gray-50 rounded-lg whitespace-pre-wrap"></div>
         </div>
 
         <div>
-          <p class="text-sm text-gray-600">Recibido</p>
+          <p class="text-base text-gray-600">Recibido</p>
           <p id="modal-date" class="text-gray-900"></p>
         </div>
       </div>
@@ -180,12 +160,6 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
       window.location.href = '/admin/login';
     }
   };
-
-  // Logout
-  document.getElementById('logout-button')?.addEventListener('click', () => {
-    sessionStorage.removeItem('admin_authenticated');
-    window.location.href = '/admin/login';
-  });
 
   // Load messages
   const loadMessages = async () => {
@@ -261,9 +235,9 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
             <div class="flex-1">
               <div class="flex items-center gap-3 mb-2">
                 <h3 class="text-lg font-bold text-gray-900">${message.subject || 'Sin asunto'}</h3>
-                ${message.status === 'new' ? '<span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full font-medium">NUEVO</span>' : ''}
+                ${message.status === 'new' ? '<span class="px-2 py-1 text-sm bg-blue-100 text-blue-700 rounded-full font-medium">NUEVO</span>' : ''}
               </div>
-              <div class="flex items-center gap-4 text-sm text-gray-600">
+              <div class="flex items-center gap-4 text-base text-gray-600">
                 <span class="flex items-center gap-1">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -290,23 +264,23 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
           <p class="text-gray-700 mb-4 line-clamp-2">${message.message}</p>
 
           <div class="flex items-center justify-between">
-            <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">${message.category || 'general'}</span>
+            <span class="text-sm px-2 py-1 bg-gray-100 text-gray-600 rounded">${message.category || 'general'}</span>
             <div class="flex gap-2">
               <button
                 onclick="toggleRead('${message.id}', '${message.status}')"
-                class="px-3 py-1 text-sm cursor-pointer ${message.status === 'read' ? 'text-gray-600 hover:text-gray-900' : 'text-blue-600 hover:text-blue-900'}"
+                class="px-3 py-1 text-base cursor-pointer ${message.status === 'read' ? 'text-gray-600 hover:text-gray-900' : 'text-blue-600 hover:text-blue-900'}"
               >
                 ${message.status === 'read' ? '✗ Marcar no leído' : '✓ Marcar leído'}
               </button>
               <button
                 onclick="viewMessage('${message.id}')"
-                class="px-3 py-1 text-sm text-blue-600 hover:text-blue-900 cursor-pointer"
+                class="px-3 py-1 text-base text-blue-600 hover:text-blue-900 cursor-pointer"
               >
                 Ver detalles
               </button>
               <button
                 onclick="deleteMessage('${message.id}')"
-                class="px-3 py-1 text-sm text-red-600 hover:text-red-900 cursor-pointer"
+                class="px-3 py-1 text-base text-red-600 hover:text-red-900 cursor-pointer"
               >
                 Eliminar
               </button>
