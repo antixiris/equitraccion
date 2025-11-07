@@ -255,7 +255,8 @@ const categories = ['Todas', ...new Set(articles.map(a => a.category))];
     e.preventDefault();
 
     const email = newsletterEmail.value.trim();
-    const honeypot = document.getElementById('newsletter-honeypot').value;
+    const honeypotElement = document.getElementById('newsletter-honeypot') as HTMLInputElement;
+    const honeypot = honeypotElement ? honeypotElement.value : '';
 
     // Mostrar estado de carga
     newsletterSubmit.disabled = true;

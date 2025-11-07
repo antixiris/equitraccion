@@ -14,6 +14,8 @@ export const POST: APIRoute = async ({ request }) => {
     const body = await request.json();
     const { email, honeypot } = body;
 
+    console.log('📧 Newsletter subscription attempt:', { email: email ? '***' : 'missing', honeypot: !!honeypot });
+
     // 🍯 Honeypot field - Si está lleno, es un bot
     if (honeypot) {
       console.warn('🤖 Bot detected via honeypot field in newsletter');
@@ -37,8 +39,20 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Validar email
+    if (!email) {
+      console.error('❌ Email missing in request');
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Email es requerido'
+        }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     const validation = validateEmail(email);
     if (!validation.isValid) {
+      console.error('❌ Email validation failed:', validation.errors);
       return new Response(
         JSON.stringify({
           success: false,
