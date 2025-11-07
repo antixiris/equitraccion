@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabase } from '../../../lib/supabase';
+import { supabaseAdmin } from '../../../lib/supabase';
 import { validateEmail } from '../../../lib/validation/sanitize';
 import { checkContactFormRateLimit, getClientIP, createRateLimitResponse } from '../../../lib/security/rate-limiter';
 
@@ -49,11 +49,16 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Verificar si ya está suscrito
-    const { data: existing } = await supabase
+    const { data: existing, error: checkError } = await supabaseAdmin
       .from('newsletter_subscriptions')
       .select('email, status')
-      .eq('email', email)
+      .eq('email', email.toLowerCase().trim())
       .single();
+
+    if (checkError && checkError.code !== 'PGRST116') {
+      // PGRST116 = no rows returned, que es lo esperado si no existe
+      console.error('Error checking existing subscription:', checkError);
+    }
 
     if (existing) {
       if (existing.status === 'active') {
@@ -66,12 +71,13 @@ export const POST: APIRoute = async ({ request }) => {
         );
       } else {
         // Reactivar suscripción
-        const { error: updateError } = await supabase
+        const { error: updateError } = await supabaseAdmin
           .from('newsletter_subscriptions')
           .update({
-            status: 'active'
+            status: 'active',
+            updated_at: new Date().toISOString()
           })
-          .eq('email', email);
+          .eq('email', email.toLowerCase().trim());
 
         if (updateError) {
           console.error('Error reactivating newsletter subscription:', updateError);
@@ -95,12 +101,15 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Crear nueva suscripción
-    const { error: insertError } = await supabase
+    const { data: newSubscription, error: insertError } = await supabaseAdmin
       .from('newsletter_subscriptions')
       .insert({
         email: email.toLowerCase().trim(),
-        status: 'active'
-      });
+        status: 'active',
+        subscribed_at: new Date().toISOString()
+      })
+      .select()
+      .single();
 
     if (insertError) {
       console.error('Error creating newsletter subscription:', insertError);
@@ -113,11 +122,23 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    console.log(`📧 New newsletter subscription: ${email}`);
+
+    // TODO: Enviar email de confirmación
+    // Aquí deberías integrar con tu servicio de email (SendGrid, Mailgun, etc.)
+    // Ejemplo:
+    /*
+    await sendConfirmationEmail(email, {
+      subject: 'Confirmación de suscripción - Equitracción Newsletter',
+      message: '¡Gracias por suscribirte! Recibirás nuestro boletín mensual con artículos y novedades.'
+    });
+    */
+
     // Éxito
     return new Response(
       JSON.stringify({
         success: true,
-        message: '¡Gracias por suscribirte! Recibirás un email de confirmación pronto.'
+        message: '¡Gracias por suscribirte! Recibirás nuestro próximo boletín mensual.'
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
