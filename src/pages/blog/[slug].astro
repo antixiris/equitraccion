@@ -6,6 +6,12 @@ import { supabase } from '../../lib/supabase';
 import type { BlogPost } from '../../lib/supabase';
 import { marked } from 'marked';
 
+// Configure marked options
+marked.setOptions({
+  breaks: true,  // Convertir saltos de línea en <br>
+  gfm: true,     // GitHub Flavored Markdown
+});
+
 // Get the slug from the URL
 const { slug } = Astro.params;
 
