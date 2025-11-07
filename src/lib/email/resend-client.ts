@@ -12,7 +12,7 @@ export async function sendWelcomeEmail(email: string): Promise<{ success: boolea
     const baseUrl = import.meta.env.SITE_URL || 'https://equitraccion.com';
 
     const { data, error } = await resend.emails.send({
-      from: 'Equitracción <newsletter@equitraccion.com>',
+      from: 'Equitracción <onboarding@resend.dev>',  // Dominio sandbox para testing
       to: [email],
       subject: 'Bienvenido a Equitracción',
       html: generateWelcomeEmailHTML(email, baseUrl),
@@ -57,7 +57,7 @@ export async function sendNewsletterBatch(
       const personalizedText = text.replace('{{email}}', encodeURIComponent(email));
 
       const { error } = await resend.emails.send({
-        from: 'Equitracción <newsletter@equitraccion.com>',
+        from: 'Equitracción <onboarding@resend.dev>',  // Dominio sandbox para testing
         to: [email],
         subject: subject,
         html: personalizedHTML,
