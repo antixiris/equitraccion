@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../../lib/supabase';
-import { isAuthenticated } from '../../../../lib/auth/jwt';
+import { supabaseAdmin } from '../../../lib/supabase';
+import { isAuthenticated } from '../../../lib/auth/jwt';
 
 export const PUT: APIRoute = async ({ request, params, ...context }) => {
   if (!isAuthenticated(context)) {
