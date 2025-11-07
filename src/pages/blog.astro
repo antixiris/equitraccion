@@ -7,11 +7,18 @@ import { supabase } from '../lib/supabase';
 import type { BlogPost } from '../lib/supabase';
 
 // Fetch blog posts from Supabase
+console.log('🔍 Fetching posts from Supabase...');
+console.log('📍 Supabase URL:', import.meta.env.PUBLIC_SUPABASE_URL);
+console.log('🔑 Anon Key exists:', !!import.meta.env.PUBLIC_SUPABASE_ANON_KEY);
+
 const { data: posts, error } = await supabase
   .from('blog_posts')
   .select('*')
   .eq('published', true)
   .order('published_at', { ascending: false });
+
+console.log('📊 Posts fetched:', posts?.length || 0);
+console.log('❌ Error:', error);
 
 if (error) {
   console.error('Error fetching blog posts:', error);
