@@ -133,7 +133,9 @@ if (isAuthenticated(Astro)) {
       const data = await response.json();
 
       if (data.success) {
-        // Login exitoso - redirigir
+        // Login exitoso - establecer autenticación en sessionStorage
+        sessionStorage.setItem('admin_authenticated', 'true');
+        // Redirigir
         window.location.href = data.redirect || '/admin/posts';
       } else {
         // Mostrar error
