@@ -339,19 +339,20 @@ const title = 'Editar Post | Equitracción CMS';
     postId = getPostId();
 
     try {
-      const { data: post, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('id', postId)
-        .single();
+      const response = await fetch(`/api/admin/posts/${postId}`);
+      const result = await response.json();
 
-      if (error) throw error;
-      if (!post) {
+      if (!result.success) {
+        throw new Error(result.message);
+      }
+
+      if (!result.data) {
         alert('Post no encontrado');
         window.location.href = '/admin/posts';
         return;
       }
 
+      const post = result.data;
       currentPost = post;
 
       // Populate form fields
