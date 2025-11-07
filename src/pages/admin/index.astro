@@ -319,7 +319,14 @@ const title = 'Panel de Administración | Equitracción CMS';
   // Check authentication
   const checkAuth = () => {
     const isAuthenticated = sessionStorage.getItem('admin_authenticated');
-    if (!isAuthenticated) {
+    const isLoggingOut = sessionStorage.getItem('logging_out');
+
+    // Don't redirect if we're in the middle of logging out
+    if (!isAuthenticated && !isLoggingOut) {
+      window.location.href = '/admin/login';
+    } else if (isLoggingOut) {
+      // Clear the flag and complete logout
+      sessionStorage.removeItem('logging_out');
       window.location.href = '/admin/login';
     }
   };
@@ -404,6 +411,8 @@ const title = 'Panel de Administración | Equitracción CMS';
 
   // Logout
   document.getElementById('logout-btn')?.addEventListener('click', () => {
+    // Set flag to prevent redirect loop
+    sessionStorage.setItem('logging_out', 'true');
     sessionStorage.removeItem('admin_authenticated');
     window.location.href = '/admin/login';
   });
