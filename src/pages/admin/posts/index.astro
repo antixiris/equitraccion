@@ -319,12 +319,19 @@ const title = 'Gestión de Posts | Equitracción CMS';
   // Toggle published status
   (window as any).togglePublished = async (id: string, currentStatus: boolean) => {
     try {
-      const { error } = await supabase
-        .from('blog_posts')
-        .update({ published: !currentStatus })
-        .eq('id', id);
+      const response = await fetch('/api/admin/posts/toggle-published', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, currentStatus }),
+      });
 
-      if (error) throw error;
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message);
+      }
 
       await loadPosts();
     } catch (error) {
@@ -343,12 +350,19 @@ const title = 'Gestión de Posts | Equitracción CMS';
     if (!postToDelete) return;
 
     try {
-      const { error } = await supabase
-        .from('blog_posts')
-        .delete()
-        .eq('id', postToDelete);
+      const response = await fetch('/api/admin/posts/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: postToDelete }),
+      });
 
-      if (error) throw error;
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message);
+      }
 
       document.getElementById('delete-modal')!.classList.add('hidden');
       postToDelete = null;
