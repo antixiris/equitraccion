@@ -7,8 +7,14 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://equitraccion.com',
   output: 'server', // SSR mode para API routes
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: false
+    },
+    edgeMiddleware: false
+  }),
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+  trailingSlash: 'ignore'
 });
