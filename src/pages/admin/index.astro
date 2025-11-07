@@ -324,12 +324,7 @@ const title = 'Panel de Administración | Equitracción CMS';
     }
   };
 
-  // Handle logout
-  const logoutBtn = document.getElementById('logout-btn');
-  logoutBtn?.addEventListener('click', () => {
-    sessionStorage.removeItem('admin_authenticated');
-    window.location.href = '/admin/login';
-  });
+  // Handle logout (removed duplicate, kept one at bottom)
 
   // Load stats from API
   const loadStats = async () => {
