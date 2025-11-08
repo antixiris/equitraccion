@@ -383,8 +383,11 @@ const title = 'Gestión de Posts | Equitracción CMS';
   });
   document.getElementById('confirm-delete')?.addEventListener('click', deletePost);
 
-  // Initialize
-  checkAuth();
+  // Initialize - check auth inline to prevent redirect loops
+  const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+  if (!isAuthenticated) {
+    window.location.replace('/admin/login');
+  }
   loadPosts();
 </script>
 

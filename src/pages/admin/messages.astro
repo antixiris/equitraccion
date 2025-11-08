@@ -378,9 +378,13 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
     }
   });
 
-  // Initialize
-  checkAuth();
-  loadMessages();
+  // Initialize - check auth inline to prevent redirect loops
+  const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+  if (!isAuthenticated) {
+    window.location.replace('/admin/login');
+  } else {
+    loadMessages();
+  }
 </script>
 
 <style>

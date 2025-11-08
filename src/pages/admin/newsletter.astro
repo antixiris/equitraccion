@@ -368,8 +368,11 @@ const title = 'Gestionar Newsletter | Equitracción CMS';
     renderSubscribers(filtered);
   });
 
-  // Initialize
-  checkAuth();
+  // Initialize - check auth inline to prevent redirect loops
+  const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+  if (!isAuthenticated) {
+    window.location.replace('/admin/login');
+  }
   loadStats();
   loadSubscribers();
 </script>

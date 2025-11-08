@@ -413,14 +413,14 @@ const title = 'Panel de Administración | Equitracción CMS';
     window.location.replace('/admin/login');
   });
 
-  // Initialize - only load data if authenticated
+  // Initialize - check auth and load data if authenticated
+  // We do NOT call checkAuth() because it causes redirect loops
+  // Instead, we just check if authenticated and redirect if not
   const isAuthenticated = sessionStorage.getItem('admin_authenticated');
-  if (isAuthenticated) {
+  if (!isAuthenticated) {
+    window.location.replace('/admin/login');
+  } else {
     loadStats();
     loadRecentPosts();
   }
-
-  // Check auth AFTER checking if we should load data
-  // This prevents race conditions
-  checkAuth();
 </script>
