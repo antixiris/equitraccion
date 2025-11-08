@@ -316,27 +316,14 @@ const title = 'Panel de Administración | Equitracción CMS';
     import.meta.env.PUBLIC_SUPABASE_ANON_KEY
   );
 
-  // Check authentication
+  // Check authentication - SIMPLE VERSION
   const checkAuth = () => {
     const isAuthenticated = sessionStorage.getItem('admin_authenticated');
-    const isLoggingOut = sessionStorage.getItem('logging_out');
 
-    console.log('[Dashboard] checkAuth - isAuthenticated:', isAuthenticated, 'isLoggingOut:', isLoggingOut);
-
-    // Don't redirect if we're in the middle of logging out
-    if (!isAuthenticated && !isLoggingOut) {
-      console.log('[Dashboard] Not authenticated, redirecting to login...');
-      window.location.href = '/admin/login';
-      return;
-    } else if (isLoggingOut) {
-      // Clear the flag and complete logout
-      console.log('[Dashboard] Logging out, cleaning up...');
-      sessionStorage.removeItem('logging_out');
-      window.location.href = '/admin/login';
-      return;
+    if (!isAuthenticated) {
+      // Not authenticated - redirect to login immediately
+      window.location.replace('/admin/login');
     }
-
-    console.log('[Dashboard] Authentication OK, staying on dashboard');
   };
 
   // Handle logout (removed duplicate, kept one at bottom)
@@ -417,12 +404,13 @@ const title = 'Panel de Administración | Equitracción CMS';
     }
   };
 
-  // Logout
-  document.getElementById('logout-btn')?.addEventListener('click', () => {
-    // Set flag to prevent redirect loop
-    sessionStorage.setItem('logging_out', 'true');
-    sessionStorage.removeItem('admin_authenticated');
-    window.location.href = '/admin/login';
+  // Logout - SIMPLE VERSION
+  document.getElementById('logout-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Clear all session storage
+    sessionStorage.clear();
+    // Use replace to avoid back button issues
+    window.location.replace('/admin/login');
   });
 
   // Initialize - only load data if authenticated
