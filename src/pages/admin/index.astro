@@ -1,6 +1,10 @@
 ---
 // Admin Dashboard - Panel de Control del CMS
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { requireAuth } from '../../lib/auth/server';
+
+// Server-side authentication check
+requireAuth(Astro);
 
 const title = 'Panel de Administración | Equitracción CMS';
 ---
@@ -316,17 +320,7 @@ const title = 'Panel de Administración | Equitracción CMS';
     import.meta.env.PUBLIC_SUPABASE_ANON_KEY
   );
 
-  // Check authentication - SIMPLE VERSION
-  const checkAuth = () => {
-    const isAuthenticated = sessionStorage.getItem('admin_authenticated');
-
-    if (!isAuthenticated) {
-      // Not authenticated - redirect to login immediately
-      window.location.replace('/admin/login');
-    }
-  };
-
-  // Handle logout (removed duplicate, kept one at bottom)
+  // Server-side authentication handles everything - no client-side checks needed
 
   // Load stats from API
   const loadStats = async () => {
@@ -404,23 +398,29 @@ const title = 'Panel de Administración | Equitracción CMS';
     }
   };
 
-  // Logout - SIMPLE VERSION
-  document.getElementById('logout-btn')?.addEventListener('click', (e) => {
+  // Logout via API endpoint
+  document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
     e.preventDefault();
-    // Clear all session storage
-    sessionStorage.clear();
-    // Use replace to avoid back button issues
-    window.location.replace('/admin/login');
+
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+      });
+
+      if (response.ok) {
+        // Redirect to login after successful logout
+        window.location.replace('/admin/login');
+      } else {
+        console.error('Logout failed');
+        alert('Error al cerrar sesión');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+      alert('Error al cerrar sesión');
+    }
   });
 
-  // Initialize - check auth and load data if authenticated
-  // We do NOT call checkAuth() because it causes redirect loops
-  // Instead, we just check if authenticated and redirect if not
-  const isAuthenticated = sessionStorage.getItem('admin_authenticated');
-  if (!isAuthenticated) {
-    window.location.replace('/admin/login');
-  } else {
-    loadStats();
-    loadRecentPosts();
-  }
+  // Initialize - server-side auth already verified, just load data
+  loadStats();
+  loadRecentPosts();
 </script>

@@ -137,9 +137,8 @@ if (isAuthenticated(Astro)) {
       const data = await response.json();
 
       if (data.success) {
-        // Login exitoso - establecer autenticación en sessionStorage
-        sessionStorage.setItem('admin_authenticated', 'true');
-        // Redirigir al dashboard
+        // Login exitoso - la cookie HTTP-only ya está establecida por el servidor
+        // Simplemente redirigir al dashboard
         window.location.href = data.redirect || '/admin';
       } else {
         // Mostrar error
