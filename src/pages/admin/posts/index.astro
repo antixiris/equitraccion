@@ -158,15 +158,15 @@ const title = 'Gestión de Posts | Equitracción CMS';
   const checkAuth = () => {
     const isAuthenticated = sessionStorage.getItem('admin_authenticated');
     if (!isAuthenticated) {
-      window.location.href = '/admin/login';
+      window.location.replace('/admin/login');
     }
   };
 
   // Handle logout
   const logoutBtn = document.getElementById('logout-btn');
   logoutBtn?.addEventListener('click', () => {
-    sessionStorage.removeItem('admin_authenticated');
-    window.location.href = '/admin/login';
+    sessionStorage.clear();
+    window.location.replace('/admin/login');
   });
 
   // Category mapping

@@ -162,7 +162,7 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
   const checkAuth = () => {
     const isAuthenticated = sessionStorage.getItem('admin_authenticated');
     if (!isAuthenticated) {
-      window.location.href = '/admin/login';
+      window.location.replace('/admin/login');
     }
   };
 
@@ -170,8 +170,8 @@ const title = 'Mensajes de Contacto | Equitracción CMS';
   const logoutForm = document.getElementById('logout-form');
   logoutForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    sessionStorage.removeItem('admin_authenticated');
-    window.location.href = '/admin/login';
+    sessionStorage.clear();
+    window.location.replace('/admin/login');
   });
 
   // Category mapping

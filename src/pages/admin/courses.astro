@@ -165,8 +165,8 @@ if (error) {
   const logoutForm = document.getElementById('logout-form');
   logoutForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    sessionStorage.removeItem('admin_authenticated');
-    window.location.href = '/admin/login';
+    sessionStorage.clear();
+    window.location.replace('/admin/login');
   });
 
   const deleteButtons = document.querySelectorAll('.delete-course');
