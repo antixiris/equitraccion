@@ -425,8 +425,14 @@ const title = 'Panel de Administración | Equitracción CMS';
     window.location.href = '/admin/login';
   });
 
-  // Initialize
+  // Initialize - only load data if authenticated
+  const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+  if (isAuthenticated) {
+    loadStats();
+    loadRecentPosts();
+  }
+
+  // Check auth AFTER checking if we should load data
+  // This prevents race conditions
   checkAuth();
-  loadStats();
-  loadRecentPosts();
 </script>
