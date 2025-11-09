@@ -1,12 +1,12 @@
 # CLAUDE CONTEXT - Equitracción Website
 
-**Última actualización:** 7 de noviembre de 2025
+**Última actualización:** 8 de noviembre de 2025
 
 ## 📋 Resumen del Proyecto
 
 Sitio web completo para Fundación Equitracción con:
 - Frontend público en Astro (SSR/SSG híbrido)
-- Backend CMS personalizado con autenticación JWT
+- Backend CMS personalizado con autenticación server-side
 - Base de datos Supabase (PostgreSQL)
 - Sistema de blog, cursos, newsletter y contacto
 
@@ -20,11 +20,16 @@ equitraccion/website/
 │   │   │   ├── index.astro           # Dashboard principal
 │   │   │   ├── login.astro           # Login admin
 │   │   │   ├── posts/                # Gestión de blog
+│   │   │   │   ├── index.astro       # Lista de posts
+│   │   │   │   ├── new.astro         # Crear post (CON QUILL.JS)
+│   │   │   │   └── edit/[id].astro   # Editar post (PENDIENTE QUILL)
 │   │   │   ├── courses/              # Gestión de cursos
 │   │   │   ├── newsletter.astro      # Gestión newsletter
 │   │   │   └── messages.astro        # Mensajes contacto
 │   │   ├── api/            # Endpoints API
 │   │   │   ├── auth/       # Autenticación
+│   │   │   │   ├── login.ts          # Login con cookies HTTP-only
+│   │   │   │   └── logout.ts         # Logout limpia cookie
 │   │   │   ├── posts/      # CRUD posts
 │   │   │   ├── courses/    # CRUD cursos
 │   │   │   ├── newsletter/ # Newsletter
@@ -33,7 +38,9 @@ equitraccion/website/
 │   │   ├── formacion/      # Página cursos público
 │   │   └── contacto.astro  # Formulario contacto
 │   ├── lib/
-│   │   ├── auth/           # JWT y autenticación
+│   │   ├── auth/
+│   │   │   ├── jwt.ts      # JWT helpers (legacy)
+│   │   │   └── server.ts   # ⭐ NUEVO: Auth server-side
 │   │   ├── supabase.ts     # Cliente Supabase
 │   │   └── email/          # Templates newsletter
 │   └── layouts/
@@ -42,139 +49,175 @@ equitraccion/website/
 └── supabase-*.sql          # Scripts SQL
 ```
 
-## 🔄 Cambios Realizados Hoy (7 Nov 2025)
+## 🔄 Cambios Realizados Hoy (8 Nov 2025)
 
-### 1. **Corrección de Botón "Añadir Fecha" en Edición de Cursos**
-**Archivo:** `src/pages/admin/courses/edit/[id].astro`
-**Líneas clave:** 260-446
+### ⚠️ PROBLEMA CRÍTICO IDENTIFICADO: Sistema de Autenticación Corrupto
 
-**Problema:** El botón no respondía al hacer clic
-**Solución:**
-- Eliminadas anotaciones de tipo TypeScript (`as HTMLElement`, `as HTMLInputElement`)
-- Eliminados operadores non-null assertion (`!`)
-- Reorganizado script dentro de `DOMContentLoaded`
-- Movidas funciones fuera del event listener para mejor scope
+**Síntoma:** Bucle infinito de recargas al hacer logout desde cualquier página del CMS.
 
-**Cambios específicos:**
-```javascript
-// Antes (línea 325):
-const target = e.target as HTMLElement;
+**Causa raíz identificada:**
+1. Sistema basado en `sessionStorage` cliente-side
+2. Función `checkAuth()` ejecutándose automáticamente al cargar cada página
+3. Al hacer logout, `sessionStorage.clear()` borraba la sesión PERO el script seguía ejecutándose
+4. `checkAuth()` detectaba ausencia de sesión y redirigía → bucle infinito
 
-// Después:
-const target = e.target;
-```
+### 🔧 SOLUCIÓN IMPLEMENTADA: Autenticación Server-Side Completa
 
-### 2. **Mejora de Tamaños de Texto en Gestión de Cursos**
-**Archivo:** `src/pages/admin/courses.astro`
-**Líneas:** 30-143
+#### 1. **Nuevo Sistema de Autenticación**
+**Archivo creado:** `src/lib/auth/server.ts`
 
-**Cambios:**
-- Título principal: `text-2xl` → `text-3xl` (línea 30)
-- Subtítulo: `text-sm` → `text-base` (línea 31)
-- Enlaces navegación: `text-sm` → `text-base`
-- Título curso: `text-xl` → `text-2xl` (línea 70)
-- Badges: `text-xs` → `text-sm` (líneas 73, 78)
-- Contenido general: `text-sm` → `text-base`
-
-### 3. **Navegación Unificada en Todo el CMS**
-**Archivos modificados:**
-- `src/pages/admin/index.astro` (líneas 11-42)
-- `src/pages/admin/posts/index.astro` (líneas 11-42)
-- `src/pages/admin/courses.astro` (líneas 27-60)
-- `src/pages/admin/newsletter.astro` (líneas 11-46)
-- `src/pages/admin/messages.astro` (líneas 11-44)
-
-**Diseño:**
-```html
-<nav class="flex items-center gap-6">
-  <a href="/admin">Dashboard</a>
-  <a href="/admin/posts">Blog</a>
-  <a href="/admin/courses">Cursos</a>
-  <a href="/admin/newsletter">Newsletter</a>
-  <a href="/admin/messages">Mensajes</a>
-</nav>
-<div class="border-l pl-8">
-  <h1>Título de Página</h1>
-  <p>Descripción</p>
-</div>
+```typescript
+// Funciones principales:
+requireAuth(Astro)      // Verifica auth server-side, redirige si no autenticado
+isAuthenticated(Astro)  // Verifica cookie HTTP-only
+setAuthCookie(Astro)    // Establece cookie segura (login.ts lo usa)
+clearAuthCookie(Astro)  // Borra cookie (logout.ts lo usa)
 ```
 
 **Características:**
-- Página activa: `font-semibold text-amber-800 border-b-2`
-- Hover: `hover:text-amber-800 transition-colors`
-- Menú a la izquierda, título a la derecha con separador vertical
+- Cookies HTTP-only (no accesibles desde JavaScript)
+- Verificación server-side ANTES de renderizar páginas
+- SameSite: 'lax', Secure en producción
+- MaxAge: 7 días
+- Path: '/'
 
-### 4. **Corrección de Nombres de Tablas Supabase**
-**Archivos afectados:**
-- `src/pages/admin/newsletter.astro` (líneas 179, 200, 289, 315)
-- `src/pages/admin/index.astro` (líneas 271, 282)
-- `src/pages/api/newsletter/send.ts` (línea 94)
-- `src/pages/api/newsletter/subscribe.ts` (líneas 40, 57, 86)
+#### 2. **Refactorización de `/admin/index.astro`**
+**Líneas clave:**
+- Línea 4: `import { requireAuth } from '../../lib/auth/server'`
+- Línea 7: `requireAuth(Astro)` - Auth server-side
+- Líneas 323: Eliminada función `checkAuth()` cliente
+- Líneas 401-421: Nuevo logout via API endpoint
+- Líneas 423-425: Carga de datos SIN verificación cliente
 
-**Correcciones:**
-| Incorrecto | Correcto |
-|-----------|----------|
-| `newsletter_subscribers` | `newsletter_subscriptions` |
-| `contact_messages` | `contact_submissions` |
-| `subscribed` (boolean) | `status` ('active'/'unsubscribed') |
-
-**Ejemplo de cambio:**
+**Antes (cliente-side):**
 ```javascript
-// Antes:
-.from('newsletter_subscribers')
-.select('email, subscribed')
-.eq('subscribed', true)
-
-// Después:
-.from('newsletter_subscriptions')
-.select('email, status')
-.eq('status', 'active')
+const checkAuth = () => {
+  const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+  if (!isAuthenticated) {
+    window.location.replace('/admin/login');
+  }
+};
+checkAuth(); // ← Esto causaba el bucle
 ```
 
-### 5. **Rediseño Completo del Dashboard**
-**Archivo:** `src/pages/admin/index.astro` (líneas 44-289)
+**Después (server-side):**
+```astro
+---
+requireAuth(Astro); // ← Verifica ANTES de renderizar
+---
+<script>
+  // Solo lógica de logout vía API
+  document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
+    const response = await fetch('/api/auth/logout', { method: 'POST' });
+    if (response.ok) window.location.replace('/admin/login');
+  });
+  // Carga directa de datos, sin verificación
+  loadStats();
+  loadRecentPosts();
+</script>
+```
 
-**Nueva Estructura:**
+#### 3. **Actualización de `/admin/login.astro`**
+**Líneas modificadas:** 140-142
 
-#### a) Resumen General (líneas 53-101)
-- 4 tarjetas compactas con métricas
-- Grid: `grid-cols-2 lg:grid-cols-4 gap-4`
-- Iconos con colores distintivos
+**Antes:**
+```javascript
+sessionStorage.setItem('admin_authenticated', 'true');
+window.location.href = data.redirect || '/admin';
+```
 
-#### b) Gestión de Contenidos (líneas 104-201)
-**Blog y Cursos en tarjetas modulares:**
-- Header con gradiente de color identificativo
-- Icono + título + descripción
-- 2 acciones por sección:
-  - Ver todos (hover bg-gray-50)
-  - Crear nuevo (bg-color destacado)
+**Después:**
+```javascript
+// Cookie HTTP-only ya establecida por el servidor
+window.location.href = data.redirect || '/admin';
+```
 
-**Colores:**
-- Blog: `from-blue-500 to-blue-600`
-- Cursos: `from-amber-500 to-amber-600`
+#### 4. **Limpieza de Código Legacy**
+**Archivos afectados:**
+- `src/pages/admin/index.astro`
+- `src/pages/admin/messages.astro`
+- `src/pages/admin/newsletter.astro`
+- `src/pages/admin/posts/index.astro`
 
-#### c) Comunicación (líneas 204-289)
-**Newsletter y Mensajes:**
-- Newsletter: `from-green-500 to-emerald-600`
-  - Gestionar suscriptores
-  - Preview newsletter (target="_blank")
-- Mensajes: `from-purple-500 to-purple-600`
-  - Ver mensajes de contacto
+**Eliminado:**
+- ❌ Todas las referencias a `sessionStorage`
+- ❌ Funciones `checkAuth()` cliente-side
+- ❌ Verificaciones de autenticación en JavaScript cliente
 
-#### d) Posts Recientes (líneas 291-324)
-- Lista de últimos 5 posts
-- Estado (Publicado/Borrador) con badges
-- Botón "Editar" por post
+**Mantenido:**
+- ✅ `/lib/auth/jwt.ts` - Para compatibilidad con APIs existentes
+- ✅ `/api/auth/login.ts` y `/api/auth/logout.ts` - Actualizados para cookies
 
-**Ventajas del nuevo diseño:**
-1. Jerarquía visual clara con secciones agrupadas
-2. Colores consistentes por tipo de contenido
-3. Acciones primarias destacadas
-4. Espaciado generoso (mb-12 entre secciones)
-5. Transiciones suaves en todos los hover states
-6. Responsive: 1 columna móvil, 2 columnas desktop
+### 🎨 MEJORA: Editor Quill.js en Creación de Posts
+
+**Archivo:** `src/pages/admin/posts/new.astro`
+
+#### Implementación Completa de Quill.js
+**CDN integrado (líneas aproximadas):**
+```html
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+```
+
+**Configuración del editor:**
+```javascript
+let quill = new Quill('#editor', {
+  theme: 'snow',
+  modules: {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      ['blockquote', 'link', 'image'],
+      ['clean']
+    ]
+  },
+  placeholder: 'Empieza a escribir aquí tu contenido...'
+});
+```
+
+**Ventajas:**
+- ✅ Formato en tiempo real funcional
+- ✅ H1, H2, H3, listas, citas, links, imágenes
+- ✅ Guarda HTML directamente (no Markdown)
+- ✅ Editor profesional y robusto
+- ✅ No hay errores de `document.execCommand` (deprecated)
+
+**Pendiente:**
+- 🔜 Aplicar Quill.js a `edit/[id].astro`
+
+### 📝 Otros Cambios Menores
+
+#### Eliminación de Duplicados de Navegación
+- Removidas definiciones duplicadas de navegación en varias páginas
+- Unificación de estilos amber-800 en todo el CMS
 
 ## 🔑 Decisiones Técnicas Importantes
+
+### ⚠️ ESTADO ACTUAL DEL CMS: Necesita Refactorización Completa
+
+**Problemas identificados que requieren atención:**
+
+1. **Autenticación mixta** (parcialmente solucionado hoy)
+   - ✅ `index.astro` usa server-side
+   - ❌ Resto de páginas admin aún usan `sessionStorage`
+   - 🔜 Necesario: Migrar TODAS las páginas admin a `requireAuth()`
+
+2. **Editor de posts inconsistente**
+   - ✅ `new.astro` tiene Quill.js
+   - ❌ `edit/[id].astro` aún usa `contenteditable` + `document.execCommand`
+   - 🔜 Necesario: Unificar con Quill.js
+
+3. **Manejo de imágenes deficiente**
+   - ❌ No hay resize automático
+   - ❌ No hay optimización
+   - ❌ No hay gestión de storage cuotas
+   - 🔜 Necesario: Integrar Cloudinary o servicio similar
+
+4. **Sin validación consistente**
+   - ❌ Validaciones diferentes en cliente vs servidor
+   - ❌ Mensajes de error inconsistentes
+   - 🔜 Necesario: Sistema centralizado de validación
 
 ### Schema de Base de Datos
 ```sql
@@ -185,10 +228,30 @@ newsletter_subscriptions  -- status: 'active'|'unsubscribed'
 contact_submissions      -- Mensajes del formulario
 ```
 
-### Autenticación
-- **JWT** almacenado en cookie HTTP-only
-- **Middleware:** `isAuthenticated()` en `/lib/auth/jwt.ts`
-- **Session storage** para flag cliente: `admin_authenticated`
+### Autenticación (Sistema Nuevo - Parcialmente Implementado)
+
+**Server-Side (CORRECTO):**
+```typescript
+// En páginas .astro (frontmatter)
+import { requireAuth } from '../../lib/auth/server';
+requireAuth(Astro); // Verifica ANTES de renderizar
+```
+
+**Client-Side (LEGACY - A ELIMINAR):**
+```javascript
+// ❌ NO USAR - causas bucles y problemas
+const checkAuth = () => {
+  const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+  if (!isAuthenticated) window.location.replace('/admin/login');
+};
+```
+
+**Cookies HTTP-only:**
+- Nombre: `admin_session`
+- Secure: true en producción
+- HttpOnly: true (no accesible desde JavaScript)
+- SameSite: 'lax'
+- MaxAge: 604800 segundos (7 días)
 
 ### Cliente Supabase
 ```typescript
@@ -204,14 +267,6 @@ const supabaseAdmin = createClient(
   import.meta.env.SUPABASE_SERVICE_ROLE_KEY
 );
 ```
-
-### Newsletter Template
-**Archivo:** `src/lib/email/newsletter-template.ts`
-- Diseño minimalista tipo Medium
-- Tipografía: Crimson Pro/Text (serif)
-- Colores: Blanco/Negro
-- Width: 680px
-- Parámetro `baseUrl` para localhost vs producción
 
 ## 📝 Variables de Entorno Requeridas
 
@@ -234,61 +289,86 @@ NODE_ENV=development
 NEWSLETTER_CRON_TOKEN=dev_newsletter_token_change_in_production_32_chars
 ```
 
-## 🚀 Próximos Pasos Sugeridos
+## 🚀 Próximos Pasos Sugeridos (ACTUALIZADOS)
 
-### Prioridad Alta
-1. **Implementar envío real de emails**
+### 🔴 PRIORIDAD CRÍTICA - Refactorización CMS
+
+**Problema:** El CMS actual tiene múltiples inconsistencias y código legacy que causan bugs.
+
+**Solución propuesta:** Refactorización completa en siguiente sesión con:
+
+1. **Migración total a autenticación server-side**
+   - Aplicar `requireAuth()` a TODAS las páginas admin
+   - Eliminar todo código de `sessionStorage`
+   - Limpiar `/lib/auth/jwt.ts` de funciones innecesarias
+
+2. **Unificación del editor de posts**
+   - Implementar Quill.js en `edit/[id].astro`
+   - Eliminar código de `document.execCommand`
+   - Añadir preview en tiempo real
+
+3. **Sistema centralizado de gestión de imágenes**
+   - Integrar Cloudinary o Uploadcare
+   - Resize automático de imágenes
+   - Compresión y optimización
+   - CDN para delivery
+
+4. **Validación y manejo de errores unificado**
+   - Crear `/lib/validation.ts` con schemas Zod
+   - Mensajes de error consistentes
+   - Loading states unificados
+
+5. **Refactorización de componentes comunes**
+   - Header de navegación como componente
+   - Modales reutilizables
+   - Toast notifications
+
+### Prioridad Alta (Después de refactorización)
+
+6. **Implementar envío real de emails**
    - Integrar SendGrid o Mailgun en `/api/newsletter/send.ts`
    - Configurar API key en variables de entorno
-   - Testear con emails reales
 
-2. **Configurar cron job para newsletter mensual**
-   - Servicio: Vercel Cron, GitHub Actions, o cron-job.org
-   - Endpoint: `POST /api/newsletter/send`
-   - Frecuencia: Día 1 de cada mes
-   - Header: `Authorization: Bearer ${NEWSLETTER_CRON_TOKEN}`
-
-3. **Deploy a producción**
-   - Actualizar variables de entorno en Vercel/Netlify
+7. **Deploy a producción**
+   - Actualizar variables de entorno en Vercel
    - Cambiar `SITE_URL` a dominio real
-   - Cambiar JWT_SECRET y NEWSLETTER_CRON_TOKEN
-   - Verificar políticas RLS en Supabase
+   - Rotar secrets (JWT_SECRET, NEWSLETTER_CRON_TOKEN)
 
 ### Prioridad Media
-4. **Mejorar página de edición de cursos**
-   - Añadir preview de fechas antes de guardar
-   - Validación de fechas (fin > inicio)
-   - Confirmación antes de eliminar convocatorias
 
-5. **Añadir funcionalidad de respuesta a mensajes**
-   - Form de respuesta en `/admin/messages`
-   - Integrar con servicio de email
-   - Actualizar status del mensaje
-
-6. **Optimizar imágenes**
-   - Comprimir imágenes en `/public/images/`
-   - Implementar lazy loading
-   - Considerar usar Cloudinary o similar
-
-### Prioridad Baja
-7. **Tests automatizados**
-   - Tests unitarios para funciones de lib/
-   - Tests E2E con Playwright para admin panel
+8. **Tests automatizados**
+   - Tests E2E con Playwright para flujos críticos
+   - Tests de integración para APIs
    - CI/CD con GitHub Actions
 
-8. **Mejoras de UX**
-   - Drag & drop para reordenar posts
-   - Preview en vivo al editar posts
-   - Rich text editor mejorado (TipTap o similar)
-
-9. **Analytics**
-   - Integrar Google Analytics o Plausible
-   - Dashboard de métricas en admin
-   - Tracking de conversiones (suscripciones, contacto)
+9. **Analytics y monitoreo**
+   - Integrar Plausible o Google Analytics
+   - Error tracking con Sentry
+   - Performance monitoring
 
 ## 🐛 Issues Conocidos
 
-- Ninguno actualmente
+### 🔴 Críticos (Requieren solución inmediata)
+
+1. **Logout causa bucle infinito**
+   - Estado: ✅ Solucionado parcialmente en `index.astro`
+   - Pendiente: Aplicar a resto de páginas admin
+   - Solución: Migrar todas las páginas a autenticación server-side
+
+2. **Editor de posts inconsistente**
+   - `new.astro`: Usa Quill.js ✅
+   - `edit/[id].astro`: Usa `contenteditable` deprecated ❌
+   - Solución: Aplicar Quill.js a `edit/[id].astro`
+
+### ⚠️ Moderados
+
+3. **Código duplicado en navegación**
+   - Mismo HTML de nav copiado en 5+ archivos
+   - Solución: Crear componente de navegación
+
+4. **Sin manejo de imágenes grandes**
+   - Usuarios pueden subir imágenes de MB sin compresión
+   - Solución: Implementar resize y compresión en upload
 
 ## 📚 Documentación Relacionada
 
@@ -304,13 +384,63 @@ NEWSLETTER_CRON_TOKEN=dev_newsletter_token_change_in_production_32_chars
 - **Dashboard:** http://localhost:4321/admin
 - **Newsletter preview:** http://localhost:4321/api/newsletter/send?preview=true
 - **Supabase:** https://supabase.com/dashboard/project/xmucbjbtgmjezypkdjpc
+- **Producción:** https://equitraccion.vercel.app
+
+## 📊 Historial de Commits Importantes
+
+### 8 Nov 2025
+- `66ddced` - **refactor: Implementar autenticación server-side con cookies HTTP-only**
+  - Solución al bucle infinito de logout
+  - Nuevo `/lib/auth/server.ts`
+  - Migración de `index.astro` a server-side auth
+
+- `7604424` - **fix: Eliminar checkAuth() automático para prevenir loops de logout**
+  - Primer intento de solución (parcial)
+  - Eliminación de `checkAuth()` automático
+
+- `0e6f4ce` - **feat: Reemplazar editor con Quill.js en new.astro**
+  - Editor profesional WYSIWYG
+  - Formato en tiempo real funcional
+
+### 7 Nov 2025
+- Corrección de nombres de tablas Supabase
+- Rediseño completo del dashboard
+- Navegación unificada en CMS
+
+---
+
+## 🎯 Plan para Próxima Sesión
+
+### Objetivo: Refactorización Completa del CMS
+
+**Duración estimada:** 2-3 horas
+
+**Tareas:**
+1. ✅ Auditoría completa del código actual
+2. 🔧 Migrar TODAS las páginas admin a server-side auth
+3. 🔧 Implementar Quill.js en `edit/[id].astro`
+4. 🔧 Crear componentes reutilizables (Nav, Modal, Toast)
+5. 🔧 Centralizar validación con Zod
+6. 🔧 Implementar gestión de imágenes con Cloudinary
+7. ✅ Testing manual exhaustivo
+8. ✅ Deploy a producción
+
+**Criterios de éxito:**
+- ✅ No hay bucles de logout en ninguna página
+- ✅ Editor funciona igual en crear y editar
+- ✅ Código DRY (sin duplicación)
+- ✅ Mensajes de error consistentes
+- ✅ Performance óptimo (<2s carga de páginas)
 
 ---
 
 **Notas para Claude:**
 - El proyecto usa Astro en modo híbrido (SSR + SSG)
-- JavaScript en scripts de Astro NO soporta TypeScript
-- Usar operador `?.` para optional chaining es seguro
+- JavaScript en `<script>` de Astro NO soporta TypeScript
 - NO usar `as` type assertions ni `!` non-null assertions en scripts cliente
+- Usar operador `?.` para optional chaining es seguro
 - Las tablas de Supabase usan `snake_case`
-- Colores del tema: Amber-800 (#92400e) para B2B, tonos tierra para B2C
+- Colores del tema: Amber-800 (#92400e) para B2B
+- **IMPORTANTE:** Siempre verificar auth con `requireAuth(Astro)` en frontmatter de páginas admin
+- **IMPORTANTE:** NO usar `sessionStorage` para autenticación
+- **IMPORTANTE:** Logout debe ser vía `POST /api/auth/logout`
