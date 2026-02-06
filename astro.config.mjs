@@ -13,14 +13,14 @@ export default defineConfig({
     },
     edgeMiddleware: false,
     // Forzar inclusión de módulos que el bundler de Vercel no rastrea
-    includeFiles: ['./node_modules/@opentelemetry/api/build/src/index.js']
+    // includeFiles no necesario con noExternal en vite.ssr
   }),
   vite: {
     plugins: [tailwindcss()],
     ssr: {
-      // firebase-admin y sus dependencias necesitan resolverse desde node_modules
-      // en Vercel, no bundlearse con Vite (evita "Cannot find module" en serverless)
-      external: ['firebase-admin']
+      // Forzar que Vite NO externalice estos paquetes y los bundlee inline
+      // Esto evita "Cannot find module" en Vercel serverless
+      noExternal: ['firebase-admin', '@opentelemetry/api']
     }
   },
   trailingSlash: 'ignore'
