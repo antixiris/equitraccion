@@ -14,7 +14,12 @@ export default defineConfig({
     edgeMiddleware: false
   }),
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    ssr: {
+      // firebase-admin y sus dependencias necesitan resolverse desde node_modules
+      // en Vercel, no bundlearse con Vite (evita "Cannot find module" en serverless)
+      external: ['firebase-admin']
+    }
   },
   trailingSlash: 'ignore'
 });
