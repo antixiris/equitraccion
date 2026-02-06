@@ -26,9 +26,9 @@ export const GET: APIRoute = async ({ request }) => {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Blog posts API error:', error);
-    return new Response(JSON.stringify({ error: error?.message || 'Internal server error' }), {
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
