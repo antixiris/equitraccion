@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../lib/supabase';
+import { db } from '../../../lib/firebase';
 import { isAuthenticated } from '../../../lib/auth/jwt';
 
 /**
@@ -8,7 +8,6 @@ import { isAuthenticated } from '../../../lib/auth/jwt';
  * Body: { id: string }
  */
 export const DELETE: APIRoute = async (context) => {
-  // Check authentication
   if (!isAuthenticated(context)) {
     return new Response(
       JSON.stringify({ success: false, message: 'No autorizado' }),
@@ -27,20 +26,22 @@ export const DELETE: APIRoute = async (context) => {
       );
     }
 
-    const { error } = await supabaseAdmin
-      .from('newsletter_subscriptions')
-      .delete()
-      .eq('id', id);
+    // Find subscriber by UUID id
+    const querySnapshot = await db.collection('newsletter_subscriptions')
+      .where('id', '==', id)
+      .limit(1)
+      .get();
 
-    if (error) {
-      console.error('Error deleting subscriber:', error);
+    if (querySnapshot.empty) {
       return new Response(
-        JSON.stringify({ success: false, message: 'Error al eliminar el suscriptor' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: false, message: 'Suscriptor no encontrado' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    console.log(`✅ Subscriber ${id} deleted successfully`);
+    await querySnapshot.docs[0].ref.delete();
+
+    console.log(`Subscriber ${id} deleted successfully`);
 
     return new Response(
       JSON.stringify({ success: true, message: 'Suscriptor eliminado correctamente' }),

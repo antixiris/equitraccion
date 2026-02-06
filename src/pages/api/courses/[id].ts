@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../lib/supabase';
+import { db } from '../../../lib/firebase';
 import { isAuthenticated } from '../../../lib/auth/jwt';
+import { nowISO } from '../../../lib/firestore-helpers';
 
 export const PUT: APIRoute = async ({ request, params, ...context }) => {
   if (!isAuthenticated(context)) {
@@ -13,35 +14,37 @@ export const PUT: APIRoute = async ({ request, params, ...context }) => {
   try {
     const { id } = params;
     const body = await request.json();
-    
-    const { data, error } = await supabaseAdmin
-      .from('courses')
-      .update({
-        title: body.title,
-        duration_days: body.duration_days,
-        level: body.level,
-        experience_level: body.experience_level,
-        max_participants: body.max_participants,
-        price: body.price,
-        target_audience: body.target_audience,
-        contents: body.contents,
-        requirements: body.requirements || null,
-        dates: body.dates,
-        location: body.location,
-        active: body.active,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', id)
-      .select()
-      .single();
 
-    if (error) {
-      console.error('Error updating course:', error);
+    const docRef = db.collection('courses').doc(id!);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
       return new Response(
-        JSON.stringify({ success: false, message: 'Error al actualizar el curso' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: false, message: 'Curso no encontrado' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
       );
     }
+
+    const updateData = {
+      title: body.title,
+      duration_days: body.duration_days,
+      level: body.level,
+      experience_level: body.experience_level,
+      max_participants: body.max_participants,
+      price: body.price,
+      target_audience: body.target_audience,
+      contents: body.contents,
+      requirements: body.requirements || null,
+      dates: body.dates,
+      location: body.location,
+      active: body.active,
+      updated_at: nowISO(),
+    };
+
+    await docRef.update(updateData);
+
+    const updatedDoc = await docRef.get();
+    const data = { id: updatedDoc.data()?.id || updatedDoc.id, ...updatedDoc.data() };
 
     return new Response(
       JSON.stringify({ success: true, data }),
@@ -67,19 +70,18 @@ export const DELETE: APIRoute = async ({ params, ...context }) => {
 
   try {
     const { id } = params;
-    
-    const { error } = await supabaseAdmin
-      .from('courses')
-      .delete()
-      .eq('id', id);
 
-    if (error) {
-      console.error('Error deleting course:', error);
+    const docRef = db.collection('courses').doc(id!);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
       return new Response(
-        JSON.stringify({ success: false, message: 'Error al eliminar el curso' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: false, message: 'Curso no encontrado' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
       );
     }
+
+    await docRef.delete();
 
     return new Response(
       JSON.stringify({ success: true, message: 'Curso eliminado' }),

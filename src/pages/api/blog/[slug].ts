@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabase } from '../../../lib/supabase';
+import { db } from '../../../lib/firebase';
 
 export const GET: APIRoute = async ({ params }) => {
   try {
@@ -12,14 +12,20 @@ export const GET: APIRoute = async ({ params }) => {
       });
     }
 
-    const { data, error } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .eq('slug', slug)
-      .eq('published', true)
-      .single();
+    // slug = doc ID → direct O(1) lookup
+    const doc = await db.collection('blog_posts').doc(slug).get();
 
-    if (error || !data) {
+    if (!doc.exists) {
+      return new Response(JSON.stringify({ error: 'Post not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    const data = { id: doc.id, ...doc.data() };
+
+    // Only return published posts via public API
+    if (!(data as any).published) {
       return new Response(JSON.stringify({ error: 'Post not found' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json' }

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../lib/supabase';
+import { db } from '../../../lib/firebase';
 import { isAuthenticated } from '../../../lib/auth/jwt';
 
 /**
@@ -7,7 +7,6 @@ import { isAuthenticated } from '../../../lib/auth/jwt';
  * GET /api/admin/stats
  */
 export const GET: APIRoute = async (context) => {
-  // Check authentication
   if (!isAuthenticated(context)) {
     return new Response(
       JSON.stringify({ success: false, message: 'No autorizado' }),
@@ -16,53 +15,23 @@ export const GET: APIRoute = async (context) => {
   }
 
   try {
-    // Get blog posts count
-    const { count: postsCount, error: postsError } = await supabaseAdmin
-      .from('blog_posts')
-      .select('*', { count: 'exact', head: true });
-
-    if (postsError) {
-      console.error('Error counting posts:', postsError);
-    }
-
-    // Get active courses count
-    const { count: coursesCount, error: coursesError } = await supabaseAdmin
-      .from('courses')
-      .select('*', { count: 'exact', head: true })
-      .eq('active', true);
-
-    if (coursesError) {
-      console.error('Error counting courses:', coursesError);
-    }
-
-    // Get active subscribers count
-    const { count: subscribersCount, error: subscribersError } = await supabaseAdmin
-      .from('newsletter_subscriptions')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'active');
-
-    if (subscribersError) {
-      console.error('Error counting subscribers:', subscribersError);
-    }
-
-    // Get contact messages count
-    const { count: messagesCount, error: messagesError } = await supabaseAdmin
-      .from('contact_submissions')
-      .select('*', { count: 'exact', head: true });
-
-    if (messagesError) {
-      console.error('Error counting messages:', messagesError);
-    }
+    // Run all count queries in parallel
+    const [postsSnap, coursesSnap, subscribersSnap, messagesSnap] = await Promise.all([
+      db.collection('blog_posts').count().get(),
+      db.collection('courses').where('active', '==', true).count().get(),
+      db.collection('newsletter_subscriptions').where('status', '==', 'active').count().get(),
+      db.collection('contact_submissions').count().get(),
+    ]);
 
     return new Response(
       JSON.stringify({
         success: true,
         data: {
-          posts: postsCount || 0,
-          courses: coursesCount || 0,
-          subscribers: subscribersCount || 0,
-          messages: messagesCount || 0
-        }
+          posts: postsSnap.data().count,
+          courses: coursesSnap.data().count,
+          subscribers: subscribersSnap.data().count,
+          messages: messagesSnap.data().count,
+        },
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );

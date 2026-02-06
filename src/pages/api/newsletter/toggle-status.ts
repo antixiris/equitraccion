@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../lib/supabase';
+import { db } from '../../../lib/firebase';
 import { isAuthenticated } from '../../../lib/auth/jwt';
 
 /**
@@ -8,7 +8,6 @@ import { isAuthenticated } from '../../../lib/auth/jwt';
  * Body: { id: string, currentStatus: string }
  */
 export const POST: APIRoute = async (context) => {
-  // Check authentication
   if (!isAuthenticated(context)) {
     return new Response(
       JSON.stringify({ success: false, message: 'No autorizado' }),
@@ -27,26 +26,27 @@ export const POST: APIRoute = async (context) => {
       );
     }
 
-    // Toggle status
     const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
 
-    const { error } = await supabaseAdmin
-      .from('newsletter_subscriptions')
-      .update({
-        status: newStatus,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', id);
+    // Find subscriber by UUID id
+    const querySnapshot = await db.collection('newsletter_subscriptions')
+      .where('id', '==', id)
+      .limit(1)
+      .get();
 
-    if (error) {
-      console.error('Error toggling subscriber status:', error);
+    if (querySnapshot.empty) {
       return new Response(
-        JSON.stringify({ success: false, message: 'Error al actualizar el estado' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: false, message: 'Suscriptor no encontrado' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    console.log(`✅ Subscriber ${id} status toggled to ${newStatus}`);
+    await querySnapshot.docs[0].ref.update({
+      status: newStatus,
+      updated_at: new Date().toISOString(),
+    });
+
+    console.log(`Subscriber ${id} status toggled to ${newStatus}`);
 
     return new Response(
       JSON.stringify({ success: true, message: 'Estado actualizado correctamente' }),

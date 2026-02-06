@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../../lib/supabase';
+import { db } from '../../../../lib/firebase';
 import { isAuthenticated } from '../../../../lib/auth/jwt';
 
 /**
@@ -7,7 +7,6 @@ import { isAuthenticated } from '../../../../lib/auth/jwt';
  * GET /api/admin/messages/list
  */
 export const GET: APIRoute = async (context) => {
-  // Check authentication
   if (!isAuthenticated(context)) {
     return new Response(
       JSON.stringify({ success: false, message: 'No autorizado' }),
@@ -16,24 +15,14 @@ export const GET: APIRoute = async (context) => {
   }
 
   try {
-    const { data: messages, error } = await supabaseAdmin
-      .from('contact_submissions')
-      .select('*')
-      .order('created_at', { ascending: false });
+    const snapshot = await db.collection('contact_submissions')
+      .orderBy('created_at', 'desc')
+      .get();
 
-    if (error) {
-      console.error('Error loading messages:', error);
-      return new Response(
-        JSON.stringify({ success: false, message: 'Error al cargar mensajes' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
+    const messages = snapshot.docs.map(doc => ({ id: doc.data().id || doc.id, ...doc.data() }));
 
     return new Response(
-      JSON.stringify({
-        success: true,
-        data: messages || []
-      }),
+      JSON.stringify({ success: true, data: messages }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
 

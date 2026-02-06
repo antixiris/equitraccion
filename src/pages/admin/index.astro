@@ -312,14 +312,6 @@ const title = 'Panel de Administración | Equitracción CMS';
 </BaseLayout>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
-
-  // Create Supabase client with public env vars (for recent posts only)
-  const supabase = createClient(
-    import.meta.env.PUBLIC_SUPABASE_URL,
-    import.meta.env.PUBLIC_SUPABASE_ANON_KEY
-  );
-
   // Server-side authentication handles everything - no client-side checks needed
 
   // Load stats from API
@@ -343,17 +335,15 @@ const title = 'Panel de Administración | Equitracción CMS';
     }
   };
 
-  // Load recent posts
+  // Load recent posts via API
   const loadRecentPosts = async () => {
     try {
-      const { data: posts, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(5);
+      const response = await fetch('/api/admin/posts/list');
+      const result = await response.json();
 
-      if (error) throw error;
+      if (!result.success) throw new Error(result.message);
 
+      const posts = (result.data || []).slice(0, 5);
       const container = document.getElementById('recent-posts')!;
 
       if (!posts || posts.length === 0) {

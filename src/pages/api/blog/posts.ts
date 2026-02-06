@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabase } from '../../../lib/supabase';
+import { db } from '../../../lib/firebase';
 
 export const GET: APIRoute = async ({ request }) => {
   try {
@@ -8,27 +8,21 @@ export const GET: APIRoute = async ({ request }) => {
     const limit = parseInt(url.searchParams.get('limit') || '10');
     const offset = parseInt(url.searchParams.get('offset') || '0');
 
-    let query = supabase
-      .from('blog_posts')
-      .select('*')
-      .eq('published', true)
-      .order('published_at', { ascending: false })
-      .range(offset, offset + limit - 1);
+    let query: FirebaseFirestore.Query = db.collection('blog_posts')
+      .where('published', '==', true)
+      .orderBy('published_at', 'desc');
 
     if (category) {
-      query = query.eq('category', category);
+      query = query.where('category', '==', category);
     }
 
-    const { data, error, count } = await query;
+    // Firestore no tiene offset nativo — usamos limit+offset con startAfter
+    // Para simplificar y mantener paridad, obtenemos limit+offset y cortamos
+    const snapshot = await query.limit(limit + offset).get();
+    const allDocs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const data = allDocs.slice(offset, offset + limit);
 
-    if (error) {
-      return new Response(JSON.stringify({ error: error.message }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-
-    return new Response(JSON.stringify({ data, count }), {
+    return new Response(JSON.stringify({ data, count: allDocs.length }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });

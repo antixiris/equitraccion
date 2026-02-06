@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/firebase';
 
 export const GET: APIRoute = async () => {
   const baseUrl = 'https://equitraccion.com';
@@ -15,18 +15,15 @@ export const GET: APIRoute = async () => {
     { url: '/blog', priority: '0.9', changefreq: 'daily' },
   ];
 
-  // Get published blog posts from Supabase
+  // Get published blog posts from Firestore
   let blogPosts: any[] = [];
   try {
-    const { data } = await supabase
-      .from('blog_posts')
-      .select('slug, published_at, updated_at')
-      .eq('published', true)
-      .order('published_at', { ascending: false });
+    const snapshot = await db.collection('blog_posts')
+      .where('published', '==', true)
+      .orderBy('published_at', 'desc')
+      .get();
 
-    if (data) {
-      blogPosts = data;
-    }
+    blogPosts = snapshot.docs.map(doc => doc.data());
   } catch (error) {
     console.error('Error fetching blog posts for sitemap:', error);
   }

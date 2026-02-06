@@ -1,14 +1,13 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../lib/supabase';
+import { bucket } from '../../lib/firebase';
 import { isAuthenticated } from '../../lib/auth/jwt';
 
 /**
- * Upload image to Supabase Storage
+ * Upload image to Firebase Cloud Storage
  * POST /api/upload-image
  * Body: FormData with 'file' field
  */
 export const POST: APIRoute = async (context) => {
-  // Check authentication
   if (!isAuthenticated(context)) {
     return new Response(
       JSON.stringify({ success: false, message: 'No autorizado' }),
@@ -37,7 +36,7 @@ export const POST: APIRoute = async (context) => {
     }
 
     // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
       return new Response(
         JSON.stringify({ success: false, message: 'El archivo es demasiado grande. Tamaño máximo: 5MB' }),
@@ -50,46 +49,34 @@ export const POST: APIRoute = async (context) => {
     const randomString = Math.random().toString(36).substring(2, 8);
     const extension = file.name.split('.').pop();
     const filename = `${timestamp}-${randomString}.${extension}`;
-
-    // Define storage path
     const storagePath = `blog/${filename}`;
 
-    // Convert File to ArrayBuffer
+    // Convert File to Buffer
     const arrayBuffer = await file.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
+    const buffer = Buffer.from(arrayBuffer);
 
-    // Upload to Supabase Storage
-    const { data, error } = await supabaseAdmin.storage
-      .from('images')
-      .upload(storagePath, buffer, {
+    // Upload to Firebase Storage
+    const firebaseFile = bucket.file(storagePath);
+    await firebaseFile.save(buffer, {
+      metadata: {
         contentType: file.type,
-        cacheControl: '3600',
-        upsert: false
-      });
+        cacheControl: 'public, max-age=31536000',
+      },
+    });
 
-    if (error) {
-      console.error('Error uploading to Supabase Storage:', error);
-      return new Response(
-        JSON.stringify({ success: false, message: `Error al subir la imagen: ${error.message}` }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
+    // Make public
+    await firebaseFile.makePublic();
 
-    // Get public URL
-    const { data: publicUrlData } = supabaseAdmin.storage
-      .from('images')
-      .getPublicUrl(storagePath);
+    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${storagePath}`;
 
-    const publicUrl = publicUrlData.publicUrl;
-
-    console.log(`✅ Image uploaded successfully: ${publicUrl}`);
+    console.log(`Image uploaded successfully: ${publicUrl}`);
 
     return new Response(
       JSON.stringify({
         success: true,
         url: publicUrl,
         path: storagePath,
-        message: 'Imagen subida correctamente'
+        message: 'Imagen subida correctamente',
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
@@ -99,7 +86,7 @@ export const POST: APIRoute = async (context) => {
     return new Response(
       JSON.stringify({
         success: false,
-        message: error instanceof Error ? error.message : 'Error interno del servidor'
+        message: error instanceof Error ? error.message : 'Error interno del servidor',
       }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );

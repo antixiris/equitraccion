@@ -2,8 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { supabase } from '../../lib/supabase';
-import type { BlogPost } from '../../lib/supabase';
+import { db } from '../../lib/firebase';
+import type { BlogPost } from '../../lib/firebase';
 import { marked } from 'marked';
 
 // Configure marked options for backward compatibility with old posts
@@ -15,16 +15,17 @@ marked.setOptions({
 // Get the slug from the URL
 const { slug } = Astro.params;
 
-// Fetch the blog post from Supabase
-const { data: post, error } = await supabase
-  .from('blog_posts')
-  .select('*')
-  .eq('slug', slug)
-  .eq('published', true)
-  .single();
+// Fetch the blog post from Firestore (slug = doc ID → O(1) lookup)
+const postDoc = await db.collection('blog_posts').doc(slug!).get();
 
-// If post not found or error, return 404
-if (error || !post) {
+// If post not found or not published, return 404
+if (!postDoc.exists) {
+  return Astro.redirect('/404');
+}
+
+const post = { id: postDoc.id, ...postDoc.data() } as BlogPost;
+
+if (!post.published) {
   return Astro.redirect('/404');
 }
 

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../../lib/supabase';
+import { db } from '../../../../lib/firebase';
 import { isAuthenticated } from '../../../../lib/auth/jwt';
 
 /**
@@ -7,7 +7,6 @@ import { isAuthenticated } from '../../../../lib/auth/jwt';
  * GET /api/admin/posts/[id]
  */
 export const GET: APIRoute = async (context) => {
-  // Check authentication
   if (!isAuthenticated(context)) {
     return new Response(
       JSON.stringify({ success: false, message: 'No autorizado' }),
@@ -25,32 +24,24 @@ export const GET: APIRoute = async (context) => {
       );
     }
 
-    const { data: post, error } = await supabaseAdmin
-      .from('blog_posts')
-      .select('*')
-      .eq('id', id)
-      .single();
+    // Search by UUID id field (not doc ID which is slug)
+    const querySnapshot = await db.collection('blog_posts')
+      .where('id', '==', id)
+      .limit(1)
+      .get();
 
-    if (error) {
-      console.error('Error loading post:', error);
-      return new Response(
-        JSON.stringify({ success: false, message: 'Error al cargar el post' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    if (!post) {
+    if (querySnapshot.empty) {
       return new Response(
         JSON.stringify({ success: false, message: 'Post no encontrado' }),
         { status: 404, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
+    const doc = querySnapshot.docs[0];
+    const post = { id: doc.data().id || doc.id, ...doc.data() };
+
     return new Response(
-      JSON.stringify({
-        success: true,
-        data: post
-      }),
+      JSON.stringify({ success: true, data: post }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
 

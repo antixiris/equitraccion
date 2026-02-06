@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../../lib/supabase';
+import { db } from '../../../../lib/firebase';
 import { isAuthenticated } from '../../../../lib/auth/jwt';
 
 /**
@@ -7,7 +7,6 @@ import { isAuthenticated } from '../../../../lib/auth/jwt';
  * PATCH /api/admin/messages/[id]
  */
 export const PATCH: APIRoute = async (context) => {
-  // Check authentication
   if (!isAuthenticated(context)) {
     return new Response(
       JSON.stringify({ success: false, message: 'No autorizado' }),
@@ -26,21 +25,18 @@ export const PATCH: APIRoute = async (context) => {
       );
     }
 
-    // Convert boolean read to status value
     const status = body.read ? 'read' : 'new';
+    const docRef = db.collection('contact_submissions').doc(id);
+    const doc = await docRef.get();
 
-    const { error } = await supabaseAdmin
-      .from('contact_submissions')
-      .update({ status })
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error updating message:', error);
+    if (!doc.exists) {
       return new Response(
-        JSON.stringify({ success: false, message: 'Error al actualizar el mensaje' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: false, message: 'Mensaje no encontrado' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
       );
     }
+
+    await docRef.update({ status });
 
     return new Response(
       JSON.stringify({ success: true, message: 'Mensaje actualizado' }),
@@ -61,7 +57,6 @@ export const PATCH: APIRoute = async (context) => {
  * DELETE /api/admin/messages/[id]
  */
 export const DELETE: APIRoute = async (context) => {
-  // Check authentication
   if (!isAuthenticated(context)) {
     return new Response(
       JSON.stringify({ success: false, message: 'No autorizado' }),
@@ -79,18 +74,17 @@ export const DELETE: APIRoute = async (context) => {
       );
     }
 
-    const { error } = await supabaseAdmin
-      .from('contact_submissions')
-      .delete()
-      .eq('id', id);
+    const docRef = db.collection('contact_submissions').doc(id);
+    const doc = await docRef.get();
 
-    if (error) {
-      console.error('Error deleting message:', error);
+    if (!doc.exists) {
       return new Response(
-        JSON.stringify({ success: false, message: 'Error al eliminar el mensaje' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: false, message: 'Mensaje no encontrado' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
       );
     }
+
+    await docRef.delete();
 
     return new Response(
       JSON.stringify({ success: true, message: 'Mensaje eliminado' }),

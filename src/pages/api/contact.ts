@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../lib/supabase';
+import { db } from '../../lib/firebase';
 import {
   validateEmail,
   validateContactForm,
@@ -92,25 +92,24 @@ export const POST: APIRoute = async ({ request }) => {
     const sanitizedSubject = sanitizeHTML(subject.trim());
     const sanitizedMessage = sanitizeHTML(message.trim());
 
-    // Insert into database using service role key to bypass RLS
-    const { data, error } = await supabaseAdmin
-      .from('contact_submissions')
-      .insert([
-        {
-          name: sanitizedName,
-          email: sanitizedEmail,
-          phone: sanitizedPhone,
-          subject: sanitizedSubject,
-          message: sanitizedMessage,
-          category,
-          status: 'new',
-        },
-      ])
-      .select()
-      .single();
+    // Insert into Firestore
+    const now = new Date().toISOString();
+    const docData = {
+      id: crypto.randomUUID(),
+      name: sanitizedName,
+      email: sanitizedEmail,
+      phone: sanitizedPhone,
+      subject: sanitizedSubject,
+      message: sanitizedMessage,
+      category,
+      status: 'new' as const,
+      created_at: now,
+    };
 
-    if (error) {
-      console.error('Supabase error:', error);
+    try {
+      await db.collection('contact_submissions').doc(docData.id).set(docData);
+    } catch (dbError) {
+      console.error('Firestore error:', dbError);
       return new Response(
         JSON.stringify({ error: 'Error al enviar el formulario' }),
         {
@@ -119,6 +118,8 @@ export const POST: APIRoute = async ({ request }) => {
         }
       );
     }
+
+    const data = docData;
 
     // Enviar email de notificación a roberto@equitraccion.com
     try {

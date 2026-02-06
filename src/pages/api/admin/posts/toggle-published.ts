@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../../lib/supabase';
+import { db } from '../../../../lib/firebase';
 import { isAuthenticated } from '../../../../lib/auth/jwt';
+import { nowISO } from '../../../../lib/firestore-helpers';
 
 /**
  * Toggle post published status
@@ -8,7 +9,6 @@ import { isAuthenticated } from '../../../../lib/auth/jwt';
  * Body: { id: string, currentStatus: boolean }
  */
 export const POST: APIRoute = async (context) => {
-  // Check authentication
   if (!isAuthenticated(context)) {
     return new Response(
       JSON.stringify({ success: false, message: 'No autorizado' }),
@@ -27,26 +27,33 @@ export const POST: APIRoute = async (context) => {
       );
     }
 
-    // Toggle published status
-    const newStatus = !currentStatus;
+    // Find post by UUID id
+    const querySnapshot = await db.collection('blog_posts')
+      .where('id', '==', id)
+      .limit(1)
+      .get();
 
-    const { error } = await supabaseAdmin
-      .from('blog_posts')
-      .update({
-        published: newStatus,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error toggling post published status:', error);
+    if (querySnapshot.empty) {
       return new Response(
-        JSON.stringify({ success: false, message: 'Error al actualizar el estado' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: false, message: 'Post no encontrado' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    console.log(`✅ Post ${id} published status toggled to ${newStatus}`);
+    const newStatus = !currentStatus;
+    const updateData: Record<string, any> = {
+      published: newStatus,
+      updated_at: nowISO(),
+    };
+
+    // Set published_at when publishing for the first time
+    if (newStatus && !querySnapshot.docs[0].data().published_at) {
+      updateData.published_at = nowISO();
+    }
+
+    await querySnapshot.docs[0].ref.update(updateData);
+
+    console.log(`Post ${id} published status toggled to ${newStatus}`);
 
     return new Response(
       JSON.stringify({ success: true, message: 'Estado actualizado correctamente' }),

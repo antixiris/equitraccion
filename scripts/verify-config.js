@@ -31,9 +31,9 @@ const log = {
 
 // Variables requeridas
 const requiredEnvVars = [
-  'SUPABASE_URL',
-  'SUPABASE_ANON_KEY',
-  'SUPABASE_SERVICE_ROLE_KEY',
+  'FIREBASE_PROJECT_ID',
+  'FIREBASE_CLIENT_EMAIL',
+  'FIREBASE_PRIVATE_KEY',
   'JWT_SECRET',
   'ADMIN_EMAIL',
   'ADMIN_PASSWORD',
@@ -162,13 +162,30 @@ if (env.SITE_URL) {
   }
 }
 
-// Supabase URL - verificar formato
-if (env.SUPABASE_URL) {
-  if (!env.SUPABASE_URL.startsWith('https://') || !env.SUPABASE_URL.includes('.supabase.co')) {
-    log.warning('SUPABASE_URL no parece tener el formato correcto');
-    hasWarnings = true;
+// Firebase Private Key - verificar formato
+if (env.FIREBASE_PRIVATE_KEY) {
+  // La clave puede estar entre comillas en .env
+  const key = env.FIREBASE_PRIVATE_KEY.replace(/^["']|["']$/g, '');
+  if (key.includes('-----BEGIN PRIVATE KEY-----')) {
+    log.success('FIREBASE_PRIVATE_KEY tiene formato válido');
   } else {
-    log.success('SUPABASE_URL tiene formato válido');
+    log.error('FIREBASE_PRIVATE_KEY no tiene el formato esperado (debe empezar con -----BEGIN PRIVATE KEY-----)');
+    hasErrors = true;
+  }
+}
+
+// Firebase Project ID
+if (env.FIREBASE_PROJECT_ID) {
+  log.success('FIREBASE_PROJECT_ID configurada');
+}
+
+// Firebase Client Email
+if (env.FIREBASE_CLIENT_EMAIL) {
+  if (env.FIREBASE_CLIENT_EMAIL.includes('@') && env.FIREBASE_CLIENT_EMAIL.includes('.iam.gserviceaccount.com')) {
+    log.success('FIREBASE_CLIENT_EMAIL tiene formato de service account válido');
+  } else {
+    log.warning('FIREBASE_CLIENT_EMAIL no parece tener formato de service account');
+    hasWarnings = true;
   }
 }
 

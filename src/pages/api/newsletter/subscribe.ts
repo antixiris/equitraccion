@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../lib/supabase';
+import { db } from '../../../lib/firebase';
 import { validateEmail } from '../../../lib/validation/sanitize';
 import { checkContactFormRateLimit, getClientIP, createRateLimitResponse } from '../../../lib/security/rate-limiter';
 import { sendWelcomeEmail } from '../../../lib/email/resend-client';
@@ -11,21 +11,16 @@ import { sendWelcomeEmail } from '../../../lib/email/resend-client';
  */
 export const POST: APIRoute = async ({ request }) => {
   try {
-    // Parsear body
     const body = await request.json();
     const { email, honeypot } = body;
 
-    console.log('📧 Newsletter subscription attempt:', { email: email ? '***' : 'missing', honeypot: !!honeypot });
+    console.log('Newsletter subscription attempt:', { email: email ? '***' : 'missing', honeypot: !!honeypot });
 
-    // 🍯 Honeypot field - Si está lleno, es un bot
+    // Honeypot field - Si está lleno, es un bot
     if (honeypot) {
-      console.warn('🤖 Bot detected via honeypot field in newsletter');
-      // Responder con éxito falso para confundir al bot
+      console.warn('Bot detected via honeypot field in newsletter');
       return new Response(
-        JSON.stringify({
-          success: true,
-          message: '¡Gracias por suscribirte!',
-        }),
+        JSON.stringify({ success: true, message: '¡Gracias por suscribirte!' }),
         { status: 200, headers: { 'Content-Type': 'application/json' } }
       );
     }
@@ -35,143 +30,85 @@ export const POST: APIRoute = async ({ request }) => {
     const rateLimitResult = checkContactFormRateLimit(clientIP);
 
     if (!rateLimitResult.allowed) {
-      console.warn(`🚫 Rate limit exceeded for newsletter subscription from IP: ${clientIP}`);
+      console.warn(`Rate limit exceeded for newsletter subscription from IP: ${clientIP}`);
       return createRateLimitResponse(rateLimitResult);
     }
 
     // Validar email
     if (!email) {
-      console.error('❌ Email missing in request');
       return new Response(
-        JSON.stringify({
-          success: false,
-          message: 'Email es requerido'
-        }),
+        JSON.stringify({ success: false, message: 'Email es requerido' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
     const validation = validateEmail(email);
     if (!validation.isValid) {
-      console.error('❌ Email validation failed:', validation.errors);
       return new Response(
-        JSON.stringify({
-          success: false,
-          message: validation.errors[0] || 'Email inválido'
-        }),
+        JSON.stringify({ success: false, message: validation.errors[0] || 'Email inválido' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // Verificar si ya está suscrito
-    const { data: existing, error: checkError } = await supabaseAdmin
-      .from('newsletter_subscriptions')
-      .select('email, status')
-      .eq('email', email.toLowerCase().trim())
-      .single();
+    const normalizedEmail = email.toLowerCase().trim();
+    // email normalizado = doc ID → unicidad garantizada + O(1) lookup
+    const docRef = db.collection('newsletter_subscriptions').doc(normalizedEmail);
+    const existing = await docRef.get();
 
-    if (checkError && checkError.code !== 'PGRST116') {
-      // PGRST116 = no rows returned, que es lo esperado si no existe
-      console.error('Error checking existing subscription:', checkError);
-    }
+    if (existing.exists) {
+      const existingData = existing.data()!;
 
-    if (existing) {
-      if (existing.status === 'active') {
+      if (existingData.status === 'active') {
         return new Response(
-          JSON.stringify({
-            success: false,
-            message: 'Este email ya está suscrito al newsletter'
-          }),
+          JSON.stringify({ success: false, message: 'Este email ya está suscrito al newsletter' }),
           { status: 400, headers: { 'Content-Type': 'application/json' } }
         );
       } else {
         // Reactivar suscripción
-        const { error: updateError } = await supabaseAdmin
-          .from('newsletter_subscriptions')
-          .update({
-            status: 'active',
-            updated_at: new Date().toISOString()
-          })
-          .eq('email', email.toLowerCase().trim());
+        await docRef.update({
+          status: 'active',
+          updated_at: new Date().toISOString(),
+        });
 
-        if (updateError) {
-          console.error('Error reactivating newsletter subscription:', updateError);
-          return new Response(
-            JSON.stringify({
-              success: false,
-              message: 'Error al reactivar la suscripción'
-            }),
-            { status: 500, headers: { 'Content-Type': 'application/json' } }
-          );
-        }
+        console.log(`Newsletter subscription reactivated: ${email}`);
 
-        console.log(`🔄 Newsletter subscription reactivated: ${email}`);
-
-        // Enviar email de bienvenida de nuevo
         const emailResult = await sendWelcomeEmail(email);
         if (!emailResult.success) {
           console.error('Failed to send welcome email on reactivation:', emailResult.error);
         }
 
         return new Response(
-          JSON.stringify({
-            success: true,
-            message: '¡Suscripción reactivada! Revisa tu email.'
-          }),
+          JSON.stringify({ success: true, message: '¡Suscripción reactivada! Revisa tu email.' }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
       }
     }
 
     // Crear nueva suscripción
-    const { data: newSubscription, error: insertError } = await supabaseAdmin
-      .from('newsletter_subscriptions')
-      .insert({
-        email: email.toLowerCase().trim(),
-        status: 'active'
-        // Note: created_at will be auto-populated by Supabase
-      })
-      .select()
-      .single();
+    const now = new Date().toISOString();
+    await docRef.set({
+      id: crypto.randomUUID(),
+      email: normalizedEmail,
+      status: 'active',
+      created_at: now,
+    });
 
-    if (insertError) {
-      console.error('Error creating newsletter subscription:', insertError);
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: 'Error al procesar la suscripción. Intenta de nuevo.'
-        }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
+    console.log(`New newsletter subscription: ${email}`);
 
-    console.log(`📧 New newsletter subscription: ${email}`);
-
-    // Enviar email de bienvenida
     const emailResult = await sendWelcomeEmail(email);
-
     if (!emailResult.success) {
       console.error('Failed to send welcome email:', emailResult.error);
-      // No fallar la suscripción si el email falla, solo logear
-      // El usuario ya está suscrito en la BD
     }
 
-    // Éxito
     return new Response(
-      JSON.stringify({
-        success: true,
-        message: '¡Gracias por suscribirte! Revisa tu email para confirmar.'
-      }),
+      JSON.stringify({ success: true, message: '¡Gracias por suscribirte! Revisa tu email para confirmar.' }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Newsletter subscription error:', error);
     return new Response(
-      JSON.stringify({
-        success: false,
-        message: 'Error interno del servidor'
-      }),
+      JSON.stringify({ success: false, message: 'Error interno del servidor' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }

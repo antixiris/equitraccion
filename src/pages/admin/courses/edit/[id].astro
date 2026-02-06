@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { isAuthenticated } from '../../../../lib/auth/jwt';
-import { supabaseAdmin } from '../../../../lib/supabase';
-import type { Course } from '../../../../lib/supabase';
+import { db } from '../../../../lib/firebase';
+import type { Course } from '../../../../lib/firebase';
 
 if (!isAuthenticated(Astro)) {
   return Astro.redirect('/admin/login');
@@ -10,15 +10,13 @@ if (!isAuthenticated(Astro)) {
 
 const { id } = Astro.params;
 
-const { data: course, error } = await supabaseAdmin
-  .from('courses')
-  .select('*')
-  .eq('id', id)
-  .single();
+const courseDoc = await db.collection('courses').doc(id!).get();
 
-if (error || !course) {
+if (!courseDoc.exists) {
   return Astro.redirect('/admin/courses');
 }
+
+const course = { id: courseDoc.data()?.id || courseDoc.id, ...courseDoc.data() } as Course;
 ---
 
 <BaseLayout

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { supabaseAdmin } from '../../../lib/supabase';
+import { db } from '../../../lib/firebase';
 import { isAuthenticated } from '../../../lib/auth/jwt';
 
 /**
@@ -8,54 +8,35 @@ import { isAuthenticated } from '../../../lib/auth/jwt';
  */
 export const GET: APIRoute = async (context) => {
   try {
-    // Verificar autenticación
     if (!isAuthenticated(context)) {
       return new Response(
-        JSON.stringify({
-          success: false,
-          message: 'No autorizado'
-        }),
+        JSON.stringify({ success: false, message: 'No autorizado' }),
         { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // Obtener parámetros de query
     const url = new URL(context.request.url);
-    const status = url.searchParams.get('status'); // 'active', 'inactive', o null para todos
+    const status = url.searchParams.get('status');
 
-    // Construir query
-    let query = supabaseAdmin
-      .from('newsletter_subscriptions')
-      .select('*')
-      .order('created_at', { ascending: false });
+    let query: FirebaseFirestore.Query = db.collection('newsletter_subscriptions')
+      .orderBy('created_at', 'desc');
 
-    // Filtrar por status si se especifica
     if (status) {
-      query = query.eq('status', status);
+      query = query.where('status', '==', status);
     }
 
-    const { data: subscribers, error } = await query;
-
-    if (error) {
-      console.error('Error fetching newsletter subscribers:', error);
-      throw new Error('Error al obtener suscriptores');
-    }
+    const snapshot = await query.get();
+    const subscribers = snapshot.docs.map(doc => ({ id: doc.data().id || doc.id, ...doc.data() }));
 
     return new Response(
-      JSON.stringify({
-        success: true,
-        data: subscribers || []
-      }),
+      JSON.stringify({ success: true, data: subscribers }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Newsletter list error:', error);
     return new Response(
-      JSON.stringify({
-        success: false,
-        message: error instanceof Error ? error.message : 'Error interno'
-      }),
+      JSON.stringify({ success: false, message: error instanceof Error ? error.message : 'Error interno' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }

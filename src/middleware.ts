@@ -59,11 +59,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // Permite contenido del mismo origen, Google Fonts, y Google Analytics
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.quilljs.com",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.quilljs.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https: blob:",
-    "connect-src 'self' https://www.google-analytics.com https://*.supabase.co",
+    "connect-src 'self' https://www.google-analytics.com https://*.googleapis.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'"

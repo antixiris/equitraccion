@@ -3,15 +3,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
-import { supabase } from '../lib/supabase';
-import type { Course, CourseDate } from '../lib/supabase';
+import { db } from '../lib/firebase';
+import type { Course, CourseDate } from '../lib/firebase';
 
 // Obtener cursos activos con fechas futuras
-const { data: courses } = await supabase
-  .from('courses')
-  .select('*')
-  .eq('active', true)
-  .order('created_at', { ascending: false });
+const coursesSnapshot = await db.collection('courses')
+  .where('active', '==', true)
+  .orderBy('created_at', 'desc')
+  .get();
+
+const courses = coursesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Course));
 
 // Procesar cursos y sus fechas
 const upcomingCourses: Array<{
@@ -21,7 +22,7 @@ const upcomingCourses: Array<{
 
 const now = new Date();
 
-courses?.forEach((course: Course) => {
+courses.forEach((course: Course) => {
   course.dates.forEach((date: CourseDate) => {
     if (new Date(date.start) > now) {
       upcomingCourses.push({ course, date });

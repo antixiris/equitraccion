@@ -300,14 +300,7 @@ const title = 'Editar Post | Equitracción CMS';
 </BaseLayout>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
   import { marked } from 'marked';
-
-  // Create Supabase client with public env vars
-  const supabase = createClient(
-    import.meta.env.PUBLIC_SUPABASE_URL,
-    import.meta.env.PUBLIC_SUPABASE_ANON_KEY
-  );
 
   // Configure marked for backward compatibility with old Markdown posts
   marked.setOptions({
