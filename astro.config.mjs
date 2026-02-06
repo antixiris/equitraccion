@@ -11,7 +11,9 @@ export default defineConfig({
     webAnalytics: {
       enabled: false
     },
-    edgeMiddleware: false
+    edgeMiddleware: false,
+    // Forzar inclusión de módulos que el bundler de Vercel no rastrea
+    includeFiles: ['./node_modules/@opentelemetry/api/build/src/index.js']
   }),
   vite: {
     plugins: [tailwindcss()],
