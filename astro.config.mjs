@@ -11,17 +11,10 @@ export default defineConfig({
     webAnalytics: {
       enabled: false
     },
-    edgeMiddleware: false,
-    // Forzar inclusión de módulos que el bundler de Vercel no rastrea
-    // includeFiles no necesario con noExternal en vite.ssr
+    edgeMiddleware: false
   }),
   vite: {
-    plugins: [tailwindcss()],
-    ssr: {
-      // Forzar que Vite NO externalice estos paquetes y los bundlee inline
-      // Esto evita "Cannot find module" en Vercel serverless
-      noExternal: ['firebase-admin', '@opentelemetry/api']
-    }
+    plugins: [tailwindcss()]
   },
   trailingSlash: 'ignore'
 });
