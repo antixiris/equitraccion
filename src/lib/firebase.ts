@@ -1,3 +1,6 @@
+// Importar @opentelemetry/api antes de firebase-admin para que el bundler de Vercel
+// lo incluya en el trace de dependencias (evita "Cannot find module" en serverless)
+import '@opentelemetry/api';
 import { initializeApp, getApps, cert, type ServiceAccount } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
