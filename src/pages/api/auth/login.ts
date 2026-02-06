@@ -47,8 +47,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     }
 
     // Obtener credenciales de administrador desde variables de entorno
-    const adminEmail = import.meta.env.ADMIN_EMAIL;
-    const adminPassword = import.meta.env.ADMIN_PASSWORD;
+    const adminEmail = import.meta.env.ADMIN_EMAIL || process.env.ADMIN_EMAIL;
+    const adminPassword = import.meta.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD;
 
     if (!adminEmail || !adminPassword) {
       console.error('Admin credentials not configured in environment variables');

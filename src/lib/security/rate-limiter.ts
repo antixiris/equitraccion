@@ -120,8 +120,8 @@ export function checkLoginRateLimit(identifier: string): RateLimitResult {
  * Límite moderado para uso normal
  */
 export function checkAPIRateLimit(identifier: string): RateLimitResult {
-  const maxRequests = parseInt(import.meta.env.RATE_LIMIT_MAX || '100');
-  const windowMs = parseInt(import.meta.env.RATE_LIMIT_WINDOW || '900000'); // 15 min
+  const maxRequests = parseInt(import.meta.env.RATE_LIMIT_MAX || process.env.RATE_LIMIT_MAX || '100');
+  const windowMs = parseInt(import.meta.env.RATE_LIMIT_WINDOW || process.env.RATE_LIMIT_WINDOW || '900000'); // 15 min
   
   return checkRateLimit(identifier, {
     maxRequests,

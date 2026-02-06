@@ -9,7 +9,7 @@ import { generateNewsletterHTML } from '../../../lib/email/newsletter-template';
 export const POST: APIRoute = async ({ request }) => {
   try {
     const authHeader = request.headers.get('authorization');
-    const expectedToken = import.meta.env.NEWSLETTER_CRON_TOKEN || 'change-me-in-production';
+    const expectedToken = import.meta.env.NEWSLETTER_CRON_TOKEN || process.env.NEWSLETTER_CRON_TOKEN || 'change-me-in-production';
 
     if (authHeader !== `Bearer ${expectedToken}`) {
       return new Response(

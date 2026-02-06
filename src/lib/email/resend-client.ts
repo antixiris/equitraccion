@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 import { generateWelcomeEmailHTML, generateWelcomeEmailText } from './welcome-template';
 
 // Inicializar cliente de Resend
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
+const resend = new Resend(import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY);
 
 /**
  * Envía email de bienvenida a nuevo suscriptor

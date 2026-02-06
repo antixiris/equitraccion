@@ -72,7 +72,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   response.headers.set('Content-Security-Policy', csp);
 
   // Strict Transport Security (HSTS) - Solo en producción con HTTPS
-  if (import.meta.env.NODE_ENV === 'production') {
+  if (import.meta.env.PROD) {
     response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   }
 

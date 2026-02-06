@@ -123,7 +123,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Enviar email de notificación a roberto@equitraccion.com
     try {
-      const resend = new Resend(import.meta.env.RESEND_API_KEY);
+      const resend = new Resend(import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY);
 
       const categoryLabels: Record<string, string> = {
         'forestales': 'Servicios Forestales',

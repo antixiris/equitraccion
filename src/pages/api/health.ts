@@ -3,11 +3,12 @@ import type { APIRoute } from 'astro';
 export const GET: APIRoute = async () => {
   const checks: Record<string, string> = {};
 
-  // Check env vars exist
-  checks.FIREBASE_PROJECT_ID = import.meta.env.FIREBASE_PROJECT_ID ? 'set' : 'MISSING';
-  checks.FIREBASE_CLIENT_EMAIL = import.meta.env.FIREBASE_CLIENT_EMAIL ? 'set' : 'MISSING';
-  checks.FIREBASE_PRIVATE_KEY = import.meta.env.FIREBASE_PRIVATE_KEY
-    ? `set (${import.meta.env.FIREBASE_PRIVATE_KEY.length} chars, starts: ${import.meta.env.FIREBASE_PRIVATE_KEY.substring(0, 20)})`
+  // Check env vars exist (import.meta.env vs process.env)
+  checks.meta_FIREBASE_PROJECT_ID = import.meta.env.FIREBASE_PROJECT_ID ? 'set' : 'MISSING';
+  checks.proc_FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID ? 'set' : 'MISSING';
+  checks.proc_FIREBASE_CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL ? 'set' : 'MISSING';
+  checks.proc_FIREBASE_PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY
+    ? `set (${process.env.FIREBASE_PRIVATE_KEY.length} chars)`
     : 'MISSING';
 
   // Try Firebase init

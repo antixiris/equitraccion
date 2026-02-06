@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import type { APIContext } from 'astro';
 
-const JWT_SECRET = import.meta.env.JWT_SECRET || 'fallback-secret-change-in-production';
+const JWT_SECRET = import.meta.env.JWT_SECRET || process.env.JWT_SECRET || 'fallback-secret-change-in-production';
 const JWT_EXPIRATION = '7d'; // 7 días
 
 export interface TokenPayload {

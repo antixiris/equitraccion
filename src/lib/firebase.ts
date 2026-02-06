@@ -2,18 +2,24 @@ import { initializeApp, getApps, cert, type ServiceAccount } from 'firebase-admi
 import { getFirestore } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
 
+// Helper: Astro expone vars server-side via import.meta.env en dev,
+// pero en Vercel las vars sin prefijo PUBLIC_ solo están en process.env
+const env = (key: string) => import.meta.env[key] || process.env[key] || '';
+
 // Singleton: solo inicializar si no existe ya una app
 if (!getApps().length) {
+  const privateKey = env('FIREBASE_PRIVATE_KEY')?.replace(/\\n/g, '\n');
+  const projectId = env('FIREBASE_PROJECT_ID');
+
   const serviceAccount: ServiceAccount = {
-    projectId: import.meta.env.FIREBASE_PROJECT_ID,
-    clientEmail: import.meta.env.FIREBASE_CLIENT_EMAIL,
-    // Vercel almacena las claves con \n literal — hay que convertirlos a saltos de línea reales
-    privateKey: import.meta.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    projectId,
+    clientEmail: env('FIREBASE_CLIENT_EMAIL'),
+    privateKey,
   };
 
   initializeApp({
     credential: cert(serviceAccount),
-    storageBucket: `${import.meta.env.FIREBASE_PROJECT_ID}.firebasestorage.app`,
+    storageBucket: `${projectId}.firebasestorage.app`,
   });
 }
 
