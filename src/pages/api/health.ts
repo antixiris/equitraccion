@@ -53,6 +53,28 @@ export const GET: APIRoute = async () => {
     diagnostics.adminEnvError = e.message;
   }
 
+  // Step 6: Test login flow (simulate)
+  try {
+    const { generateToken } = await import('../../lib/auth/jwt');
+    const adminEmail = import.meta.env.ADMIN_EMAIL || process.env.ADMIN_EMAIL || '';
+    const adminPassword = import.meta.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || '';
+
+    // Test password comparison
+    const testPassword = 'Admin2025!';
+    const passwordMatch = testPassword === adminPassword;
+    diagnostics.passwordMatch = passwordMatch ? 'OK' : `FAIL (expected match)`;
+
+    // Test token generation
+    const token = generateToken(adminEmail, 'admin');
+    diagnostics.loginToken = token ? 'OK' : 'FAIL';
+
+    // Test bcrypt import
+    const bcrypt = await import('bcryptjs');
+    diagnostics.bcryptImport = bcrypt ? 'OK' : 'FAIL';
+  } catch (e: any) {
+    diagnostics.loginFlowError = `FAIL: ${e.message}\n${e.stack?.substring(0, 200)}`;
+  }
+
   return new Response(JSON.stringify(diagnostics, null, 2), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }
