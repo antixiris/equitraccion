@@ -14,14 +14,7 @@ export default defineConfig({
     edgeMiddleware: false
   }),
   vite: {
-    plugins: [tailwindcss()],
-    ssr: {
-      // Externalizar firebase-admin y sus dependencias para que Vite/Rollup
-      // no intente bundlearlas. Se resuelven en runtime desde node_modules.
-      // Esto evita el error "Cannot find module @opentelemetry/api" porque
-      // nft (Vercel's file tracer) las incluye correctamente como externals.
-      external: ['firebase-admin', '@google-cloud/firestore', '@opentelemetry/api']
-    }
+    plugins: [tailwindcss()]
   },
   trailingSlash: 'ignore'
 });
