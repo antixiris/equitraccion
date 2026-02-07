@@ -32,6 +32,27 @@ export const GET: APIRoute = async () => {
     diagnostics.firebaseImport = `FAIL: ${e.message}`;
   }
 
+  // Step 4: Test JWT
+  try {
+    const { generateToken, verifyToken } = await import('../../lib/auth/jwt');
+    const token = generateToken('test@test.com', 'admin');
+    diagnostics.jwtGenerate = token ? `OK (${token.substring(0, 20)}...)` : 'FAIL: empty token';
+    const payload = verifyToken(token);
+    diagnostics.jwtVerify = payload ? `OK (${payload.email})` : 'FAIL: null payload';
+  } catch (e: any) {
+    diagnostics.jwtError = `FAIL: ${e.message}`;
+  }
+
+  // Step 5: Check admin env vars
+  try {
+    const adminEmail = import.meta.env.ADMIN_EMAIL || process.env.ADMIN_EMAIL || '';
+    const adminPassword = import.meta.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || '';
+    diagnostics.adminEmail = adminEmail ? 'OK' : 'MISSING';
+    diagnostics.adminPassword = adminPassword ? 'OK' : 'MISSING';
+  } catch (e: any) {
+    diagnostics.adminEnvError = e.message;
+  }
+
   return new Response(JSON.stringify(diagnostics, null, 2), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }
