@@ -75,7 +75,7 @@ export function getAuthenticatedUser(context: APIContext): TokenPayload | null {
 export function setAuthCookie(context: APIContext, token: string): void {
   context.cookies.set('auth_token', token, {
     httpOnly: true,
-    secure: import.meta.env.NODE_ENV === 'production',
+    secure: import.meta.env.PROD,
     sameSite: 'strict',
     maxAge: 60 * 60 * 24 * 7, // 7 días
     path: '/'

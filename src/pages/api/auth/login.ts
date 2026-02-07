@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import bcrypt from 'bcryptjs';
-import { generateToken, setAuthCookie } from '../../../lib/auth/jwt';
+import { generateToken } from '../../../lib/auth/jwt';
 import { checkLoginRateLimit, getClientIP, createRateLimitResponse } from '../../../lib/security/rate-limiter';
 
 /**
@@ -100,7 +100,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const token = generateToken(email, 'admin');
 
     // Establecer cookie segura
-    setAuthCookie({ cookies } as any, token);
+    cookies.set('auth_token', token, {
+      httpOnly: true,
+      secure: import.meta.env.PROD,
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 24 * 7, // 7 días
+      path: '/'
+    });
 
     // Respuesta exitosa
     return new Response(
