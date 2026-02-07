@@ -11,10 +11,14 @@ export default defineConfig({
     webAnalytics: {
       enabled: false
     },
-    edgeMiddleware: false
+    edgeMiddleware: false,
+    includeFiles: ['./node_modules/@opentelemetry/api/**/*']
   }),
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    ssr: {
+      external: ['firebase-admin']
+    }
   },
   trailingSlash: 'ignore'
 });
