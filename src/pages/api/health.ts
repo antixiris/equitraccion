@@ -75,6 +75,22 @@ export const GET: APIRoute = async () => {
     diagnostics.loginFlowError = `FAIL: ${e.message}\n${e.stack?.substring(0, 200)}`;
   }
 
+  // Step 7: Test resend import
+  try {
+    await import('../../lib/email/resend-client');
+    diagnostics.resendImport = 'OK';
+  } catch (e: any) {
+    diagnostics.resendImport = `FAIL: ${e.message}`;
+  }
+
+  // Step 8: Test sanitize import
+  try {
+    await import('../../lib/validation/sanitize');
+    diagnostics.sanitizeImport = 'OK';
+  } catch (e: any) {
+    diagnostics.sanitizeImport = `FAIL: ${e.message}`;
+  }
+
   return new Response(JSON.stringify(diagnostics, null, 2), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }
