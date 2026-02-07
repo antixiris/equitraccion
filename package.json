@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && cp -r node_modules/@opentelemetry .vercel/output/functions/_render.func/node_modules/@opentelemetry 2>/dev/null || true",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@astrojs/node": "^9.5.0",
     "@astrojs/vercel": "^9.0.0",
+    "@opentelemetry/api": "^1.9.0",
     "@supabase/auth-helpers-sveltekit": "^0.13.0",
     "@supabase/supabase-js": "^2.79.0",
     "@tailwindcss/vite": "^4.1.16",
