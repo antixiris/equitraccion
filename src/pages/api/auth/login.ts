@@ -121,12 +121,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       }
     );
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login error:', error);
     return new Response(
       JSON.stringify({
         success: false,
-        message: 'Error interno del servidor'
+        message: 'Error interno del servidor',
+        debug: error?.message || String(error)
       }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
