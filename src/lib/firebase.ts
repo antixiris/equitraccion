@@ -1,3 +1,7 @@
+// Importación explícita para que el bundler de Vercel (nft) incluya este módulo
+// Es dependencia transitiva de @google-cloud/firestore que nft no traza automáticamente
+import '@opentelemetry/api';
+
 import { initializeApp, getApps, cert, type ServiceAccount } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
