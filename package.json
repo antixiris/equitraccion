@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && cp -r node_modules/@opentelemetry .vercel/output/functions/_render.func/node_modules/@opentelemetry 2>/dev/null || true",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",

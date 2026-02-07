@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run build && cp -r node_modules/@opentelemetry/api .vercel/output/functions/_render.func/node_modules/@opentelemetry/api",
   "installCommand": "npm ci",
   "framework": "astro"
 }
